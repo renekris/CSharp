@@ -29,23 +29,17 @@ namespace Fibonacci_Sequence
                 case 0:
                     return null;
                 case 1:
-                    if (ani == "1")
-                    {
-                        return "#";
-                    }
-                    else
-                        return null;
+                    return null;
                 case 2:
                     if (ani == "2")
                     {
-                        return "##";
+                        return "^LEVEL UP^";
                     }
                     else
                         return null;
+
                 default:
-                    return "---";
-
-
+                    return null;
             }
         }
 
