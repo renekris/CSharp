@@ -27,7 +27,8 @@ namespace ConsoleClicker
             //    case ConsoleKey.Enter:
             //        break;
             //}
-            int bars = 0, x = 1, count1 = 0;
+            int powerx = 1, count1 = 0;
+            float price1f = 50f, bars = 0f;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
             Console.WriteLine("Welcome to Console Clicker - WIP\n\n");
@@ -55,14 +56,14 @@ namespace ConsoleClicker
             
 
             Console.Clear();
-            Console.WriteLine("~~Main screen!~~");
-            Console.WriteLine("Enter - collect bars \nEsc - store");
+            Console.WriteLine("~~~Welcome~~~");
+            Console.WriteLine("<-/-> Arrows to Collect Bars \nESC - Store");
             cki = Console.ReadKey();
-            while (cki.Key == ConsoleKey.Enter)
+            while (cki.Key == ConsoleKey.RightArrow || cki.Key == ConsoleKey.LeftArrow)
             {
                 bars:
                 Console.Clear();
-                Console.WriteLine("Press <- and -> arrows to earn bars ~{0}\nPress esc to go back to the menu.", bars);
+                Console.WriteLine("Press <- and -> arrows to earn Bars ~{0:n2}\nPress ESC to go back to the menu.", bars);
                 cki = Console.ReadKey();
                 if (cki.Key == ConsoleKey.Escape)
                 {
@@ -71,14 +72,14 @@ namespace ConsoleClicker
                 System.Threading.Thread.Sleep(9);
                 if (cki.Key == ConsoleKey.LeftArrow && count1 == 0)
                 {
-                    bars += 1 * x;
+                    bars += 1 * powerx;
                     count1 = 1;
                     goto bars;
                 }
 
                 if (cki.Key == ConsoleKey.RightArrow && count1 == 1)
                 {
-                    bars += 1 * x;
+                    bars += 1 * powerx;
                     count1 = 0;
                     goto bars;
                 }
@@ -91,24 +92,25 @@ namespace ConsoleClicker
             {
                 store:
                 Console.Clear();
-                Console.WriteLine("~~Welcome to the store~~\nYou have about ~{0} bars.\nEsc to menu\nEnter a number to buy\n", bars);
-                Console.WriteLine("1.\t2x enter power\n\t~50 bars\n\n");
+                Console.WriteLine("~~Welcome to the store~~\nYou have about ~{0:n2} bars.\nESC to menu\nEnter a number to buy\n", bars);
+                Console.WriteLine("1.\t+= 1x enter power\n\t~{0:n2} Bars\n\n", price1f);
                 cki = Console.ReadKey();
                 if (cki.Key == ConsoleKey.D1)
                 {
-                    if (bars >= 50)
+                    if (bars >= price1f)
                     {
-                        x += 1;
-                        bars = bars - 50;
+                        bars = bars - price1f;
+                        price1f = price1f * 1.21f;
+                        powerx += 1;
                         Console.Clear();
-                        Console.WriteLine("You have just bought += 1x power\n~{0} bars remaining.\n\nEsc to go back.", bars);
+                        Console.WriteLine("You have just bought += 1x power\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
                         Console.ReadKey();
                         goto store;
                     }
                     else
                     {
                         Console.Clear();
-                        Console.WriteLine("You dont have enough bars!");
+                        Console.WriteLine("You don't have enough Bars!");
                         Console.ReadKey();
                         goto store;
                     }
