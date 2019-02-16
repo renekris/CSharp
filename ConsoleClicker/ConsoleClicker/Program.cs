@@ -25,7 +25,7 @@ namespace ConsoleClicker
         {
             int powerx = 1, count1 = 0;
             float price1f = 50f, price2f = 100f, bars = 0f, totalBars = 0f, menuSelection = 0, timedx = 0f;
-            bool isSecret = false;
+            bool isSecret = false, side = false;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
             Console.WriteLine("Welcome to Console Clicker - WIP\n\n");
@@ -68,12 +68,19 @@ namespace ConsoleClicker
             {
             
                 Console.Clear();
-                Console.WriteLine("Press <- and -> arrows to earn Bars\nPress ESC to go back to the menu.\n");
+                Console.WriteLine("Press the arrow shown below, to earn Bars.\nPress ESC to go back to the menu.\n");
             bars:
                 Console.WriteLine("~{0:n2} Bars", bars);
-
+                if (side == false)
+                {
+                    Console.WriteLine("  <-");
+                }
+                else if (side == true)
+                {
+                    Console.WriteLine("  ->");
+                }
                 press = Console.ReadKey(true).Key;
-                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                Console.SetCursorPosition(0, Console.CursorTop - 2);
                 ClearCurrentConsoleLine();
                 
                     
@@ -86,6 +93,7 @@ namespace ConsoleClicker
                     case ConsoleKey.LeftArrow:
                         if (press == ConsoleKey.LeftArrow && count1 == 0)
                         {
+                            side = true;
                             bars += 1 * powerx;
                             totalBars += 1 * powerx;
                             count1 = 1;
@@ -97,6 +105,7 @@ namespace ConsoleClicker
                     case ConsoleKey.RightArrow:
                         if (press == ConsoleKey.RightArrow && count1 == 1)
                         {
+                            side = false;
                             bars += 1 * powerx;
                             totalBars += 1 * powerx;
                             count1 = 0;
