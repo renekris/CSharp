@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-
+    
 
 namespace ConsoleClicker
 {
@@ -23,17 +23,19 @@ namespace ConsoleClicker
 
         static void Main(string[] args)
         {
+            
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
             int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0;
             float barsLimit = 50f, price1f = 50f, price2f = 100f, price3f = 10, bars = 0f, totalBars = 0f, menuSelection = 0, timedx = 0f;
             bool isSecret = false, side = false;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
-            Console.WriteLine("Welcome to Console Clicker - WIP\n\n");
+            Console.WriteLine("Welcome to Console Clicker - WIP\n\n \u004f\u0020\u252c\u00ac\u0020\u0020\u0020\u0020\u0020\u0020\u2591\u2591\u2591\u2591\n\u002f\u007c\u2514\u2563\u0020\u0020\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u0020\u000a\u002f\u0020\u005c\u0020\u0020\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592\u0020\u0020");
             Console.ReadKey();
         menu:
             Console.Clear();
             Console.WriteLine("~~~Welcome~~~");
-            Console.WriteLine("<- / -> Arrows to Collect Bars \nESC / M - Market\n");
+            Console.WriteLine("\u2191 / \u2193 Arrows to Collect Bars \nESC / M - Market\n");
             if (isSecret == true)
             {
                 Console.WriteLine("S - Secret menu");
@@ -42,8 +44,8 @@ namespace ConsoleClicker
             ConsoleKey press = Console.ReadKey(true).Key;
             switch (press)
             {
-                case ConsoleKey.LeftArrow:
-                case ConsoleKey.RightArrow:
+                case ConsoleKey.UpArrow:
+                case ConsoleKey.DownArrow:
                     menuSelection = 1;
                     break;
                 case ConsoleKey.Escape:
@@ -68,30 +70,32 @@ namespace ConsoleClicker
             {
             
                 Console.Clear();
-                Console.WriteLine("Press the arrow shown below, to earn Bars.\nPress ESC to go back to the menu.\n");
+                Console.WriteLine("Press the arrows shown below, to earn Bars.\nPress ESC to go back to the menu.\n");
             bars:
-                Console.WriteLine("~{0:n2}/{1} Bars", bars, barsLimit);
+                Console.WriteLine("~{0:n2}/{1:n2} Bars", bars, barsLimit);
                 if (side == false)
                 {
-                    Console.WriteLine("  <-");
+                    Console.WriteLine("Press \u2191 +{0}\n", powerx);
+                    Console.WriteLine("           \n           \n    _._     \n   / O \\     \n   \\| |/     \nO--+=-=+--O");
+                    //Console.WriteLine("   ._O_.    \nO--<-+->--O\n     X     \n    / \\     \n   - -");
+                    
                 }
                 else if (side == true)
                 {
-                    Console.WriteLine("  ->");
-                }
-                press = Console.ReadKey(true).Key;
-                Console.SetCursorPosition(0, Console.CursorTop - 2);
-                ClearCurrentConsoleLine();
-                
+                    Console.WriteLine("Press \u2193 +{0}\n", powerx);
+                    Console.WriteLine("O--,---,--O\n   \\ O /    \n    - -    \n     -    \n    / \\      \n   =   =    ");
                     
-                
+                }
+                Console.SetCursorPosition(0, Console.CursorTop - 9);
+                press = Console.ReadKey(true).Key;
+                ClearCurrentConsoleLine();
                 //Bar Values
                 switch (press)
                 {
                     case ConsoleKey.Escape:
                         goto menu;
-                    case ConsoleKey.LeftArrow:
-                        if (press == ConsoleKey.LeftArrow && count1 == 0 && barsLimit > bars)
+                    case ConsoleKey.UpArrow:
+                        if (press == ConsoleKey.UpArrow && count1 == 0 && barsLimit > bars)
                         {
                             side = true;
                             bars += 1 * powerx;
@@ -102,8 +106,8 @@ namespace ConsoleClicker
                         }
                         else
                             goto bars;
-                    case ConsoleKey.RightArrow:
-                        if (press == ConsoleKey.RightArrow && count1 == 1 && barsLimit > bars)
+                    case ConsoleKey.DownArrow:
+                        if (press == ConsoleKey.DownArrow && count1 == 1 && barsLimit > bars)
                         {
                             side = false;
                             bars += 1 * powerx;
@@ -126,7 +130,7 @@ namespace ConsoleClicker
                 Console.WriteLine("~~Welcome to the store~~\nYou have about ~{0:n2} bars.\nESC to menu\nEnter a number to buy\n", bars);
                 Console.WriteLine("1.\t+= 1x enter power\n\t~{0:n2} Bars\n\tYou have bought {1}/10 of this\n\n", price1f, countPowerX);
                 Console.WriteLine("2.\tSecret\n\t~{0:n2} Bars\n\n", price2f);
-                Console.WriteLine("3.\tBars limit currently: {0}\n\t~{1:n2} Bars\n\tYou have bought {2}/50 of this", barsLimit, price3f, countBarsLimit);
+                Console.WriteLine("3.\tBars limit currently: {0:n2}\n\t~{1:n2} Bars\n\tYou have bought {2}/50 of this", barsLimit, price3f, countBarsLimit);
                 press = Console.ReadKey(true).Key;
                 switch (press)
                 {
@@ -168,6 +172,7 @@ namespace ConsoleClicker
                             Console.ReadKey();
                             goto store;
                         }
+                    //Bar Counter Limit Upgrade
                     case ConsoleKey.D3:
                         if (bars >= price3f && countBarsLimit < 50)
                         {
