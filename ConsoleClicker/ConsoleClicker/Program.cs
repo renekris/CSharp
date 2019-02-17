@@ -200,6 +200,7 @@ namespace ConsoleClicker
                         else
                             goto bars;
                     default:
+                        sideMain = 0;
                         goto bars;
                 }
             }
