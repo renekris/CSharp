@@ -25,8 +25,8 @@ namespace ConsoleClicker
         {
             
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-            int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0;
-            float barsLimit = 50f, price1f = 50f, price2f = 100f, price3f = 10, bars = 0f, totalBars = 0f, menuSelection = 0, timedx = 0f;
+            int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0, actionTiming = 50, menuSelection = 0, countActionTime = 0, sideMain = 0;
+            float barsLimit = 50f, price1f = 50f, price2f = 100f, price3f = 10f, bars = 0f, totalBars = 0f, price4f = 20f;
             bool isSecret = false, side = false;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
@@ -72,33 +72,101 @@ namespace ConsoleClicker
             
                 Console.Clear();
                 Console.WriteLine("Press the arrows shown below, to earn Bars.\nPress ESC to go back to the menu.\n");
+                sideMain = 0;
+                side = false;
             bars:
                 Console.WriteLine("~{0:n2}/{1:n2} Bars", bars, barsLimit);
                 if (side == false && barsLimit > bars)
                 {
                     Console.WriteLine("Press \u2191 +{0}\n", powerx);
-                    //Console.WriteLine("   ._O_.     \nO--<-+->--O \n     X      \n    / \\      \n   - -    ");
-                    Console.WriteLine("           \n           \n   ,_O_,    \nO--(---)--O\n    >'>     \n    - -    ");
-                    Console.SetCursorPosition(0, Console.CursorTop - 5);
-                    Thread.Sleep(25);
-
-                    ClearCurrentConsoleLine();
-                    Console.WriteLine("             \n             \n    _._       \n   / O \\      \n   \\| |/      \nO--+=-=+--O");
-                    
+                    if (sideMain == 1)
+                    {
+                        //Bars 5/6
+                        Console.WriteLine("           \nO--=-O-=--O\n    '-'    \n     v     \n    / )     \n    ~ z    ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 6);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        //Bars 4/6
+                        Console.WriteLine("           \n   ._O_.   \nO--<-+->--O\n     X     \n    / \\    \n    - -    ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 6);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        //Bars 3/6
+                        Console.WriteLine("           \n           \n   ,_O_,   \nO--(---)--O\n    >'>     \n    - -    ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 6);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        //Bars 2/6
+                        Console.WriteLine("           \n           \n           \n   ,-O-,    \nO--=---=--O\n    2\"2   ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 6);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        //Bars 1/6
+                        Console.WriteLine("           \n           \n    _._    \n   / O \\   \n   \\| |/   \nO--+=-=+--O");
+                        Console.SetCursorPosition(0, Console.CursorTop - 7);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        sideMain = 1;
+                    }
+                    else if (sideMain == 0)
+                    {
+                        //Bars 1/6 MAIN
+                        Console.WriteLine("           \n           \n    _._    \n   / O \\   \n   \\| |/   \nO--+=-=+--O");
+                        Console.SetCursorPosition(0, Console.CursorTop - 7);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        sideMain = 1;
+                    }
                 }
                 else if (side == true && barsLimit > bars)
                 {
                     Console.WriteLine("Press \u2193 +{0}\n", powerx);
-                    //Console.WriteLine("   ._O_.     \nO--<-+->--O \n     X      \n    / \\      \n   - -    ");
-                    Console.WriteLine("           \n           \n   ,_O_,    \nO--(---)--O\n    >'>     \n    - -    ");
-                    Console.SetCursorPosition(0, Console.CursorTop - 5);
-                    Thread.Sleep(25);
-
-                    ClearCurrentConsoleLine();
-                    Console.WriteLine("O--,---,--O\n   \\ O /    \n    - -     \n     -     \n    / \\      \n   =   =    ");
-                    
+                    if (sideMain == 1)
+                    {
+                        //Bars 2/6
+                        Console.WriteLine("           \n           \n            \n   ,-O-,   \nO--=---=--O\n    2\"2    ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 6);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        //Bars 3/6
+                        Console.WriteLine("           \n           \n   ,_O_,    \nO--(---)--O\n    >'>     \n    - -    ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 6);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        //Bars 4/6
+                        Console.WriteLine("           \n   ._O_.   \nO--<-+->--O\n     X     \n    / \\    \n    - -    ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 6);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        //Bars 5/6
+                        Console.WriteLine("           \nO--=-O-=--O\n    '-'     \n     v     \n    / )     \n    ~ z    ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 6);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        //Bars 6/6
+                        Console.WriteLine("O--,---,--O\n   \\ O /   \n    - -     \n     -     \n    / \\    \n   =   =   ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 7);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        sideMain = 1;
+                    }
+                    else if (sideMain == 0)
+                    {
+                        //Bars 6/6
+                        Console.WriteLine("O--,---,--O\n   \\ O /   \n    - -     \n     -     \n    / \\    \n   =   =   ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 7);
+                        Thread.Sleep(actionTiming);
+                        ClearCurrentConsoleLine();
+                        sideMain = 1;
+                    }
                 }
-                Console.SetCursorPosition(0, Console.CursorTop - 10);
+                //Amount ot clear after hitting the Bar cap.
+                if (bars < barsLimit)
+                {
+                    Console.SetCursorPosition(0, Console.CursorTop - 2);
+                }
+                else
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
 
                 press = Console.ReadKey(true).Key;
                 ClearCurrentConsoleLine();
@@ -141,9 +209,10 @@ namespace ConsoleClicker
                 store:
                 Console.Clear();
                 Console.WriteLine("~~Welcome to the store~~\nYou have about ~{0:n2} bars.\nESC to menu\nEnter a number to buy\n", bars);
-                Console.WriteLine("1.\t+= 1x enter power\n\t~{0:n2} Bars\n\tYou have bought {1}/10 of this\n\n", price1f, countPowerX);
-                Console.WriteLine("2.\tSecret\n\t~{0:n2} Bars\n\n", price2f);
-                Console.WriteLine("3.\tBars limit currently: {0:n2}\n\t~{1:n2} Bars\n\tYou have bought {2}/50 of this", barsLimit, price3f, countBarsLimit);
+                Console.WriteLine("1.\tIncreases the amount of Bars you gain\n\tYour current multiplier: {2}\n\tYou have bought {1}/10 of this\n\t~{0:n2} Bars\n", price1f, countPowerX, powerx);
+                Console.WriteLine("2.\tGives you access to your overall stats\n\t~{0:n2} Bars\n", price2f);
+                Console.WriteLine("3.\tIncreases you maximum Bars limit\n\tYour current Bar limit: {0:n2}\n\tYou have bought {2}/50 of this\n\t~{1:n2} Bars\n", barsLimit, price3f, countBarsLimit);
+                Console.WriteLine("4.\tDecrease the time that it takes to gain Bars\n\tYour current action time: {0}ms\n\tYou have bought {1}/25 of this\n\t~{2:n2} Bars\n", actionTiming, countActionTime, price4f);
                 press = Console.ReadKey(true).Key;
                 switch (press)
                 {
@@ -156,7 +225,7 @@ namespace ConsoleClicker
                             price1f = price1f * 1.21f;
                             powerx += 1;
                             Console.Clear();
-                            Console.WriteLine("You have just bought += 1x power\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
+                            Console.WriteLine("You have just bought += 1x power.\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
                             Console.ReadKey();
                             goto store;
                         }
@@ -194,7 +263,27 @@ namespace ConsoleClicker
                             price3f = price3f * 1.25f;
                             barsLimit = barsLimit * 1.25f;
                             Console.Clear();
-                            Console.WriteLine("You have just increased your Bars limit\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
+                            Console.WriteLine("You have just increased your Bars limit.\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
+                            Console.ReadKey();
+                            goto store;
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("You don't have enough Bars!");
+                            Console.ReadKey();
+                            goto store;
+                        }
+                        //Bar Gaining Action Time
+                    case ConsoleKey.D4:
+                        if (bars >= price4f && countActionTime < 25)
+                        {
+                            countActionTime++;
+                            bars = bars - price4f;
+                            price4f = price4f * 1.10f;
+                            actionTiming = actionTiming - 1;
+                            Console.Clear();
+                            Console.WriteLine("You have just increased your action time.\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
                             Console.ReadKey();
                             goto store;
                         }
