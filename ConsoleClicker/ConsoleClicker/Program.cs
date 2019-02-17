@@ -30,7 +30,7 @@ namespace ConsoleClicker
             bool isSecret = false, side = false;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
-            Console.WriteLine("Welcome to Console Clicker - WIP\n\n \u004f\u0020\u252c\u00ac\u0020\u0020\u0020\u0020\u0020\u0020\u2591\u2591\u2591\u2591\n\u002f\u007c\u2514\u2563\u0020\u0020\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u0020\u000a\u002f\u0020\u005c\u0020\u0020\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592\u0020\u0020");
+            Console.WriteLine("Welcome to Console Clicker - WIP\n\n \u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
             Console.ReadKey();
         menu:
             Console.Clear();
@@ -44,6 +44,7 @@ namespace ConsoleClicker
             ConsoleKey press = Console.ReadKey(true).Key;
             switch (press)
             {
+                case ConsoleKey.Enter:
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.DownArrow:
                     menuSelection = 1;
@@ -73,20 +74,32 @@ namespace ConsoleClicker
                 Console.WriteLine("Press the arrows shown below, to earn Bars.\nPress ESC to go back to the menu.\n");
             bars:
                 Console.WriteLine("~{0:n2}/{1:n2} Bars", bars, barsLimit);
-                if (side == false)
+                if (side == false && barsLimit > bars)
                 {
                     Console.WriteLine("Press \u2191 +{0}\n", powerx);
-                    Console.WriteLine("           \n           \n    _._     \n   / O \\     \n   \\| |/     \nO--+=-=+--O");
-                    //Console.WriteLine("   ._O_.    \nO--<-+->--O\n     X     \n    / \\     \n   - -");
+                    //Console.WriteLine("   ._O_.     \nO--<-+->--O \n     X      \n    / \\      \n   - -    ");
+                    Console.WriteLine("           \n           \n   ,_O_,    \nO--(---)--O\n    >'>     \n    - -    ");
+                    Console.SetCursorPosition(0, Console.CursorTop - 5);
+                    Thread.Sleep(25);
+
+                    ClearCurrentConsoleLine();
+                    Console.WriteLine("             \n             \n    _._       \n   / O \\      \n   \\| |/      \nO--+=-=+--O");
                     
                 }
-                else if (side == true)
+                else if (side == true && barsLimit > bars)
                 {
                     Console.WriteLine("Press \u2193 +{0}\n", powerx);
-                    Console.WriteLine("O--,---,--O\n   \\ O /    \n    - -    \n     -    \n    / \\      \n   =   =    ");
+                    //Console.WriteLine("   ._O_.     \nO--<-+->--O \n     X      \n    / \\      \n   - -    ");
+                    Console.WriteLine("           \n           \n   ,_O_,    \nO--(---)--O\n    >'>     \n    - -    ");
+                    Console.SetCursorPosition(0, Console.CursorTop - 5);
+                    Thread.Sleep(25);
+
+                    ClearCurrentConsoleLine();
+                    Console.WriteLine("O--,---,--O\n   \\ O /    \n    - -     \n     -     \n    / \\      \n   =   =    ");
                     
                 }
-                Console.SetCursorPosition(0, Console.CursorTop - 9);
+                Console.SetCursorPosition(0, Console.CursorTop - 10);
+
                 press = Console.ReadKey(true).Key;
                 ClearCurrentConsoleLine();
                 //Bar Values
