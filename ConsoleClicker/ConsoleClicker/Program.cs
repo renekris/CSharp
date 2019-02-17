@@ -27,7 +27,7 @@ namespace ConsoleClicker
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0, actionTiming = 50, menuSelection = 0, countActionTime = 0, sideMain = 0;
             float barsLimit = 50f, price1f = 50f, price2f = 100f, price3f = 10f, bars = 0f, totalBars = 0f, price4f = 20f;
-            bool isSecret = false, side = false;
+            bool isSecret = false, side = false, pressedDown = false, pressedUp = false;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
             Console.WriteLine("Welcome to Console Clicker - WIP\n\n \u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
@@ -79,7 +79,7 @@ namespace ConsoleClicker
                 if (side == false && barsLimit > bars)
                 {
                     Console.WriteLine("Press \u2191 +{0}\n", powerx);
-                    if (sideMain == 1)
+                    if (sideMain == 1 && pressedDown == true)
                     {
                         //Bars 5/6
                         Console.WriteLine("           \nO--=-O-=--O\n    '-'    \n     v     \n    / )     \n    ~ z    ");
@@ -107,9 +107,11 @@ namespace ConsoleClicker
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         sideMain = 1;
+                        pressedDown = false;
                     }
                     else if (sideMain == 0)
                     {
+                        //Add here the start position.
                         //Bars 1/6 MAIN
                         Console.WriteLine("           \n           \n    _._    \n   / O \\   \n   \\| |/   \nO--+=-=+--O");
                         Console.SetCursorPosition(0, Console.CursorTop - 7);
@@ -121,7 +123,7 @@ namespace ConsoleClicker
                 else if (side == true && barsLimit > bars)
                 {
                     Console.WriteLine("Press \u2193 +{0}\n", powerx);
-                    if (sideMain == 1)
+                    if (sideMain == 1 && pressedUp == true)
                     {
                         //Bars 2/6
                         Console.WriteLine("           \n           \n            \n   ,-O-,   \nO--=---=--O\n    2\"2    ");
@@ -149,8 +151,9 @@ namespace ConsoleClicker
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         sideMain = 1;
+                        pressedUp = false;
                     }
-                    else if (sideMain == 0)
+                    else if (sideMain == 1)
                     {
                         //Bars 6/6
                         Console.WriteLine("O--,---,--O\n   \\ O /   \n    - -     \n     -     \n    / \\    \n   =   =   ");
@@ -182,6 +185,7 @@ namespace ConsoleClicker
                             bars += 1 * powerx;
                             totalBars += 1 * powerx;
                             count1 = 1;
+                            pressedUp = true;
                             Thread.Sleep(10);
                             goto bars;
                         }
@@ -194,6 +198,7 @@ namespace ConsoleClicker
                             bars += 1 * powerx;
                             totalBars += 1 * powerx;
                             count1 = 0;
+                            pressedDown = true;
                             Thread.Sleep(10);
                             goto bars;
                         }
