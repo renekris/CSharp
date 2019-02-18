@@ -25,10 +25,10 @@ namespace ConsoleClicker
         {
             
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-            int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0, actionTiming = 50, menuSelection = 0, countActionTime = 0, sideMain = 0;
+            int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0, actionTiming = 50, menuSelection = 0, countActionTime = 0, sideMain = 0, clicks = 0, realClicks = 0;
             float barsLimit = 50f, price1f = 50f, price2f = 100f, price3f = 10f, bars = 0f, totalBars = 0f, price4f = 20f;
-            bool isSecret = false, side = false, pressedDown = false, pressedUp = false;
-            string boughtIt1 = null;
+            bool pressedESC = false, isSecret = false, side = false, pressedDown = false, pressedUp = false, barOnGround = false;
+            string boughtIt1 = null, barOnGroundString = null;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
             Console.WriteLine("Welcome to Console Clicker - WIP\n\nProgramming by Renekris\nBig thanks to: Gio, Juškin\n\n\n\u0020\u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
@@ -36,7 +36,7 @@ namespace ConsoleClicker
         menu:
             Console.Clear();
             Console.WriteLine("~~~Welcome~~~");
-            Console.WriteLine("\u2191 / \u2193 Arrows to Collect Bars \nESC / M - Market\n");
+            Console.WriteLine("\u2191 / \u2193 Arrows to Collect Bars \nESC / M - Market");
             if (isSecret == true)
             {
                 Console.WriteLine("S - Secret menu");
@@ -80,15 +80,20 @@ namespace ConsoleClicker
                 sideMain = 0;
                 side = false;
             bars:
-                Console.WriteLine("~{0:n2}/{1:n2} Bars", bars, barsLimit);
-                if (side == false && barsLimit > bars)
+                if (bars < barsLimit)
                 {
+                    Console.WriteLine("~{0:n2}/{1:n2} Bars", bars, barsLimit);
+                }
+                //Pressed down
+                if (side == false)
+                {
+                    realClicks++;
                     Console.WriteLine("Press \u2191 +{0}\n", powerx);
-                    if (sideMain == 1 && pressedDown == true)
+                    if (sideMain == 1 && pressedDown == true && barsLimit > bars)
                     {
                         //Bars 5/6
-                        Console.WriteLine("           \nO--=-O-=--O\n    '-'    \n     v     \n    / )     \n    ~ z    ");
-                        Console.SetCursorPosition(0, Console.CursorTop - 6);
+                        Console.WriteLine("           \nO--=-O-=--O\n    '-'    \n     v     \n    / )     \n    ~ z    \n           ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 7);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         //Bars 4/6
@@ -113,26 +118,54 @@ namespace ConsoleClicker
                         ClearCurrentConsoleLine();
                         sideMain = 1;
                         pressedDown = false;
+                        barOnGround = false;
                     }
-                    else if (sideMain == 0)
+                    else if (sideMain == 0 || sideMain == 1)
                     {
                         //Add here the start position.
                         //Bars 1/6 MAIN
-                        Console.WriteLine("           \n           \n    _._    \n   / O \\   \n   \\| |/   \nO--+=-=+--O");
-                        Console.SetCursorPosition(0, Console.CursorTop - 7);
-                        Thread.Sleep(actionTiming);
+                        if (pressedDown == false || pressedUp == false)
+                        {
+                            Console.WriteLine("           \n     O     \n   /- -\\  \n  ´  H  `   \n    / \\     \n   =   =   \nO---------O");
+                            barOnGround = true;
+                            sideMain = 1;
+                        }
+                        else
+                            Console.WriteLine("           \n           \n    _._    \n   / O \\   \n   \\| |/   \nO--+=-=+--O");
+                        if (barsLimit > bars)
+                        {
+                            if (pressedDown == false)
+                            {
+                                Console.SetCursorPosition(0, Console.CursorTop - 8);
+                                ClearCurrentConsoleLine();
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(0, Console.CursorTop - 7);
+                                ClearCurrentConsoleLine();
+                            }
+                            
+                        }
+                        else
+                        {
+                            Console.SetCursorPosition(0, Console.CursorTop - 8);
+                            Console.WriteLine("You got tired, go to the Market to increase your cap limit{0}", barOnGroundString);
+                            ClearCurrentConsoleLine();
+                        }
                         ClearCurrentConsoleLine();
                         sideMain = 1;
                     }
                 }
-                else if (side == true && barsLimit > bars)
+                //Pressed up
+                else if (side == true)
                 {
+                    realClicks++;
                     Console.WriteLine("Press \u2193 +{0}\n", powerx);
-                    if (sideMain == 1 && pressedUp == true)
+                    if (sideMain == 1 && pressedUp == true && barsLimit > bars)
                     {
                         //Bars 2/6
-                        Console.WriteLine("           \n           \n            \n   ,-O-,   \nO--=---=--O\n    2\"2    ");
-                        Console.SetCursorPosition(0, Console.CursorTop - 6);
+                        Console.WriteLine("           \n           \n            \n   ,-O-,   \nO--=---=--O\n    2\"2    \n            ");
+                        Console.SetCursorPosition(0, Console.CursorTop - 7);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         //Bars 3/6
@@ -157,6 +190,7 @@ namespace ConsoleClicker
                         ClearCurrentConsoleLine();
                         sideMain = 1;
                         pressedUp = false;
+                        barOnGround = false;
                     }
                     else if (sideMain == 1)
                     {
@@ -166,9 +200,10 @@ namespace ConsoleClicker
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         sideMain = 1;
+                        barOnGround = false;
                     }
                 }
-                //Amount ot clear after hitting the Bar cap.
+                //Amount to clear after hitting the Bar cap.
                 if (bars < barsLimit)
                 {
                     Console.SetCursorPosition(0, Console.CursorTop - 2);
@@ -182,7 +217,16 @@ namespace ConsoleClicker
                 switch (press)
                 {
                     case ConsoleKey.Escape:
-                        goto menu;
+                        pressedESC = true;
+                        if (barOnGround == true)
+                        {
+                            goto menu;
+                        }
+                        else
+                        {
+                            barOnGroundString = ", You have to put it back on the ground to leave";
+                            goto bars;
+                        }
                     case ConsoleKey.UpArrow:
                         if (press == ConsoleKey.UpArrow && count1 == 0 && barsLimit > bars)
                         {
@@ -191,6 +235,7 @@ namespace ConsoleClicker
                             totalBars += 1 * powerx;
                             count1 = 1;
                             pressedUp = true;
+                            clicks++;
                             Thread.Sleep(10);
                             goto bars;
                         }
@@ -204,13 +249,14 @@ namespace ConsoleClicker
                             totalBars += 1 * powerx;
                             count1 = 0;
                             pressedDown = true;
+                            clicks++;
                             Thread.Sleep(10);
                             goto bars;
                         }
                         else
                             goto bars;
                     case ConsoleKey.Add:
-                        bars = 10000;
+                        bars += 10000;
                         goto bars;
                     default:
                         sideMain = 0;
@@ -317,6 +363,7 @@ namespace ConsoleClicker
                             Console.ReadKey();
                             goto store;
                         }
+
                     case ConsoleKey.Escape:
                         goto menu;
                     default:
@@ -328,8 +375,9 @@ namespace ConsoleClicker
             {
                 Console.Clear();
                 Console.WriteLine("This is the secret menu\nThis is where your statistics go.\n");
-                Console.WriteLine("Current bars: {0:n2}", bars);
-                Console.WriteLine("Total bars: {0:n2}\n", totalBars);
+                Console.WriteLine("Current Bars: {0:n2}", bars);
+                Console.WriteLine("Total Bars collected: {0:n2}", totalBars);
+                Console.WriteLine("Clicks in total: {1}({0})\n", clicks, realClicks);
                 Console.WriteLine("Any key to go back.");
                 Console.ReadKey();
                 goto menu;
