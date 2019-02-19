@@ -20,10 +20,8 @@ namespace ConsoleClicker
             Console.Write(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(0, currentLineCursor);
         }
-
         static void Main(string[] args)
         {
-
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0, actionTiming = 50, menuSelection = 0, countActionTime = 0, sideMain = 1, foo = 0, clicks = 0, realClicks = 0;
             float barsLimit = 50f, price1f = 50f, price2f = 100f, price3f = 10f, bars = 0f, totalBars = 0f, price4f = 20f;
@@ -31,7 +29,7 @@ namespace ConsoleClicker
             string boughtIt1 = null;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
-            Console.WriteLine("Welcome to Console Clicker - WIP\n\n \u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
+            Console.WriteLine("Welcome to Console Clicker - WIP\n\nProgramming by Renekris/Rene Kristofer Pohlak\nBig thanks to: Gio, Juškin, for giving me ideas to work with\n\n\n\u0020\u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
             Console.ReadKey();
         menu:
             Console.Clear();
@@ -41,7 +39,6 @@ namespace ConsoleClicker
             {
                 Console.WriteLine("S - Secret menu");
             }
-
             ConsoleKey press = Console.ReadKey(true).Key;
             switch (press)
             {
@@ -64,9 +61,8 @@ namespace ConsoleClicker
                         goto menu;
                     }
                     break;
-
                 case ConsoleKey.Add:
-                    bars = 10000;
+                    bars += 10000;
                     goto menu;
                 default:
                     goto menu;
@@ -74,7 +70,6 @@ namespace ConsoleClicker
             //Bars
             while (menuSelection == 1)
             {
-
                 Console.Clear();
                 Console.WriteLine("Press the arrows shown below, to earn Bars.\nPress ESC to go back to the menu.\n");
                 sideMain = 1;
@@ -134,7 +129,6 @@ namespace ConsoleClicker
                             goto bars;
                         }
                     }
-
                 }
                 else if (side == true && barsLimit > bars)
                 {
@@ -226,7 +220,7 @@ namespace ConsoleClicker
                         else
                             goto bars;
                     case ConsoleKey.Add:
-                        bars = 10000;
+                        bars += 10000;
                         goto bars;
                     default:
                         pressedDefault = true;
@@ -345,8 +339,8 @@ namespace ConsoleClicker
             {
                 Console.Clear();
                 Console.WriteLine("This is the secret menu\nThis is where your statistics go.\n");
-                Console.WriteLine("Current bars: {0:n2}", bars);
-                Console.WriteLine("Total bars: {0:n2}", totalBars);
+                Console.WriteLine("Current Bars: {0:n2}", bars);
+                Console.WriteLine("Total Bars collected: {0:n2}", totalBars);
                 Console.WriteLine("Clicks in total: {1}({0})\n", clicks, realClicks);
                 Console.WriteLine("Any key to go back.");
                 Console.ReadKey();
@@ -355,4 +349,3 @@ namespace ConsoleClicker
         }
     }
 }
-
