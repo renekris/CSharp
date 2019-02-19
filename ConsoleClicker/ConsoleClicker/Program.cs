@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Xml;
-using System.Xml.Serialization;
-using System.IO;
 using System.Diagnostics;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
@@ -24,14 +19,14 @@ namespace ConsoleClicker
         }
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.Unicode;
-            int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0, actionTiming = 50, menuSelection = 0, countActionTime = 0, sideMain = 1, foo = 0, clicks = 0, realClicks = 0;
-            float barsLimit = 50f, price1f = 50f, price2f = 100f, price3f = 10f, bars = 0f, totalBars = 0f, price4f = 20f;
+            Console.OutputEncoding = Encoding.Unicode;
+            int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0, actionTiming = 50, menuSelection, countActionTime = 0, sideMain = 1, foo = 0, clicks = 0, realClicks = 0;
+            float barsLimit = 50f, price1F = 50f, price2F = 100f, price3F = 10f, bars = 0f, totalBars = 0f, price4F = 20f;
             bool isSecret = false, side = false, pressedDown = false, pressedUp = false, pressedDefault = false;
             string boughtIt1 = null;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
-            Console.WriteLine("Welcome to Console Clicker - WIP\nUnfortunetly there are a couple of bugs present with the animation\n\nProgramming by Renekris/Rene Kristofer Pohlak\nBig thanks to: Gio, Juškin, for giving me ideas to work with\n\n\n\u0020\u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
+            Console.WriteLine("Welcome to Console Clicker - WIP\nUnfortunately there are a couple of bugs present with the animation\n\nProgramming by Renekris/Rene Kristofer Pohlak\nBig thanks to: Gio, Juškin, for giving me ideas to work with\n\n\n\u0020\u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
             Console.ReadKey();
         menu:
             Console.Clear();
@@ -40,7 +35,7 @@ namespace ConsoleClicker
             Console.WriteLine("Market is for normal upgrades\n>M - Market\n");
             Console.WriteLine("Supermarket is for super upgrades\n>S - SuperMarket\n");
             Console.WriteLine("This is a link to my Github,\nif you want to keep up with the progress of the development\n>G - Projects Github (github.com/renekris/CSharp)");
-            if (isSecret == true)
+            if (isSecret)
             {
                 Console.WriteLine("X - Secret menu");
             }
@@ -59,7 +54,7 @@ namespace ConsoleClicker
                     menuSelection = 2;
                     break;
                 case ConsoleKey.X:
-                    if (isSecret == true)
+                    if (isSecret)
                     {
                         menuSelection = 3;
                     }
@@ -90,7 +85,7 @@ namespace ConsoleClicker
                 {
                     //PressedDown
                     Console.WriteLine("Press \u2191 +{0}\n", powerx);
-                    if (sideMain == 1 || pressedDefault == true)
+                    if (sideMain == 1 || pressedDefault)
                     {
                         //Bars 1/6 MAIN
                         Console.WriteLine("           \n           \n    _._    \n   / O \\   \n   \\| |/   \nO--+=-=+--O");
@@ -100,7 +95,7 @@ namespace ConsoleClicker
                         sideMain = 0;
                         foo += 1;
                     }
-                    else if (sideMain == 0 && pressedDown == true)
+                    else if (sideMain == 0 && pressedDown)
                     {
                         realClicks++;
                         //Bars 5/6
@@ -130,7 +125,6 @@ namespace ConsoleClicker
                         ClearCurrentConsoleLine();
                         sideMain = 0;
                         pressedDown = false;
-                        pressedDefault = false;
                         foo += 1;
                         if (foo > 2)
                         {
@@ -140,10 +134,10 @@ namespace ConsoleClicker
                         }
                     }
                 }
-                else if (side == true && barsLimit > bars)
+                else if (side && barsLimit > bars)
                 {
                     Console.WriteLine("Press \u2193 +{0}\n", powerx);
-                    if (sideMain == 0 && pressedUp == true)
+                    if (sideMain == 0 && pressedUp)
                     {
                         realClicks++;
                         //Bars 2/6
@@ -176,7 +170,7 @@ namespace ConsoleClicker
                         pressedDefault = false;
                         foo -= 1;
                     }
-                    else if (sideMain == 0 || pressedDefault == true)
+                    else if (sideMain == 0 || pressedDefault)
                     {
                         //Bars 6/6
                         Console.WriteLine("O--,---,--O\n   \\ O /   \n    - -     \n     -     \n    / \\    \n   =   =   ");
@@ -244,20 +238,20 @@ namespace ConsoleClicker
             store:
                 Console.Clear();
                 Console.WriteLine("~~Welcome to the store~~\nYou have about ~{0:n2} bars.\nESC to menu\nEnter a number to buy\n", bars);
-                Console.WriteLine("1.\tIncreases the amount of Bars you gain\n\tYour current multiplier: {2}\n\tYou have bought {1}/10 of this\n\t~{0:n2} Bars\n", price1f, countPowerX, powerx);
-                Console.WriteLine("2.\tGives you access to your overall stats\n\t~{0:n2} Bars {1}\n", price2f, boughtIt1);
-                Console.WriteLine("3.\tIncreases you maximum Bars limit\n\tYour current Bar limit: {0:n2}\n\tYou have bought {2}/50 of this\n\t~{1:n2} Bars\n", barsLimit, price3f, countBarsLimit);
-                Console.WriteLine("4.\tDecrease the time that it takes to gain Bars\n\tYour current action time: {0}ms\n\tYou have bought {1}/25 of this\n\t~{2:n2} Bars\n", actionTiming, countActionTime, price4f);
+                Console.WriteLine("1.\tIncreases the amount of Bars you gain\n\tYour current multiplier: {2}\n\tYou have bought {1}/10 of this\n\t~{0:n2} Bars\n", price1F, countPowerX, powerx);
+                Console.WriteLine("2.\tGives you access to your overall stats\n\t~{0:n2} Bars {1}\n", price2F, boughtIt1);
+                Console.WriteLine("3.\tIncreases you maximum Bars limit\n\tYour current Bar limit: {0:n2}\n\tYou have bought {2}/50 of this\n\t~{1:n2} Bars\n", barsLimit, price3F, countBarsLimit);
+                Console.WriteLine("4.\tDecrease the time that it takes to gain Bars\n\tYour current action time: {0}ms\n\tYou have bought {1}/25 of this\n\t~{2:n2} Bars\n", actionTiming, countActionTime, price4F);
                 press = Console.ReadKey(true).Key;
                 switch (press)
                 {
                     //Power upgrade
                     case ConsoleKey.D1:
-                        if (bars >= price1f && countPowerX < 10)
+                        if (bars >= price1F && countPowerX < 10)
                         {
                             countPowerX++;
-                            bars = bars - price1f;
-                            price1f = price1f * 1.21f;
+                            bars = bars - price1F;
+                            price1F = price1F * 1.21f;
                             powerx += 1;
                             Console.Clear();
                             Console.WriteLine("You have just bought += 1x power.\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
@@ -273,18 +267,18 @@ namespace ConsoleClicker
                         }
                     //Secret upgrade
                     case ConsoleKey.D2:
-                        if (bars >= price2f && isSecret == false)
+                        if (bars >= price2F && isSecret == false)
                         {
                             Console.Clear();
                             isSecret = true;
-                            bars = bars - price2f;
-                            price2f = 0;
+                            bars = bars - price2F;
+                            price2F = 0;
                             boughtIt1 = ", You have bought it already";
                             Console.WriteLine("You have just bought a secret.\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
                             Console.ReadKey();
                             goto store;
                         }
-                        else if (isSecret == true)
+                        else if (isSecret)
                         {
                             Console.Clear();
                             Console.WriteLine("You have bought it already");
@@ -300,11 +294,11 @@ namespace ConsoleClicker
                         }
                     //Bar Counter Limit Upgrade
                     case ConsoleKey.D3:
-                        if (bars >= price3f && countBarsLimit < 50)
+                        if (bars >= price3F && countBarsLimit < 50)
                         {
                             countBarsLimit++;
-                            bars = bars - price3f;
-                            price3f = price3f * 1.25f;
+                            bars = bars - price3F;
+                            price3F = price3F * 1.25f;
                             barsLimit = barsLimit * 1.25f;
                             Console.Clear();
                             Console.WriteLine("You have just increased your Bars limit.\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
@@ -320,11 +314,11 @@ namespace ConsoleClicker
                         }
                     //Bar Gaining Action Time
                     case ConsoleKey.D4:
-                        if (bars >= price4f && countActionTime < 25)
+                        if (bars >= price4F && countActionTime < 25)
                         {
                             countActionTime++;
-                            bars = bars - price4f;
-                            price4f = price4f * 1.10f;
+                            bars = bars - price4F;
+                            price4F = price4F * 1.10f;
                             actionTiming = actionTiming - 1;
                             Console.Clear();
                             Console.WriteLine("You have just increased your action time.\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
