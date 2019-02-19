@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Xml;
+using System.Xml.Serialization;
+using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +13,6 @@ using System.Threading;
 
 namespace ConsoleClicker
 {
-
     class Program
     {
         public static void ClearCurrentConsoleLine()
@@ -29,29 +31,34 @@ namespace ConsoleClicker
             string boughtIt1 = null;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
-            Console.WriteLine("Welcome to Console Clicker - WIP\n\nProgramming by Renekris/Rene Kristofer Pohlak\nBig thanks to: Gio, Juškin, for giving me ideas to work with\n\n\n\u0020\u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
+            Console.WriteLine("Welcome to Console Clicker - WIP\nUnfortunetly there are a couple of bugs present with the animation\n\nProgramming by Renekris/Rene Kristofer Pohlak\nBig thanks to: Gio, Juškin, for giving me ideas to work with\n\n\n\u0020\u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
             Console.ReadKey();
         menu:
             Console.Clear();
-            Console.WriteLine("~~~Welcome~~~");
-            Console.WriteLine("\u2191 / \u2193 Arrows to Collect Bars \nESC / M - Market\n");
+            Console.WriteLine("Welcome to Console Clicker~~\n\nThis is a game made by Renekris,\nTo start playing, you must press the (\u2191 / \u2193) arrow keys.\nWith Bars you can buy different upgrades to earn Bars quicker.\n");
+            Console.WriteLine("Press the arrow to collect Bars\n>\u2191 / \u2193\n");
+            Console.WriteLine("Market is for normal upgrades\n>M - Market\n");
+            Console.WriteLine("Supermarket is for super upgrades\n>S - SuperMarket\n");
+            Console.WriteLine("This is a link to my Github,\nif you want to keep up with the progress of the development\n>G - Projects Github (github.com/renekris/CSharp)");
             if (isSecret == true)
             {
-                Console.WriteLine("S - Secret menu");
+                Console.WriteLine("X - Secret menu");
             }
             ConsoleKey press = Console.ReadKey(true).Key;
             switch (press)
             {
+                case ConsoleKey.G:
+                    Process.Start("https://github.com/renekris/CSharp");
+                    goto menu;
                 case ConsoleKey.Enter:
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.DownArrow:
                     menuSelection = 1;
                     break;
-                case ConsoleKey.Escape:
                 case ConsoleKey.M:
                     menuSelection = 2;
                     break;
-                case ConsoleKey.S:
+                case ConsoleKey.X:
                     if (isSecret == true)
                     {
                         menuSelection = 3;
@@ -60,6 +67,9 @@ namespace ConsoleClicker
                     {
                         goto menu;
                     }
+                    break;
+                case ConsoleKey.S:
+                    menuSelection = 4;
                     break;
                 case ConsoleKey.Add:
                     bars += 10000;
@@ -343,6 +353,14 @@ namespace ConsoleClicker
                 Console.WriteLine("Total Bars collected: {0:n2}", totalBars);
                 Console.WriteLine("Clicks in total: {1}({0})\n", clicks, realClicks);
                 Console.WriteLine("Any key to go back.");
+                Console.ReadKey();
+                goto menu;
+            }
+            
+            while (menuSelection == 4)
+            {
+                Console.Clear();
+                Console.WriteLine("Supermarket is still WIP(Work in Progress)");
                 Console.ReadKey();
                 goto menu;
             }
