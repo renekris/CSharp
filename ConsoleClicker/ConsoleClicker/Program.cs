@@ -22,7 +22,7 @@ namespace ConsoleClicker
             Console.OutputEncoding = Encoding.Unicode;
             int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0, actionTiming = 50, menuSelection, countActionTime = 0, sideMain = 1, foo = 0, clicks = 0, realClicks = 0;
             float barsLimit = 50f, price1F = 50f, price2F = 100f, price3F = 10f, bars = 0f, totalBars = 0f, price4F = 20f;
-            bool isSecret = false, side = false, pressedDown = false, pressedUp = false, pressedDefault = false;
+            bool isSecret = false, side, pressedDown = false, pressedUp = false, pressedDefault = false;
             string boughtIt1 = null;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
@@ -373,16 +373,74 @@ namespace ConsoleClicker
             while (menuSelection == 5)
             {
                 //temp setup, bound to change
+                const string seven = "7", oneBar = "−", twoBars = "=", threeBars = "≡", diamond = "₿", cherry = "₪", dupe = "□";
                 Random rng = new Random();
                 Console.Clear();
-                Console.WriteLine("Welcome to the Slot Machine!");
+                Console.WriteLine("Welcome to the Slot Machine!\n");
+                Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}", seven, oneBar, twoBars, threeBars, diamond, cherry, dupe);
                 Console.ReadKey();
-                int slotMachineRng = rng.Next(5, 10);
-                for (int slotMachineIndex = 0; slotMachineIndex < slotMachineRng; slotMachineIndex++)
+                int slotMachineCounterRng = rng.Next(5, 10);
+                for (int slotMachineIndex = 0; slotMachineIndex < slotMachineCounterRng; slotMachineIndex++)
                 {
-                    goto menu;
-                }
 
+                    int slotMachineMainRng = rng.Next(1, 72);
+                    //for (int slotMachineLength = 0; slotMachineLength < 3; slotMachineLength++)
+                    //Dupes >□< filled
+                    if ((slotMachineMainRng >= 1 && slotMachineMainRng <= 3) || 
+                        (slotMachineMainRng >= 5 && slotMachineMainRng <= 9) || 
+                        (slotMachineMainRng >= 13 && slotMachineMainRng <= 19) ||
+                        (slotMachineMainRng >= 22 && slotMachineMainRng <= 26) ||
+                        (slotMachineMainRng >= 28 && slotMachineMainRng <= 32) ||
+                        (slotMachineMainRng >= 36 && slotMachineMainRng <= 39) ||
+                        (slotMachineMainRng >= 41 && slotMachineMainRng <= 42) ||
+                        (slotMachineMainRng >= 44 && slotMachineMainRng <= 51) ||
+                        (slotMachineMainRng >= 55 && slotMachineMainRng <= 59) ||
+                        (slotMachineMainRng >= 61 && slotMachineMainRng <= 65) ||
+                        (slotMachineMainRng >= 68 && slotMachineMainRng <= 70))
+                    {
+                        Console.WriteLine("dupe");
+                        Console.ReadKey();
+                    }
+                    //Sevens >7< filled
+                    else if (slotMachineMainRng == 4 || slotMachineMainRng == 43)
+                    {
+                        Console.WriteLine("sevens");
+                        Console.ReadKey();
+                    }
+                    //One Bar >−< filled
+                    else if ((slotMachineMainRng >= 10 && slotMachineMainRng <= 12) ||
+                             (slotMachineMainRng >= 33 && slotMachineMainRng <= 35) ||
+                             (slotMachineMainRng >= 52 && slotMachineMainRng <= 54) ||
+                             (slotMachineMainRng >= 71 && slotMachineMainRng <= 72))
+                    {
+                        Console.WriteLine("one bar");
+                        Console.ReadKey();
+                    }
+                    //Two Bar >=< filled
+                    else if ((slotMachineMainRng >= 66 && slotMachineMainRng <= 67))
+                    {
+                        Console.WriteLine("two bar");
+                        Console.ReadKey();
+                    }
+                    //Three Bar >≡< filled
+                    else if (slotMachineMainRng == 40)
+                    {
+                        Console.WriteLine("three bar");
+                        Console.ReadKey();
+                    }
+                    //Cherry >₪< filled
+                    else if ((slotMachineMainRng >= 20 && slotMachineMainRng <= 21))
+                    {
+                        Console.WriteLine("cherry");
+                        Console.ReadKey();
+                    }
+                    //Diamond >₿<
+                    else if (slotMachineMainRng == 27 || slotMachineMainRng == 60)
+                    {
+                        Console.WriteLine("diamond");
+                        Console.ReadKey();
+                    }
+                }
             }
         }
     }
