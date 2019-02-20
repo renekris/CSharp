@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
@@ -10,6 +11,56 @@ namespace ConsoleClicker
 {
     class Program
     {
+        public static string SlotMachine(int slotMachineMainRng)
+        {
+            const string seven = "7",
+                oneBar = "−",
+                twoBars = "=",
+                threeBars = "≡",
+                diamond = "◊",
+                cherry = "₪",
+                jackPot = "₿";
+            //for (int slotMachineLength = 0; slotMachineLength < 3; slotMachineLength++)
+            //Jackpot
+            //One Bar >−< filled
+            if (slotMachineMainRng >= 0 && slotMachineMainRng <= 44)
+            {
+                return oneBar;
+            }
+            //Two Bar >=< filled
+            if (slotMachineMainRng >= 45 && slotMachineMainRng <= 66)
+            {
+                return twoBars;
+            }
+            //Three Bar >≡< filled
+            if (slotMachineMainRng >= 67 && slotMachineMainRng <= 82)
+            {
+                return threeBars;
+            }
+            //Cherry >₪< filled
+            if (slotMachineMainRng >= 83 && slotMachineMainRng <= 92)
+            {
+                return cherry;
+            }
+            //Sevens >7< filled
+            if (slotMachineMainRng >= 93 && slotMachineMainRng <= 96)
+            {
+                return seven;
+            }
+            //Diamond >₿<
+            if (slotMachineMainRng >= 97 && slotMachineMainRng <= 99)
+            {
+                return diamond;
+            }
+            //jackpot
+            if (slotMachineMainRng == 100)
+            {
+                return jackPot;
+            }
+
+            return null;
+        }
+
         public static void ClearCurrentConsoleLine()
         {
             int currentLineCursor = Console.CursorTop;
@@ -18,7 +69,7 @@ namespace ConsoleClicker
             Console.SetCursorPosition(0, currentLineCursor);
         }
         static void Main(string[] args)
-        {
+        { 
             Console.OutputEncoding = Encoding.Unicode;
             int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0, actionTiming = 50, menuSelection, countActionTime = 0, sideMain = 1, foo = 0, clicks = 0, realClicks = 0;
             float barsLimit = 50f, price1F = 50f, price2F = 100f, price3F = 10f, bars = 0f, totalBars = 0f, price4F = 20f;
@@ -466,61 +517,21 @@ namespace ConsoleClicker
             while (menuSelection == 5)
             {
                 //temp setup, bound to change
-                const string seven = "7", oneBar = "−", twoBars = "=", threeBars = "≡", diamond = "◊", cherry = "₪", jackPot = "₿";
+                const string  oneBar = "−", twoBars = "=", threeBars = "≡", cherry = "₪", seven = "7", diamond = "◊",  jackPot = "₿";
                 Random rng = new Random();
+                int slotMachineMainRng = rng.Next(0, 100);
                 Console.Clear();
                 Console.WriteLine("Welcome to the Slot Machine!\n");
-                Console.WriteLine("");
-                Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}", seven, oneBar, twoBars, threeBars, diamond, cherry, jackPot);
+                Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
                 Console.ReadKey();
-                for (int slotMachineIndex = 0; slotMachineIndex < 3; slotMachineIndex++)
-                {
-                    int slotMachineMainRng = rng.Next(0, 100);
-                    //for (int slotMachineLength = 0; slotMachineLength < 3; slotMachineLength++)
-                    //Jackpot
-                    //One Bar >−< filled
-                    if (slotMachineMainRng >= 0 && slotMachineMainRng <= 44)
-                    {
-                        Console.WriteLine(oneBar);
-                        Console.ReadKey();
-                    }
-                    //Two Bar >=< filled
-                    else if (slotMachineMainRng >= 45 && slotMachineMainRng <= 66)
-                    {
-                        Console.WriteLine(twoBars);
-                        Console.ReadKey();
-                    }
-                    //Three Bar >≡< filled
-                    else if (slotMachineMainRng >= 67 && slotMachineMainRng <= 82)
-                    {
-                        Console.WriteLine(threeBars);
-                        Console.ReadKey();
-                    }
-                    //Cherry >₪< filled
-                    else if (slotMachineMainRng >= 83 && slotMachineMainRng <= 92)
-                    {
-                        Console.WriteLine(cherry);
-                        Console.ReadKey();
-                    }
-                    //Sevens >7< filled
-                    else if (slotMachineMainRng >= 93 && slotMachineMainRng <= 96)
-                    {
-                        Console.WriteLine(seven);
-                        Console.ReadKey();
-                    }
-                    //Diamond >₿<
-                    else if (slotMachineMainRng >= 97 && slotMachineMainRng <= 99)
-                    {
-                        Console.WriteLine(diamond);
-                        Console.ReadKey();
-                    }
-                    //jackpot
-                    else if (slotMachineMainRng == 100)
-                    {
-                        Console.WriteLine(jackPot);
-                        Console.ReadKey();
-                    }
-                }
+                string slotMachineTemp1 = SlotMachine(slotMachineMainRng);
+                slotMachineMainRng = rng.Next(0, 100);
+                string slotMachineTemp2 = SlotMachine(slotMachineMainRng);
+                slotMachineMainRng = rng.Next(0, 100);
+                string slotMachineTemp3 = SlotMachine(slotMachineMainRng);
+                Console.WriteLine("{0}|{1}|{2}", slotMachineTemp1, slotMachineTemp2, slotMachineTemp3);
+                Console.ReadKey();
+
             }
         }
     }
