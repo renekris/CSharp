@@ -26,20 +26,34 @@ namespace ConsoleClicker
             string boughtIt1 = null;
             Console.TreatControlCAsInput = true;
             Console.Title = "Console Clicker, Made by Renekris";
-            Console.WriteLine("Welcome to Console Clicker - WIP\nUnfortunately there are a couple of bugs present with the animation\n\nProgramming by Renekris/Rene Kristofer Pohlak\nBig thanks to: Gio, Juškin, for giving me ideas to work with\n\n\n\u0020\u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
+            Console.WriteLine("Welcome to Console Clicker - WIP\n" +
+                              "Unfortunately there are a couple of bugs present with the animation\n" +
+                              "\nProgramming by Renekris/Rene Kristofer Pohlak\n" +
+                              "Big thanks to: Gio, Juškin, for giving me ideas to work with\n\n\n" +
+                              "\u0020\u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
             Console.ReadKey();
         menu:
             Console.Clear();
-            Console.WriteLine("Welcome to Console Clicker~~\n\nThis is a game made by Renekris,\nTo start playing, you must press the (\u2191 / \u2193) arrow keys.\nWith Bars you can buy different upgrades to earn Bars quicker.\n");
-            Console.WriteLine("Press the arrow to collect Bars\n>\u2191 / \u2193\n");
+            Console.WriteLine("Welcome to Console Clicker~~\n\n" +
+                              "This is a game made by Renekris,\n" +
+                              "To start playing, you must press the (\u2191 / \u2193) arrow keys.\n" +
+                              "With Bars you can buy different upgrades to earn Bars quicker.\n");
+            Console.WriteLine("Press the arrow to collect Bars\n" +
+                              ">\u2191 / \u2193\n");
             if (isSecret)
             {
-                Console.WriteLine("This is where your overall statistics go\n0 - Statistics Menu\n");
+                Console.WriteLine("This is where your overall statistics go\n" +
+                                  "0 - Statistics Menu\n");
             }
-            Console.WriteLine("Market is for normal upgrades\n>1. - Market\n");
-            Console.WriteLine("Supermarket is for super upgrades\n>2 - SuperMarket\n");
-            Console.WriteLine("Slot Machine is for testing your luck\n>3 - Slot Machine\n");
-            Console.WriteLine("This is a link to my Github,\nif you want to keep up with the progress of the development\n>G - Project's Github (github.com/renekris/CSharp)");
+            Console.WriteLine("Market is for normal upgrades\n" +
+                              ">1. - Market\n");
+            Console.WriteLine("Supermarket is for super upgrades\n" +
+                              ">2 - SuperMarket\n");
+            Console.WriteLine("Slot Machine is for testing your luck\n" +
+                              ">3 - Slot Machine\n");
+            Console.WriteLine("This is a link to my Github,\n" +
+                              "if you want to keep up with the progress of the development\n" +
+                              ">G - Project's Github (github.com/renekris/CSharp)");
             ConsoleKey press = Console.ReadKey(true).Key;
             switch (press)
             {
@@ -87,7 +101,8 @@ namespace ConsoleClicker
             while (menuSelection == 1)
             {
                 Console.Clear();
-                Console.WriteLine("Press the arrows shown below, to earn Bars.\nPress ESC to go back to the menu.\n");
+                Console.WriteLine("Press the arrows shown below, to earn Bars.\n" +
+                                  "Press ESC to go back to the menu.\n");
                 sideMain = 1;
                 side = false;
             bars:
@@ -99,7 +114,12 @@ namespace ConsoleClicker
                     if (sideMain == 1 || pressedDefault)
                     {
                         //Bars 1/6 MAIN
-                        Console.WriteLine("           \n           \n    _._    \n   / O \\   \n   \\| |/   \nO--+=-=+--O");
+                        Console.WriteLine("           \n" +
+                                          "           \n" +
+                                          "    _._    \n" +
+                                          "   / O \\   \n" +
+                                          "   \\| |/   \n" +
+                                          "O--+=-=+--O");
                         Console.SetCursorPosition(0, Console.CursorTop - 7);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
@@ -110,27 +130,52 @@ namespace ConsoleClicker
                     {
                         realClicks++;
                         //Bars 5/6
-                        Console.WriteLine("           \nO--=-O-=--O\n    '-'    \n     v     \n    / )     \n    ~ z    ");
+                        Console.WriteLine("           \n" +
+                                          "O--=-O-=--O\n" +
+                                          "    '-'    \n" +
+                                          "     v     \n" +
+                                          "    / )     \n" +
+                                          "    ~ z    ");
                         Console.SetCursorPosition(0, Console.CursorTop - 6);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         //Bars 4/6
-                        Console.WriteLine("           \n   ._O_.   \nO--<-+->--O\n     X     \n    / \\    \n    - -    ");
+                        Console.WriteLine("           \n" +
+                                          "   ._O_.   \n" +
+                                          "O--<-+->--O\n" +
+                                          "     X     \n" +
+                                          "    / \\    \n" +
+                                          "    - -    ");
                         Console.SetCursorPosition(0, Console.CursorTop - 6);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         //Bars 3/6
-                        Console.WriteLine("           \n           \n   ,_O_,   \nO--(---)--O\n    >'>     \n    - -    ");
+                        Console.WriteLine("           \n" +
+                                          "           \n" +
+                                          "   ,_O_,   \n" +
+                                          "O--(---)--O\n" +
+                                          "    >'>     \n" +
+                                          "    - -    ");
                         Console.SetCursorPosition(0, Console.CursorTop - 6);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         //Bars 2/6
-                        Console.WriteLine("           \n           \n           \n   ,-O-,    \nO--=---=--O\n    2\"2   ");
+                        Console.WriteLine("           \n" +
+                                          "           \n" +
+                                          "           \n" +
+                                          "   ,-O-,    \n" +
+                                          "O--=---=--O\n" +
+                                          "    2\"2   ");
                         Console.SetCursorPosition(0, Console.CursorTop - 6);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         //Bars 1/6
-                        Console.WriteLine("           \n           \n    _._    \n   / O \\   \n   \\| |/   \nO--+=-=+--O");
+                        Console.WriteLine("           \n" +
+                                          "           \n" +
+                                          "    _._    \n" +
+                                          "   / O \\   \n" +
+                                          "   \\| |/   \n" +
+                                          "O--+=-=+--O");
                         Console.SetCursorPosition(0, Console.CursorTop - 7);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
@@ -152,27 +197,52 @@ namespace ConsoleClicker
                     {
                         realClicks++;
                         //Bars 2/6
-                        Console.WriteLine("           \n           \n            \n   ,-O-,   \nO--=---=--O\n    2\"2    ");
+                        Console.WriteLine("           \n" +
+                                          "           \n" +
+                                          "            \n" +
+                                          "   ,-O-,   \n" +
+                                          "O--=---=--O\n" +
+                                          "    2\"2    ");
                         Console.SetCursorPosition(0, Console.CursorTop - 6);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         //Bars 3/6
-                        Console.WriteLine("           \n           \n   ,_O_,    \nO--(---)--O\n    >'>     \n    - -    ");
+                        Console.WriteLine("           \n" +
+                                          "           \n" +
+                                          "   ,_O_,    \n" +
+                                          "O--(---)--O\n" +
+                                          "    >'>     \n" +
+                                          "    - -    ");
                         Console.SetCursorPosition(0, Console.CursorTop - 6);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         //Bars 4/6
-                        Console.WriteLine("           \n   ._O_.   \nO--<-+->--O\n     X     \n    / \\    \n    - -    ");
+                        Console.WriteLine("           \n" +
+                                          "   ._O_.   \n" +
+                                          "O--<-+->--O\n" +
+                                          "     X     \n" +
+                                          "    / \\    \n" +
+                                          "    - -    ");
                         Console.SetCursorPosition(0, Console.CursorTop - 6);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         //Bars 5/6
-                        Console.WriteLine("           \nO--=-O-=--O\n    '-'     \n     v     \n    / )     \n    ~ z    ");
+                        Console.WriteLine("           \n" +
+                                          "O--=-O-=--O\n" +
+                                          "    '-'     \n" +
+                                          "     v     \n" +
+                                          "    / )     \n" +
+                                          "    ~ z    ");
                         Console.SetCursorPosition(0, Console.CursorTop - 6);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
                         //Bars 6/6
-                        Console.WriteLine("O--,---,--O\n   \\ O /   \n    - -     \n     -     \n    / \\    \n   =   =   ");
+                        Console.WriteLine("O--,---,--O\n" +
+                                          "   \\ O /   \n" +
+                                          "    - -     \n" +
+                                          "     -     \n" +
+                                          "    / \\    \n" +
+                                          "   =   =   ");
                         Console.SetCursorPosition(0, Console.CursorTop - 7);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
@@ -184,7 +254,12 @@ namespace ConsoleClicker
                     else if (sideMain == 0 || pressedDefault)
                     {
                         //Bars 6/6
-                        Console.WriteLine("O--,---,--O\n   \\ O /   \n    - -     \n     -     \n    / \\    \n   =   =   ");
+                        Console.WriteLine("O--,---,--O\n" +
+                                          "   \\ O /   \n" +
+                                          "    - -     \n" +
+                                          "     -     \n" +
+                                          "    / \\    \n" +
+                                          "   =   =   ");
                         Console.SetCursorPosition(0, Console.CursorTop - 7);
                         Thread.Sleep(actionTiming);
                         ClearCurrentConsoleLine();
@@ -248,11 +323,24 @@ namespace ConsoleClicker
             {
             store:
                 Console.Clear();
-                Console.WriteLine("~~Welcome to the store~~\nYou have about ~{0:n2} bars.\nESC to menu\nEnter a number to buy\n", bars);
-                Console.WriteLine("1.\tIncreases the amount of Bars you gain\n\tYour current multiplier: {2}\n\tYou have bought {1}/10 of this\n\t~{0:n2} Bars\n", price1F, countPowerX, powerx);
-                Console.WriteLine("2.\tGives you access to your overall stats\n\t~{0:n2} Bars {1}\n", price2F, boughtIt1);
-                Console.WriteLine("3.\tIncreases you maximum Bars limit\n\tYour current Bar limit: {0:n2}\n\tYou have bought {2}/50 of this\n\t~{1:n2} Bars\n", barsLimit, price3F, countBarsLimit);
-                Console.WriteLine("4.\tDecrease the time that it takes to gain Bars\n\tYour current action time: {0}ms\n\tYou have bought {1}/25 of this\n\t~{2:n2} Bars\n", actionTiming, countActionTime, price4F);
+                Console.WriteLine("~~Welcome to the store~~\n" +
+                                  "You have about ~{0:n2} bars.\n" +
+                                  "ESC to menu\n" +
+                                  "Enter a number to buy\n", bars);
+                Console.WriteLine("1.\tIncreases the amount of Bars you gain\n" +
+                                  "\tYour current multiplier: {2}\n" +
+                                  "\tYou have bought {1}/10 of this\n" +
+                                  "\t~{0:n2} Bars\n", price1F, countPowerX, powerx);
+                Console.WriteLine("2.\tGives you access to your overall stats\n" +
+                                  "\t~{0:n2} Bars {1}\n", price2F, boughtIt1);
+                Console.WriteLine("3.\tIncreases you maximum Bars limit\n" +
+                                  "\tYour current Bar limit: {0:n2}\n" +
+                                  "\tYou have bought {2}/50 of this\n" +
+                                  "\t~{1:n2} Bars\n", barsLimit, price3F, countBarsLimit);
+                Console.WriteLine("4.\tDecrease the time that it takes to gain Bars\n" +
+                                  "\tYour current action time: {0}ms\n" +
+                                  "\tYou have bought {1}/25 of this\n" +
+                                  "\t~{2:n2} Bars\n", actionTiming, countActionTime, price4F);
                 press = Console.ReadKey(true).Key;
                 switch (press)
                 {
@@ -265,7 +353,8 @@ namespace ConsoleClicker
                             price1F = price1F * 1.21f;
                             powerx += 1;
                             Console.Clear();
-                            Console.WriteLine("You have just bought += 1x power.\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
+                            Console.WriteLine("You have just bought += 1x power.\n" +
+                                              "~{0:n2} Bars remaining.\n\nESC to go back.", bars);
                             Console.ReadKey();
                             goto store;
                         }
@@ -285,7 +374,8 @@ namespace ConsoleClicker
                             bars = bars - price2F;
                             price2F = 0;
                             boughtIt1 = ", You have bought it already";
-                            Console.WriteLine("You have just bought a secret.\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
+                            Console.WriteLine("You have just bought a secret.\n" +
+                                              "~{0:n2} Bars remaining.\n\nESC to go back.", bars);
                             Console.ReadKey();
                             goto store;
                         }
@@ -312,7 +402,8 @@ namespace ConsoleClicker
                             price3F = price3F * 1.25f;
                             barsLimit = barsLimit * 1.25f;
                             Console.Clear();
-                            Console.WriteLine("You have just increased your Bars limit.\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
+                            Console.WriteLine("You have just increased your Bars limit.\n" +
+                                              "~{0:n2} Bars remaining.\n\nESC to go back.", bars);
                             Console.ReadKey();
                             goto store;
                         }
@@ -332,7 +423,9 @@ namespace ConsoleClicker
                             price4F = price4F * 1.10f;
                             actionTiming = actionTiming - 1;
                             Console.Clear();
-                            Console.WriteLine("You have just increased your action time.\n~{0:n2} Bars remaining.\n\nESC to go back.", bars);
+                            Console.WriteLine("You have just increased your action time.\n" +
+                                              "~{0:n2} Bars remaining.\n\n" +
+                                              "ESC to go back.", bars);
                             Console.ReadKey();
                             goto store;
                         }
@@ -373,71 +466,58 @@ namespace ConsoleClicker
             while (menuSelection == 5)
             {
                 //temp setup, bound to change
-                const string seven = "7", oneBar = "−", twoBars = "=", threeBars = "≡", diamond = "₿", cherry = "₪", dupe = "□";
+                const string seven = "7", oneBar = "−", twoBars = "=", threeBars = "≡", diamond = "◊", cherry = "₪", jackPot = "₿";
                 Random rng = new Random();
                 Console.Clear();
                 Console.WriteLine("Welcome to the Slot Machine!\n");
-                Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}", seven, oneBar, twoBars, threeBars, diamond, cherry, dupe);
+                Console.WriteLine("");
+                Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}", seven, oneBar, twoBars, threeBars, diamond, cherry, jackPot);
                 Console.ReadKey();
-                int slotMachineCounterRng = rng.Next(5, 10);
-                for (int slotMachineIndex = 0; slotMachineIndex < slotMachineCounterRng; slotMachineIndex++)
+                for (int slotMachineIndex = 0; slotMachineIndex < 3; slotMachineIndex++)
                 {
-
-                    int slotMachineMainRng = rng.Next(1, 72);
+                    int slotMachineMainRng = rng.Next(0, 100);
                     //for (int slotMachineLength = 0; slotMachineLength < 3; slotMachineLength++)
-                    //Dupes >□< filled
-                    if ((slotMachineMainRng >= 1 && slotMachineMainRng <= 3) || 
-                        (slotMachineMainRng >= 5 && slotMachineMainRng <= 9) || 
-                        (slotMachineMainRng >= 13 && slotMachineMainRng <= 19) ||
-                        (slotMachineMainRng >= 22 && slotMachineMainRng <= 26) ||
-                        (slotMachineMainRng >= 28 && slotMachineMainRng <= 32) ||
-                        (slotMachineMainRng >= 36 && slotMachineMainRng <= 39) ||
-                        (slotMachineMainRng >= 41 && slotMachineMainRng <= 42) ||
-                        (slotMachineMainRng >= 44 && slotMachineMainRng <= 51) ||
-                        (slotMachineMainRng >= 55 && slotMachineMainRng <= 59) ||
-                        (slotMachineMainRng >= 61 && slotMachineMainRng <= 65) ||
-                        (slotMachineMainRng >= 68 && slotMachineMainRng <= 70))
-                    {
-                        Console.WriteLine("dupe");
-                        Console.ReadKey();
-                    }
-                    //Sevens >7< filled
-                    else if (slotMachineMainRng == 4 || slotMachineMainRng == 43)
-                    {
-                        Console.WriteLine("sevens");
-                        Console.ReadKey();
-                    }
+                    //Jackpot
                     //One Bar >−< filled
-                    else if ((slotMachineMainRng >= 10 && slotMachineMainRng <= 12) ||
-                             (slotMachineMainRng >= 33 && slotMachineMainRng <= 35) ||
-                             (slotMachineMainRng >= 52 && slotMachineMainRng <= 54) ||
-                             (slotMachineMainRng >= 71 && slotMachineMainRng <= 72))
+                    if (slotMachineMainRng >= 0 && slotMachineMainRng <= 44)
                     {
-                        Console.WriteLine("one bar");
+                        Console.WriteLine(oneBar);
                         Console.ReadKey();
                     }
                     //Two Bar >=< filled
-                    else if ((slotMachineMainRng >= 66 && slotMachineMainRng <= 67))
+                    else if (slotMachineMainRng >= 45 && slotMachineMainRng <= 66)
                     {
-                        Console.WriteLine("two bar");
+                        Console.WriteLine(twoBars);
                         Console.ReadKey();
                     }
                     //Three Bar >≡< filled
-                    else if (slotMachineMainRng == 40)
+                    else if (slotMachineMainRng >= 67 && slotMachineMainRng <= 82)
                     {
-                        Console.WriteLine("three bar");
+                        Console.WriteLine(threeBars);
                         Console.ReadKey();
                     }
                     //Cherry >₪< filled
-                    else if ((slotMachineMainRng >= 20 && slotMachineMainRng <= 21))
+                    else if (slotMachineMainRng >= 83 && slotMachineMainRng <= 92)
                     {
-                        Console.WriteLine("cherry");
+                        Console.WriteLine(cherry);
+                        Console.ReadKey();
+                    }
+                    //Sevens >7< filled
+                    else if (slotMachineMainRng >= 93 && slotMachineMainRng <= 96)
+                    {
+                        Console.WriteLine(seven);
                         Console.ReadKey();
                     }
                     //Diamond >₿<
-                    else if (slotMachineMainRng == 27 || slotMachineMainRng == 60)
+                    else if (slotMachineMainRng >= 97 && slotMachineMainRng <= 99)
                     {
-                        Console.WriteLine("diamond");
+                        Console.WriteLine(diamond);
+                        Console.ReadKey();
+                    }
+                    //jackpot
+                    else if (slotMachineMainRng == 100)
+                    {
+                        Console.WriteLine(jackPot);
                         Console.ReadKey();
                     }
                 }
