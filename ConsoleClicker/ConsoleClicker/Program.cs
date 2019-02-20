@@ -32,28 +32,29 @@ namespace ConsoleClicker
             Console.Clear();
             Console.WriteLine("Welcome to Console Clicker~~\n\nThis is a game made by Renekris,\nTo start playing, you must press the (\u2191 / \u2193) arrow keys.\nWith Bars you can buy different upgrades to earn Bars quicker.\n");
             Console.WriteLine("Press the arrow to collect Bars\n>\u2191 / \u2193\n");
-            Console.WriteLine("Market is for normal upgrades\n>M - Market\n");
-            Console.WriteLine("Supermarket is for super upgrades\n>S - SuperMarket\n");
-            Console.WriteLine("This is a link to my Github,\nif you want to keep up with the progress of the development\n>G - Projects Github (github.com/renekris/CSharp)");
             if (isSecret)
             {
-                Console.WriteLine("X - Secret menu");
+                Console.WriteLine("This is where your overall statistics go\n0 - Statistics Menu\n");
             }
+            Console.WriteLine("Market is for normal upgrades\n>1. - Market\n");
+            Console.WriteLine("Supermarket is for super upgrades\n>2 - SuperMarket\n");
+            Console.WriteLine("Slot Machine is for testing your luck\n>3 - Slot Machine\n");
+            Console.WriteLine("This is a link to my Github,\nif you want to keep up with the progress of the development\n>G - Project's Github (github.com/renekris/CSharp)");
             ConsoleKey press = Console.ReadKey(true).Key;
             switch (press)
             {
+                //Github
                 case ConsoleKey.G:
                     Process.Start("https://github.com/renekris/CSharp");
                     goto menu;
+                //Game start
                 case ConsoleKey.Enter:
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.DownArrow:
                     menuSelection = 1;
                     break;
-                case ConsoleKey.M:
-                    menuSelection = 2;
-                    break;
-                case ConsoleKey.X:
+                //Secret menu/Stat menu
+                case ConsoleKey.D0:
                     if (isSecret)
                     {
                         menuSelection = 3;
@@ -63,9 +64,19 @@ namespace ConsoleClicker
                         goto menu;
                     }
                     break;
-                case ConsoleKey.S:
+                //Market
+                case ConsoleKey.D1:
+                    menuSelection = 2;
+                    break;
+                //SuperMarket
+                case ConsoleKey.D2:
                     menuSelection = 4;
                     break;
+                //SlotMachine
+                case ConsoleKey.D3:
+                    menuSelection = 5;
+                    break;
+                //Cheat / debug
                 case ConsoleKey.Add:
                     bars += 10000;
                     goto menu;
@@ -357,6 +368,21 @@ namespace ConsoleClicker
                 Console.WriteLine("Supermarket is still WIP(Work in Progress)");
                 Console.ReadKey();
                 goto menu;
+            }
+
+            while (menuSelection == 5)
+            {
+                //temp setup, bound to change
+                Random rng = new Random();
+                Console.Clear();
+                Console.WriteLine("Welcome to the Slot Machine!");
+                Console.ReadKey();
+                int slotMachineRng = rng.Next(5, 10);
+                for (int slotMachineIndex = 0; slotMachineIndex < slotMachineRng; slotMachineIndex++)
+                {
+                    goto menu;
+                }
+
             }
         }
     }
