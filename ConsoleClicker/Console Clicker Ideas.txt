@@ -1,0 +1,16 @@
+"!" = Finished 
+"+" = Implemented somewhat || improve it
+"-" = Might not implement it
+
+!Add switches for menus and selections
++Add more items to the store
+!Make a new menu called codes
+!Add animation
+!Add up and down arrow function with animation
+!Add action speed upgrade
+-Save progress function
+Use left and right function for another action
+Add more animations per page + upgrades for all of them.
+"Energy drink" for increased bars gain
+Gambeling / betting.
+Some cases that can be opened
