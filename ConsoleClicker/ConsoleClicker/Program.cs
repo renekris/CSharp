@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,24 +88,24 @@ namespace ConsoleClicker
             Console.Clear();
             Console.WriteLine("Welcome to Console Clicker~~\n\n" +
                               "This is a game made by Renekris,\n" +
-                              "To start playing, you must press the (\u2191 / \u2193) arrow keys.\n" +
+                              "To start playing, you must press the ([\u2191] / [\u2193]) arrow keys.\n" +
                               "With Bars you can buy different upgrades to earn Bars quicker.\n");
-            Console.WriteLine("Press the arrow to collect Bars\n" +
-                              ">\u2191 / \u2193\n");
+            Console.WriteLine("Press the arrows to collect Bars\n" +
+                              "[\u2191] / [\u2193]\n");
             if (isSecret)
             {
                 Console.WriteLine("This is where your overall statistics go\n" +
-                                  "0 - Statistics Menu\n");
+                                  "[0] - Statistics Menu\n");
             }
             Console.WriteLine("Market is for normal upgrades\n" +
-                              ">1. - Market\n");
+                              "[1] - Market\n");
             Console.WriteLine("Supermarket is for super upgrades\n" +
-                              ">2 - SuperMarket\n");
+                              "[2] - SuperMarket\n");
             Console.WriteLine("Slot Machine is for testing your luck\n" +
-                              ">3 - Slot Machine\n");
+                              "[3] - Slot Machine\n");
             Console.WriteLine("This is a link to my Github,\n" +
                               "if you want to keep up with the progress of the development\n" +
-                              ">G - Project's Github (github.com/renekris/CSharp)");
+                              "[G] - Project's Github (github.com/renekris/CSharp)");
             ConsoleKey press = Console.ReadKey(true).Key;
             switch (press)
             {
@@ -153,11 +154,11 @@ namespace ConsoleClicker
             {
                 Console.Clear();
                 Console.WriteLine("Press the arrows shown below, to earn Bars.\n" +
-                                  "Press ESC to go back to the menu.\n");
+                                  "Press [ESC] to go back to the menu.\n");
                 sideMain = 1;
                 side = false;
             bars:
-                Console.WriteLine("~{0:n2}/{1:n2} Bars", bars, barsLimit);
+                Console.WriteLine("~[{0:n2}]/[{1:n2}] Bars", bars, barsLimit);
                 if (side == false && barsLimit > bars)
                 {
                     //PressedDown
@@ -243,7 +244,7 @@ namespace ConsoleClicker
                 }
                 else if (side && barsLimit > bars)
                 {
-                    Console.WriteLine("Press \u2193 +{0}\n", powerx);
+                    Console.WriteLine("Press [\u2193] +{0}\n", powerx);
                     if (sideMain == 0 && pressedUp)
                     {
                         realClicks++;
@@ -376,19 +377,19 @@ namespace ConsoleClicker
                 Console.Clear();
                 Console.WriteLine("~~Welcome to the store~~\n" +
                                   "You have about ~{0:n2} bars.\n" +
-                                  "ESC to menu\n" +
+                                  "[ESC] to menu\n" +
                                   "Enter a number to buy\n", bars);
-                Console.WriteLine("1.\tIncreases the amount of Bars you gain\n" +
+                Console.WriteLine("[1]\tIncreases the amount of Bars you gain\n" +
                                   "\tYour current multiplier: {2}\n" +
                                   "\tYou have bought {1}/10 of this\n" +
                                   "\t~{0:n2} Bars\n", price1F, countPowerX, powerx);
-                Console.WriteLine("2.\tGives you access to your overall stats\n" +
+                Console.WriteLine("[2]\tGives you access to your overall stats\n" +
                                   "\t~{0:n2} Bars {1}\n", price2F, boughtIt1);
-                Console.WriteLine("3.\tIncreases you maximum Bars limit\n" +
+                Console.WriteLine("[3]\tIncreases you maximum Bars limit\n" +
                                   "\tYour current Bar limit: {0:n2}\n" +
                                   "\tYou have bought {2}/50 of this\n" +
                                   "\t~{1:n2} Bars\n", barsLimit, price3F, countBarsLimit);
-                Console.WriteLine("4.\tDecrease the time that it takes to gain Bars\n" +
+                Console.WriteLine("[4]\tDecrease the time that it takes to gain Bars\n" +
                                   "\tYour current action time: {0}ms\n" +
                                   "\tYou have bought {1}/25 of this\n" +
                                   "\t~{2:n2} Bars\n", actionTiming, countActionTime, price4F);
@@ -517,21 +518,114 @@ namespace ConsoleClicker
             while (menuSelection == 5)
             {
                 //temp setup, bound to change
-                const string  oneBar = "−", twoBars = "=", threeBars = "≡", cherry = "₪", seven = "7", diamond = "◊",  jackPot = "₿";
                 Random rng = new Random();
-                int slotMachineMainRng = rng.Next(0, 100);
+                bool slotCameFromMachineRoll = false;
+                const string oneBar = "−",
+                    twoBars = "=",
+                    threeBars = "≡",
+                    cherry = "₪",
+                    seven = "7",
+                    diamond = "◊",
+                    jackPot = "₿";
+                string
+                    slotMachineTemp1 = null,
+                    slotMachineTemp2 = null,
+                    slotMachineTemp3 = null;
+                string[] barStrings = {oneBar, twoBars, threeBars};
+                float receivedBars = 0;
+                int slotMachineMainRng = rng.Next(0, 100), slotMachineBet = 0;
+                slotMenu:
+                //Asks for the bet
                 Console.Clear();
-                Console.WriteLine("Welcome to the Slot Machine!\n");
+                Console.WriteLine("Welcome to the Slot Machine!\n[ESC] to leave");
                 Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
-                Console.ReadKey();
-                string slotMachineTemp1 = SlotMachine(slotMachineMainRng);
-                slotMachineMainRng = rng.Next(0, 100);
-                string slotMachineTemp2 = SlotMachine(slotMachineMainRng);
-                slotMachineMainRng = rng.Next(0, 100);
-                string slotMachineTemp3 = SlotMachine(slotMachineMainRng);
-                Console.WriteLine("{0}|{1}|{2}", slotMachineTemp1, slotMachineTemp2, slotMachineTemp3);
-                Console.ReadKey();
+                Console.WriteLine("You can bet on the Slot Machine\n" +
+                                  "[1] / [INSERT] Insert a bet, current bet: {0}\n\n" +
+                                  "Start the Slot Machine\n" +
+                                  "[2] / [ENTER] Start the slot", slotMachineBet);
+                press = Console.ReadKey(true).Key;
+                slotMenuSelection:
+                if (menuSelection == 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Enter the bet:");
+                    var isNumberParse = int.TryParse(Console.ReadLine(), out int betResult);
+                    //Checks if the entered number is indeed a number
+                    if (isNumberParse)
+                    {
+                        slotMachineBet = betResult;
+                        goto slotMenu;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Enter a valid number!");
+                        Console.ReadKey();
+                        goto slotMenu;
+                    }
+                }
+                //RNG and getting the symbols
+                if (menuSelection == 2)
+                {
+                    slotMachineRoll:
+                    //
+                    Console.Clear();
+                    Console.WriteLine("Welcome to the Slot Machine!\n");
+                    Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
+                    Console.WriteLine("Current bet: {0}\n", slotMachineBet);
+                    int slotMachineRollAmount = rng.Next(20, 40);
+                    for (int slotMachineIndex = 0; slotMachineIndex < slotMachineRollAmount; slotMachineIndex++)
+                    {
+                        slotMachineTemp1 = SlotMachine(slotMachineMainRng);
+                        slotMachineMainRng = rng.Next(0, 100);
+                        slotMachineTemp2 = SlotMachine(slotMachineMainRng);
+                        slotMachineMainRng = rng.Next(0, 100);
+                        slotMachineTemp3 = SlotMachine(slotMachineMainRng);
+                        //Displays the symbols
+                        Console.WriteLine("{0}|{1}|{2}", slotMachineTemp1, slotMachineTemp2, slotMachineTemp3);
+                        Thread.Sleep(50);
+                        Console.SetCursorPosition(10, Console.CursorTop - 1);
+                        ClearCurrentConsoleLine();
+                    }
+                    //If statements for prizes/rewards
+                    if (barStrings.Contains(slotMachineTemp1) && barStrings.Contains(slotMachineTemp2) && barStrings.Contains(slotMachineTemp3))
+                    {
+                        receivedBars += slotMachineBet * 0.80f;
+                        bars += receivedBars;
+                        Console.WriteLine("You got {0} Bars~", receivedBars);
+                        Console.ReadKey();
+                    }
 
+                    Console.WriteLine("[1] / [ENTER] to run again.\n" +
+                                      "[ESC] to go back");
+                    press = Console.ReadKey(true).Key;
+                    switch (press)
+                    {
+                        case ConsoleKey.D1:
+                        case ConsoleKey.Enter:
+                            goto slotMachineRoll;
+                        case ConsoleKey.D2:
+                        case ConsoleKey.Insert:
+                            slotCameFromMachineRoll = true;
+                            menuSelection = 1;
+                            goto slotMenuSelection;
+                    }
+                }
+                switch (press)
+                {
+                    //Bet changing
+                    case ConsoleKey.Insert:
+                    case ConsoleKey.D1:
+                        menuSelection = 1;
+                        goto slotMenuSelection;
+                    //Start the slot
+                    case ConsoleKey.D2:
+                    case ConsoleKey.Enter:
+                        menuSelection = 2;
+                        goto slotMenuSelection;
+                    case ConsoleKey.Escape:
+                        goto menu;
+                }
             }
         }
     }
