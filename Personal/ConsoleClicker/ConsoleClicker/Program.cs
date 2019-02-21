@@ -64,7 +64,7 @@ namespace ConsoleClicker
 
         static string slotMachineDisplay(string slotMachineSlots1, string slotMachineSlots2, string slotMachineSlots3)
         {
-            string slotFirst = "|" + slotMachineSlots1 + "|" + slotMachineSlots2 + "|" + slotMachineSlots3 + "|";
+            string slotFirst = "|" + slotMachineSlots1 + " | " + slotMachineSlots2 + " | " + slotMachineSlots3 + "|";
             return slotFirst;
         }
 
@@ -617,14 +617,32 @@ namespace ConsoleClicker
                         slotMachineMainRng = rng.Next(0, 100);
                         slotMachineSlots3 = SlotMachine(slotMachineMainRng);
                         slotDisplay3 = slotMachineDisplay(slotMachineSlots1, slotMachineSlots2, slotMachineSlots3);
-
-                        Console.WriteLine("\n∙―∙―∙―∙\n" +
-                                          "{0}\n" +
-                                          "{1}\n" +
-                                          "{2}\n" +
-                                          "∙―∙―∙―∙", slotDisplay1, slotDisplay2, slotDisplay3);
+                        //Slot Display is 1 char long
+                        /*
+                        oneBar = "−"
+                        twoBars = "="
+                        threeBars = "≡"
+                        cherry = "₪"
+                        seven = "7"
+                        diamond = "◊"
+                        jackPot = "₿"
+                        */
+                        Console.WriteLine("\n   .-------.");
+                        Console.WriteLine("[/{-JACKPOT-}\\]");
+                        Console.WriteLine(".=============. __");
+                        Console.WriteLine("| {0} |(  )", slotDisplay1);
+                        Console.WriteLine("|>{0}<| ||", slotDisplay2);
+                        Console.WriteLine("| {0} | ||", slotDisplay3);
+                        Console.WriteLine("|             |_||");
+                        Console.WriteLine("| xxx ::::::: |--'");
+                        Console.WriteLine("| ooo ::::::: |");
+                        Console.WriteLine("| $$$ ::::::: |");
+                        Console.WriteLine("|             |");
+                        Console.WriteLine("|      __ === |");
+                        Console.WriteLine("|_____/__\\____|");
                         Thread.Sleep(50);
-                        Console.SetCursorPosition(0, Console.CursorTop - 6);
+                        //Slot Machine is 13 + 1 char in height
+                        Console.SetCursorPosition(0, Console.CursorTop - 14);
                         ClearCurrentConsoleLine();
                     }
                     //If statements for prizes/rewards
@@ -633,11 +651,11 @@ namespace ConsoleClicker
                     {
                         receivedBars = slotMachineBet * 0.80f;
                         bars += receivedBars;
-                        Console.SetCursorPosition(7, 8);
+                        Console.SetCursorPosition(21, 13);
                         Console.WriteLine("You got {0} Bars~", receivedBars);
                         Console.ReadKey();
                     }
-                    Console.SetCursorPosition(0, 11);
+                    Console.SetCursorPosition(0, 20);
                     Console.WriteLine("[1] / [ENTER] to run again.\n" +
                                       "[ESC] to go back");
                     press = Console.ReadKey(true).Key;
