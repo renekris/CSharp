@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -79,7 +80,7 @@ namespace ConsoleClicker
         { 
             Console.OutputEncoding = Encoding.Unicode;
             int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0, actionTiming = 50, menuSelection, countActionTime = 0, sideMain = 1, foo = 0, clicks = 0, realClicks = 0;
-            float barsLimit = 50f, price1F = 50f, price2F = 100f, price3F = 10f, bars = 0f, totalBars = 0f, price4F = 20f;
+            float barsLimit = 50f, price1F = 50f, price2F = 100f, price3F = 10f, bars = 0f, totalBars = 0f, price4F = 20f, totalTokens = 0;
             bool isSecret = false, side, pressedDown = false, pressedUp = false, pressedDefault = false;
             string boughtIt1 = null;
             Console.TreatControlCAsInput = true;
@@ -524,6 +525,7 @@ namespace ConsoleClicker
             while (menuSelection == 5)
             {
                 //temp setup, bound to change
+                bool slotSomeBug = false;
                 Random rng = new Random();
                 const string oneBar = "−",
                     twoBars = "=",
@@ -540,45 +542,49 @@ namespace ConsoleClicker
                     slotMachineSlotsMain2 = null,
                     slotMachineSlotsMain3 = null;
                 string[] barStrings = { oneBar, twoBars, threeBars };
-                float receivedBars;
-                int slotMachineBet = 0;
+                float slotMachineBet = 0f, receivedTokens = 0f;
                 slotMenu:
                 //Asks for the bet
                 Console.Clear();
                 Console.WriteLine("Welcome to the Slot Machine!\n[ESC] to leave");
-                Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
-                Console.WriteLine("You can bet on the Slot Machine\n" +
-                                  "[1] / [INSERT] Insert a bet, current bet: {0}\n\n" +
-                                  "Start the Slot Machine\n" +
-                                  "[2] / [ENTER] Start the slot", slotMachineBet);
+                Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}, this is where the values go\n", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
+                Console.WriteLine("Start the Slot Machine\n" +
+                                  "[1] / [ENTER] Start the slot\n\n" +
+                                  "You can bet on the Slot Machine\n" +
+                                  "[2] / [INSERT] Insert a bet, current bet: {0}", slotMachineBet);
 
                 #region Switch Case
                 press = Console.ReadKey(true).Key;
                 switch (press)
                 {
                     //Bet changing
-                    case ConsoleKey.Insert:
-                    case ConsoleKey.D1:
-                        menuSelection = 1;
-                        break;
-                    //Start the slot
                     case ConsoleKey.D2:
                     case ConsoleKey.Enter:
                         menuSelection = 2;
+                        break;
+                    //Start the slot
+                    case ConsoleKey.Insert:
+                    case ConsoleKey.D1:
+                        menuSelection = 1;
                         break;
                     case ConsoleKey.Escape:
                         goto menu;
                 }
                 #endregion
-                if (menuSelection == 1)
+                if (menuSelection == 1 || slotMachineBet == 0f)
                 {
                     Console.Clear();
                     Console.WriteLine("Enter the bet:");
-                    var isNumberParse = int.TryParse(Console.ReadLine(), out int betResult);
-                    //Checks if the entered number is indeed a number
-                    if (isNumberParse)
+                    if (slotSomeBug)
                     {
+                        Console.ReadLine();
+                    }
+                    var slotTryParse = float.TryParse(Console.ReadLine(), out float betResult);
+                    if (slotTryParse)
+                    {
+                        slotSomeBug = true;
                         slotMachineBet = betResult;
+                        slotTryParse = false;
                     }
                     goto slotMenu;
                 }
@@ -590,8 +596,7 @@ namespace ConsoleClicker
                     int slotMachineSelection = 0;
                     Console.Clear();
                     Console.WriteLine("Welcome to the Slot Machine!\n");
-                    Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
-                    Console.WriteLine("Current bet: {0}\n", slotMachineBet);
+                    Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}\n\n", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
                     int slotMachineRollAmount = rng.Next(20, 40);
                     for (int slotMachineIndex = 0; slotMachineIndex < slotMachineRollAmount; slotMachineIndex++)
                     {
@@ -618,15 +623,6 @@ namespace ConsoleClicker
                         slotMachineSlots3 = SlotMachine(slotMachineMainRng);
                         slotDisplay3 = slotMachineDisplay(slotMachineSlots1, slotMachineSlots2, slotMachineSlots3);
                         //Slot Display is 1 char long
-                        /*
-                        oneBar = "−"
-                        twoBars = "="
-                        threeBars = "≡"
-                        cherry = "₪"
-                        seven = "7"
-                        diamond = "◊"
-                        jackPot = "₿"
-                        */
                         Console.WriteLine("\n   .-------.");
                         Console.WriteLine("[/{-JACKPOT-}\\]");
                         Console.WriteLine(".=============. __");
@@ -646,18 +642,98 @@ namespace ConsoleClicker
                         ClearCurrentConsoleLine();
                     }
                     //If statements for prizes/rewards
-                    //Any bar combination giving 0.80
+
+                    #region Rewards
+                    /*
+                    oneBar = "−"
+                    twoBars = "="
+                    threeBars = "≡"
+                    cherry = "₪"
+                    seven = "7"
+                    diamond = "◊"
+                    jackPot = "₿"
+                    */
+                    //Any bar combination giving 0.30
                     if (barStrings.Contains(slotMachineSlotsMain1) && barStrings.Contains(slotMachineSlotsMain2) && barStrings.Contains(slotMachineSlotsMain3))
                     {
-                        receivedBars = slotMachineBet * 0.80f;
-                        bars += receivedBars;
-                        Console.SetCursorPosition(21, 13);
-                        Console.WriteLine("You got {0} Bars~", receivedBars);
-                        Console.ReadKey();
+                        receivedTokens = slotMachineBet * 0.30f;
+                        bars += receivedTokens;
+                        Console.SetCursorPosition(21, 10);
+                        Console.WriteLine("You got {0} | {1} | {2}\r", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
                     }
-                    Console.SetCursorPosition(0, 20);
-                    Console.WriteLine("[1] / [ENTER] to run again.\n" +
-                                      "[ESC] to go back");
+                    //Only one bars
+                    if (slotMachineSlotsMain1 == oneBar && slotMachineSlotsMain2 == oneBar && slotMachineSlotsMain1 == oneBar)
+                    {
+                        receivedTokens = slotMachineBet * 0.50f;
+                        bars += receivedTokens;
+                        Console.SetCursorPosition(21, 10);
+                        Console.WriteLine("You got {0} | {1} | {2}\r", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
+                    }
+                    //Only two bars
+                    if (slotMachineSlotsMain1 == twoBars && slotMachineSlotsMain2 == twoBars && slotMachineSlotsMain1 == twoBars)
+                    {
+                        receivedTokens = slotMachineBet * 0.90f;
+                        bars += receivedTokens;
+                        Console.SetCursorPosition(21, 10);
+                        Console.WriteLine("You got {0} | {1} | {2}\r", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
+                    }
+                    //Only threebars
+                    if (slotMachineSlotsMain1 == threeBars && slotMachineSlotsMain2 == threeBars && slotMachineSlotsMain1 == threeBars)
+                    {
+                        receivedTokens = slotMachineBet * 1.50f;
+                        bars += receivedTokens;
+                        Console.SetCursorPosition(21, 10);
+                        Console.WriteLine("You got {0} | {1} | {2}\r", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
+                    }
+                    //Only cherrys
+                    if (slotMachineSlotsMain1 == cherry && slotMachineSlotsMain2 == cherry && slotMachineSlotsMain1 == cherry)
+                    {
+                        receivedTokens = slotMachineBet * 2f;
+                        bars += receivedTokens;
+                        Console.SetCursorPosition(21, 10);
+                        Console.WriteLine("You got {0} | {1} | {2}\r", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
+                    }
+                    //Only sevens
+                    if (slotMachineSlotsMain1 == seven && slotMachineSlotsMain2 == seven && slotMachineSlotsMain1 == seven)
+                    {
+                        receivedTokens = slotMachineBet * 5f;
+                        bars += receivedTokens;
+                        Console.SetCursorPosition(21, 10);
+                        Console.WriteLine("You got {0} | {1} | {2}\r", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
+                    }
+                    //Only diamonds
+                    if (slotMachineSlotsMain1 == diamond && slotMachineSlotsMain2 == diamond && slotMachineSlotsMain1 == diamond)
+                    {
+                        receivedTokens = slotMachineBet * 10f;
+                        bars += receivedTokens;
+                        Console.SetCursorPosition(21, 10);
+                        Console.WriteLine("You got {0} | {1} | {2}\r", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
+                    }
+                    //Only jackPots
+                    if (slotMachineSlotsMain1 == jackPot && slotMachineSlotsMain2 == jackPot && slotMachineSlotsMain1 == jackPot)
+                    {
+                        receivedTokens = slotMachineBet * 50;
+                        bars += receivedTokens;
+                        Console.SetCursorPosition(21, 10);
+                        Console.WriteLine("You got {0} | {1} | {2}\r", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
+                    }
+
+                    #endregion
+                    if (receivedTokens > 0f)
+                    {
+                        Console.SetCursorPosition(21, 11);
+                        Console.WriteLine("= {0:F1} Tokens~", receivedTokens);
+                        totalTokens += receivedTokens;
+                        receivedTokens = 0f;
+                        Console.SetCursorPosition(21, 12);
+                        Console.WriteLine("Total Tokens: {0:F1}", totalTokens);
+                    }
+                    Console.SetCursorPosition(21, 14);
+                    Console.WriteLine("Current bet: {0}", slotMachineBet);
+                    Console.SetCursorPosition(21, 15);
+                    Console.WriteLine("[1] / [ENTER] to run again.");
+                    Console.SetCursorPosition(21, 16);
+                    Console.WriteLine("[ESC] to go back");
                     press = Console.ReadKey(true).Key;
                     switch (press)
                     {
