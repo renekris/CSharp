@@ -519,7 +519,6 @@ namespace ConsoleClicker
             {
                 //temp setup, bound to change
                 Random rng = new Random();
-                bool slotCameFromMachineRoll = false;
                 const string oneBar = "−",
                     twoBars = "=",
                     threeBars = "≡",
@@ -544,7 +543,21 @@ namespace ConsoleClicker
                                   "Start the Slot Machine\n" +
                                   "[2] / [ENTER] Start the slot", slotMachineBet);
                 press = Console.ReadKey(true).Key;
-                slotMenuSelection:
+                switch (press)
+                {
+                    //Bet changing
+                    case ConsoleKey.Insert:
+                    case ConsoleKey.D1:
+                        menuSelection = 1;
+                        break;
+                    //Start the slot
+                    case ConsoleKey.D2:
+                    case ConsoleKey.Enter:
+                        menuSelection = 2;
+                        break;
+                    case ConsoleKey.Escape:
+                        goto menu;
+                }
                 if (menuSelection == 1)
                 {
                     Console.Clear();
@@ -554,15 +567,8 @@ namespace ConsoleClicker
                     if (isNumberParse)
                     {
                         slotMachineBet = betResult;
-                        goto slotMenu;
                     }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Enter a valid number!");
-                        Console.ReadKey();
-                        goto slotMenu;
-                    }
+                    goto slotMenu;
                 }
                 //RNG and getting the symbols
                 if (menuSelection == 2)
@@ -588,6 +594,7 @@ namespace ConsoleClicker
                         ClearCurrentConsoleLine();
                     }
                     //If statements for prizes/rewards
+                    #region Rewarding
                     if (barStrings.Contains(slotMachineTemp1) && barStrings.Contains(slotMachineTemp2) && barStrings.Contains(slotMachineTemp3))
                     {
                         receivedBars += slotMachineBet * 0.80f;
@@ -595,7 +602,7 @@ namespace ConsoleClicker
                         Console.WriteLine("You got {0} Bars~", receivedBars);
                         Console.ReadKey();
                     }
-
+                    #endregion
                     Console.WriteLine("[1] / [ENTER] to run again.\n" +
                                       "[ESC] to go back");
                     press = Console.ReadKey(true).Key;
@@ -604,27 +611,9 @@ namespace ConsoleClicker
                         case ConsoleKey.D1:
                         case ConsoleKey.Enter:
                             goto slotMachineRoll;
-                        case ConsoleKey.D2:
-                        case ConsoleKey.Insert:
-                            slotCameFromMachineRoll = true;
-                            menuSelection = 1;
-                            goto slotMenuSelection;
+                        case ConsoleKey.Escape:
+                            goto slotMenu;
                     }
-                }
-                switch (press)
-                {
-                    //Bet changing
-                    case ConsoleKey.Insert:
-                    case ConsoleKey.D1:
-                        menuSelection = 1;
-                        goto slotMenuSelection;
-                    //Start the slot
-                    case ConsoleKey.D2:
-                    case ConsoleKey.Enter:
-                        menuSelection = 2;
-                        goto slotMenuSelection;
-                    case ConsoleKey.Escape:
-                        goto menu;
                 }
             }
         }
