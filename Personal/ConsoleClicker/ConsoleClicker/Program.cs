@@ -22,7 +22,6 @@ namespace ConsoleClicker
                 diamond = "◊",
                 cherry = "₪",
                 jackPot = "₿";
-            //for (int slotMachineLength = 0; slotMachineLength < 3; slotMachineLength++)
             //Jackpot
             //One Bar >−< filled
             //25%
@@ -374,7 +373,9 @@ namespace ConsoleClicker
                             goto bars;
                         }
                         else
+                        {
                             goto bars;
+                        }
                     case ConsoleKey.Add:
                         bars += 10000;
                         goto bars;
@@ -582,7 +583,7 @@ namespace ConsoleClicker
                         goto slotMenu;
                 }
                 #endregion
-                if (menuSelection == 1 || slotMachineBet == 0f)
+                if (menuSelection == 1 || slotMachineBet <= 0f)
                 {
                     Console.Clear();
                     Console.WriteLine("Enter the bet:");
@@ -595,7 +596,6 @@ namespace ConsoleClicker
                     {
                         slotSomeBug = true;
                         slotMachineBet = betResult;
-                        slotTryParse = false;
                     }
                     goto slotMenu;
                 }
@@ -604,7 +604,6 @@ namespace ConsoleClicker
                 {
                     slotMachineRoll:
                     string slotDisplay1, slotDisplay2, slotDisplay3;
-                    int slotMachineSelection = 0;
                     Console.Clear();
                     Console.WriteLine("Welcome to the Slot Machine!\n");
                     Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}\n\n", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
@@ -698,7 +697,7 @@ namespace ConsoleClicker
                         Console.SetCursorPosition(21, 10);
                         Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
                     }
-                    //Only cherrys
+                    //Only cherries
                     if (slotMachineSlotsMain1 == cherry && slotMachineSlotsMain2 == cherry && slotMachineSlotsMain3 == cherry)
                     {
                         receivedTokens = slotMachineBet * 10f;
@@ -757,8 +756,8 @@ namespace ConsoleClicker
                         case ConsoleKey.Backspace:
                         case ConsoleKey.Escape:
                             goto slotMenu;
-                        default:
-                            goto  slotMenu;
+                            default:
+                                goto slotMenu;
                     }
                 }
             }
