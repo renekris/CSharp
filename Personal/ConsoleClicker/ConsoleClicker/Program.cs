@@ -71,7 +71,7 @@ namespace ConsoleClicker
 
         static string slotMachineDisplay(string slotMachineSlots1, string slotMachineSlots2, string slotMachineSlots3)
         {
-            string slotFirst = "|" + slotMachineSlots1 + " | " + slotMachineSlots2 + " | " + slotMachineSlots3 + "|";
+            string slotFirst = "|" + slotMachineSlots1 + " ¦ " + slotMachineSlots2 + " ¦ " + slotMachineSlots3 + "|";
             return slotFirst;
         }
 
@@ -533,6 +533,7 @@ namespace ConsoleClicker
             while (menuSelection == 5)
             {
                 //temp setup, bound to change
+                int rollTotalCounter = 0;
                 bool slotSomeBug = false;
                 Random rng = new Random();
                 const string oneBar = "−",
@@ -543,12 +544,18 @@ namespace ConsoleClicker
                     diamond = "◊",
                     jackPot = "₿";
                 string
-                    slotMachineSlots1,
-                    slotMachineSlots2,
-                    slotMachineSlots3,
+                    slotMachineSlotsTop1 = null,
+                    slotMachineSlotsTop2 = null,
+                    slotMachineSlotsTop3 = null,
                     slotMachineSlotsMain1 = null,
                     slotMachineSlotsMain2 = null,
-                    slotMachineSlotsMain3 = null;
+                    slotMachineSlotsMain3 = null,
+                    slotMachineSlotsBottom1 = null,
+                    slotMachineSlotsBottom2 = null,
+                    slotMachineSlotsBottom3 = null,
+                    slotAnimation1 = "|x ¦ x ¦ x|",
+                    slotAnimation2 = "|x ¦ x ¦ x|",
+                    slotAnimation3 = "|x ¦ x ¦ x|";
                 string[] barStrings = { oneBar, twoBars, threeBars };
                 float slotMachineBet = 0f, receivedTokens = 0f, slotProfit = 0f;
                 slotMenu:
@@ -603,22 +610,41 @@ namespace ConsoleClicker
                 if (menuSelection == 2)
                 {
                     slotMachineRoll:
+                    rollTotalCounter++;
                     string slotDisplay1, slotDisplay2, slotDisplay3;
                     Console.Clear();
                     Console.WriteLine("Welcome to the Slot Machine!\n");
                     Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}\n\n", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
                     int slotMachineRollAmount = rng.Next(20, 50);
+                    //Animation
+                    Console.WriteLine("\n   .-------.");
+                    Console.WriteLine("[/{-JACKPOT-}\\]");
+                    Console.WriteLine(".=============.    ");
+                    Console.WriteLine("| {0} | __", slotAnimation1);
+                    Console.WriteLine("|>{0}<|( ⸗)", slotAnimation2);
+                    Console.WriteLine("| {0} | ||", slotAnimation3);
+                    Console.WriteLine("|˻┌─────────┐˼|_||");
+                    Console.WriteLine("| ´‾‾‾‾‾‾‾‾‾` |--'");
+                    Console.WriteLine("| xxx ::::::: |");
+                    Console.WriteLine("| ooo ::::::: |");
+                    Console.WriteLine("| $$$ ::::::: |");
+                    Console.WriteLine("|      __ === |");
+                    Console.WriteLine("|_____/__\\____|");
+                    Thread.Sleep(500);
+                    Console.SetCursorPosition(23, Console.CursorTop - 14);
+                    ClearCurrentConsoleLine();
                     for (int slotMachineIndex = 0; slotMachineIndex < slotMachineRollAmount; slotMachineIndex++)
                     {
                         //Rng
                         int slotMachineMainRng = rng.Next(0, 100);
+
                         //slotDisplay1
-                        slotMachineSlots1 = SlotMachine(slotMachineMainRng);
+                        slotMachineSlotsTop1 = SlotMachine(slotMachineMainRng);
                         slotMachineMainRng = rng.Next(0, 100);
-                        slotMachineSlots2 = SlotMachine(slotMachineMainRng);
+                        slotMachineSlotsTop2 = SlotMachine(slotMachineMainRng);
                         slotMachineMainRng = rng.Next(0, 100);
-                        slotMachineSlots3 = SlotMachine(slotMachineMainRng);
-                        slotDisplay1 = slotMachineDisplay(slotMachineSlots1, slotMachineSlots2, slotMachineSlots3);
+                        slotMachineSlotsTop3 = SlotMachine(slotMachineMainRng);
+                        slotDisplay1 = slotMachineDisplay(slotMachineSlotsTop1, slotMachineSlotsTop2, slotMachineSlotsTop3);
                         //slotDisplay2 MAIN
                         slotMachineMainRng = rng.Next(0, 100);
                         slotMachineSlotsMain1 = SlotMachine(slotMachineMainRng);
@@ -629,24 +655,24 @@ namespace ConsoleClicker
                         slotDisplay2 = slotMachineDisplay(slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
                         //slotDispaly3
                         slotMachineMainRng = rng.Next(0, 100);
-                        slotMachineSlots1 = SlotMachine(slotMachineMainRng);
+                        slotMachineSlotsBottom1 = SlotMachine(slotMachineMainRng);
                         slotMachineMainRng = rng.Next(0, 100);
-                        slotMachineSlots2 = SlotMachine(slotMachineMainRng);
+                        slotMachineSlotsBottom2 = SlotMachine(slotMachineMainRng);
                         slotMachineMainRng = rng.Next(0, 100);
-                        slotMachineSlots3 = SlotMachine(slotMachineMainRng);
-                        slotDisplay3 = slotMachineDisplay(slotMachineSlots1, slotMachineSlots2, slotMachineSlots3);
+                        slotMachineSlotsBottom3 = SlotMachine(slotMachineMainRng);
+                        slotDisplay3 = slotMachineDisplay(slotMachineSlotsBottom1, slotMachineSlotsBottom2, slotMachineSlotsBottom3);
                         //Slot Display is 1 char long
                         Console.WriteLine("\n   .-------.");
                         Console.WriteLine("[/{-JACKPOT-}\\]");
                         Console.WriteLine(".=============. __");
-                        Console.WriteLine("| {0} |(  )", slotDisplay1);
-                        Console.WriteLine("|>{0}<| ||", slotDisplay2);
-                        Console.WriteLine("| {0} | ||", slotDisplay3);
-                        Console.WriteLine("|             |_||");
-                        Console.WriteLine("| xxx ::::::: |--'");
+                        Console.WriteLine("| {0} |( ⸗)", slotDisplay1);
+                        Console.WriteLine("|>{0}<| || ", slotDisplay2);
+                        Console.WriteLine("| {0} | || ", slotDisplay3);
+                        Console.WriteLine("|˻┌─────────┐˼|_||");
+                        Console.WriteLine("| ´‾‾‾‾‾‾‾‾‾` |--'");
+                        Console.WriteLine("| xxx ::::::: |");
                         Console.WriteLine("| ooo ::::::: |");
                         Console.WriteLine("| $$$ ::::::: |");
-                        Console.WriteLine("|             |");
                         Console.WriteLine("|      __ === |");
                         Console.WriteLine("|_____/__\\____|");
                         Thread.Sleep(50);
@@ -654,6 +680,9 @@ namespace ConsoleClicker
                         Console.SetCursorPosition(0, Console.CursorTop - 14);
                         ClearCurrentConsoleLine();
                     }
+                    slotAnimation1 = "|" + slotMachineSlotsTop1 + " ¦ " + slotMachineSlotsTop2 + " ¦ " + slotMachineSlotsTop3 + "|";
+                    slotAnimation2 = "|" + slotMachineSlotsMain1 + " ¦ " + slotMachineSlotsMain2 + " ¦ " + slotMachineSlotsMain3 + "|";
+                    slotAnimation3 = "|" + slotMachineSlotsBottom1 + " ¦ " + slotMachineSlotsBottom2 + " ¦ " + slotMachineSlotsBottom3 + "|";
                     //If statements for prizes/rewards
                     #region Rewards
                     /*
@@ -739,7 +768,7 @@ namespace ConsoleClicker
                     slotProfit += (receivedTokens - slotMachineBet);
                     receivedTokens = 0f;
                     Console.SetCursorPosition(21, 14);
-                    Console.WriteLine("Total Profit: {0:F1}", slotProfit);
+                    Console.WriteLine("Total Profit: {0:F1} | Total Rolls: {1:F0}", slotProfit, rollTotalCounter);
                     Console.SetCursorPosition(21, 15);
                     Console.WriteLine("Current bet: {0}", slotMachineBet);
                     Console.SetCursorPosition(21, 16);
