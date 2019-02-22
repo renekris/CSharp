@@ -553,9 +553,9 @@ namespace ConsoleClicker
                     slotMachineSlotsBottom1 = null,
                     slotMachineSlotsBottom2 = null,
                     slotMachineSlotsBottom3 = null,
-                    slotAnimation1 = "|x ¦ x ¦ x|",
-                    slotAnimation2 = "|x ¦ x ¦ x|",
-                    slotAnimation3 = "|x ¦ x ¦ x|";
+                    slotAnimation1 = "|× ¦ × ¦ ×|",
+                    slotAnimation2 = "|× ¦ × ¦ ×|",
+                    slotAnimation3 = "|× ¦ × ¦ ×|";
                 string[] barStrings = { oneBar, twoBars, threeBars };
                 float slotMachineBet = 0f, receivedTokens = 0f, slotProfit = 0f;
                 slotMenu:
