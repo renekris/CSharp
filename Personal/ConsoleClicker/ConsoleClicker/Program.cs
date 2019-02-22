@@ -21,7 +21,8 @@ namespace ConsoleClicker
                 threeBars = "≡",
                 diamond = "◊",
                 cherry = "₪",
-                jackPot = "₿";
+                jackPot = "₿",
+                wild = "¥";
             //Jackpot
             //One Bar >−< filled
             //25%
@@ -65,7 +66,12 @@ namespace ConsoleClicker
             {
                 return jackPot;
             }
-
+            //WILD
+            //20%
+            if (slotMachineMainRng >= 101 && slotMachineMainRng <= 121)
+            {
+                return wild;
+            }
             return null;
         }
 
@@ -542,7 +548,8 @@ namespace ConsoleClicker
                     cherry = "₪",
                     seven = "7",
                     diamond = "◊",
-                    jackPot = "₿";
+                    jackPot = "₿",
+                    wild = "¥";
                 string
                     slotMachineSlotsTop1 = null,
                     slotMachineSlotsTop2 = null,
@@ -686,15 +693,26 @@ namespace ConsoleClicker
                     //If statements for prizes/rewards
                     #region Rewards
                     /*
-                    oneBar = "−"
-                    twoBars = "="
-                    threeBars = "≡"
-                    cherry = "₪"
-                    seven = "7"
-                    diamond = "◊"
-                    jackPot = "₿"
+                    wild = "¥" 1f
+                    oneBar = "−" 1f
+                    twoBars = "=" 2f
+                    threeBars = "≡" 4f
+                    cherry = "₪" 10f
+                    seven = "7" 25f
+                    diamond = "◊" 50f
+                    jackPot = "₿" 100f
                     */
-                    //Any bar combination giving 0.30
+                    ////////////////////////////
+                    //use this as the formula = 'receivedTokens' += 'slotMachineBet' * 2.33... = (3 / (oneBarMult + twoBarMult + threeBarMult))
+                    const float oneBarMult = 1f,
+                        twoBarMult = 2f,
+                        threeBarMult = 4f,
+                        cherryMult = 10f,
+                        sevenMult = 25f,
+                        diamondMult = 50f,
+                        jackPotMult = 100f,
+                        wildMult = 1f;
+                    ////////////////////////////
                     if (barStrings.Contains(slotMachineSlotsMain1) && barStrings.Contains(slotMachineSlotsMain2) && barStrings.Contains(slotMachineSlotsMain3))
                     {
                         receivedTokens = slotMachineBet * 0.50f;
@@ -754,6 +772,14 @@ namespace ConsoleClicker
                     if (slotMachineSlotsMain1 == jackPot && slotMachineSlotsMain2 == jackPot && slotMachineSlotsMain3 == jackPot)
                     {
                         receivedTokens = slotMachineBet * 100f;
+                        bars += receivedTokens;
+                        Console.SetCursorPosition(21, 10);
+                        Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
+                    }
+                    //Only wild
+                    if (slotMachineSlotsMain1 == wild && slotMachineSlotsMain2 == wild && slotMachineSlotsMain3 == wild)
+                    {
+                        receivedTokens = slotMachineBet * 1f;
                         bars += receivedTokens;
                         Console.SetCursorPosition(21, 10);
                         Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
