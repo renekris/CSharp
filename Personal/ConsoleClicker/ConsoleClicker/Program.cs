@@ -11,8 +11,14 @@ using System.Threading;
 
 namespace ConsoleClicker
 {
+
     class Program
     {
+        static void SetCursorMiddle(string s)
+        {
+            Console.SetCursorPosition((Console.WindowWidth - s.Length) / 2, Console.CursorTop);
+            Console.WriteLine(s);
+        }
         static string SlotMachine(int slotMachineMainRng)
         {
             const string seven = "7",
@@ -89,16 +95,17 @@ namespace ConsoleClicker
             bool isSecret = false, side, pressedDown = false, pressedUp = false, pressedDefault = false;
             string boughtIt1 = null;
             Console.TreatControlCAsInput = true;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Title = "Console Clicker, Made by Renekris";
-            Console.WriteLine("Welcome to Console Clicker - WIP\n" +
-                              "Unfortunately there are a couple of bugs present with the animation\n" +
-                              "\nProgramming by Renekris/Rene Kristofer Pohlak\n" +
-                              "Big thanks to: Gio, Juškin, for giving me ideas to work with\n\n\n" +
-                              "\u0020\u263a\u0020\u252c\u2510\u0020\u0020\u0020\u2591\u2591\u2591\u2591\u000a\u002f\u007c\u2514\u2524\u0020\u0020\u2593\u2593\u2593\u2593\u2593\u2593\u2593\u000a\u002f\u0020\u005c\u0020\u0020\u2592\u2592\u2592\u2593\u2593\u2593\u2593\u2592\u2592");
+            Console.WriteLine("  ▄████▄   ▒█████   ███▄    █   ██████  ▒█████   ██▓    ▓█████       \r\n▒██▀ ▀█  ▒██▒  ██▒ ██ ▀█   █ ▒██    ▒ ▒██▒  ██▒▓██▒    ▓█   ▀       \r\n▒▓█    ▄ ▒██░  ██▒▓██  ▀█ ██▒░ ▓██▄   ▒██░  ██▒▒██░    ▒███         \r\n▒▓▓▄ ▄██▒▒██   ██░▓██▒  ▐▌██▒  ▒   ██▒▒██   ██░▒██░    ▒▓█  ▄       \r\n▒ ▓███▀ ░░ ████▓▒░▒██░   ▓██░▒██████▒▒░ ████▓▒░░██████▒░▒████▒      \r\n░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░░ ▒░▒░▒░ ░ ▒░▓  ░░░ ▒░ ░      \r\n  ░  ▒     ░ ▒ ▒░ ░ ░░   ░ ▒░░ ░▒  ░ ░  ░ ▒ ▒░ ░ ░ ▒  ░ ░ ░  ░      \r\n░        ░ ░ ░ ▒     ░   ░ ░ ░  ░  ░  ░ ░ ░ ▒    ░ ░      ░         \r\n░ ░          ░ ░           ░       ░      ░ ░      ░  ░   ░  ░      \r\n░               ▄████▄   ██▓     ██▓ ▄████▄   ██ ▄█▀▓█████  ██▀███  \r\n               ▒██▀ ▀█  ▓██▒    ▓██▒▒██▀ ▀█   ██▄█▒ ▓█   ▀ ▓██ ▒ ██▒\r\n               ▒▓█    ▄ ▒██░    ▒██▒▒▓█    ▄ ▓███▄░ ▒███   ▓██ ░▄█ ▒\r\n               ▒▓▓▄ ▄██▒▒██░    ░██░▒▓▓▄ ▄██▒▓██ █▄ ▒▓█  ▄ ▒██▀▀█▄  \r\n               ▒ ▓███▀ ░░██████▒░██░▒ ▓███▀ ░▒██▒ █▄░▒████▒░██▓ ▒██▒\r\n               ░ ░▒ ▒  ░░ ▒░▓  ░░▓  ░ ░▒ ▒  ░▒ ▒▒ ▓▒░░ ▒░ ░░ ▒▓ ░▒▓░\r\n                 ░  ▒   ░ ░ ▒  ░ ▒ ░  ░  ▒   ░ ░▒ ▒░ ░ ░  ░  ░▒ ░ ▒░\r\n               ░          ░ ░    ▒ ░░        ░ ░░ ░    ░     ░░   ░ \r\n               ░ ░          ░  ░ ░  ░ ░      ░  ░      ░  ░   ░     \r\n               ░                    ░                               ");
+            Console.ResetColor();
+            Console.WriteLine("\nProgramming by Renekris / Rene Kristofer Pohlak.\n");
+            Console.WriteLine("Big thanks to: Gio, Juškin, for giving me ideas to work with!");
+
             Console.ReadKey();
         menu:
             Console.Clear();
-            Console.WriteLine("Welcome to Console Clicker~~\n\n" +
+            Console.WriteLine("Welcome to Console Clicker~\n\n" +
                               "This is a game made by Renekris,\n" +
                               "To start playing, you must press the ([\u2191] / [\u2193]) arrow keys.\n" +
                               "With Bars you can buy different upgrades to earn Bars quicker.\n");
@@ -562,14 +569,19 @@ namespace ConsoleClicker
                     slotProfit = 0f;
             slotMenu:
             float betResult;
-                //Asks for the bet
                 Console.Clear();
-                Console.WriteLine("Welcome to the Slot Machine!\n[ESC] to leave\n");
-                Console.WriteLine("Start the Slot Machine\n" +
-                                  "[1] / [ENTER] Start the slot\n\n" +
-                                  "You can bet on the Slot Machine\n" +
-                                  "[2] / [INSERT] Insert a bet, current bet: {0}", slotMachineBet);
-
+                Console.ForegroundColor = ConsoleColor.Green;
+                SetCursorMiddle("╔═╗╦  ╔═╗╔╦╗╔═╗  ╔╦╗╔═╗╔═╗╦ ╦╦╔╗╔╔═╗");
+                SetCursorMiddle("╚═╗║  ║ ║ ║ ╚═╗  ║║║╠═╣║  ╠═╣║║║║║╣ ");
+                SetCursorMiddle("╚═╝╩═╝╚═╝ ╩ ╚═╝  ╩ ╩╩ ╩╚═╝╩ ╩╩╝╚╝╚═╝");
+                Console.ResetColor();
+                SetCursorMiddle("[ESC] to leave");
+                Console.WriteLine("\n");
+                SetCursorMiddle("Start the Slot Machine");
+                SetCursorMiddle("[1] / [ENTER] Start the slot");
+                Console.WriteLine("\n");
+                SetCursorMiddle("You can bet on the Slot Machine");
+                SetCursorMiddle("[2] / [INSERT] Insert a bet");
                 #region Switch Case
                 press = Console.ReadKey(true).Key;
                 switch (press)
@@ -594,43 +606,73 @@ namespace ConsoleClicker
                 #endregion
                 if (menuSelection == 1 || slotMachineBet <= 0f)
                 {
-                    Console.Clear();
-                    Console.WriteLine("Enter the bet:\n ");
-                    float.TryParse(Console.ReadLine(), out betResult);
-                    slotMachineBet = betResult;
-                    goto slotMenu;
+                    while (true)
+                    {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        SetCursorMiddle("╔═╗╦  ╔═╗╔╦╗╔═╗  ╔╦╗╔═╗╔═╗╦ ╦╦╔╗╔╔═╗");
+                        SetCursorMiddle("╚═╗║  ║ ║ ║ ╚═╗  ║║║╠═╣║  ╠═╣║║║║║╣ ");
+                        SetCursorMiddle("╚═╝╩═╝╚═╝ ╩ ╚═╝  ╩ ╩╩ ╩╚═╝╩ ╩╩╝╚╝╚═╝");
+                        Console.ResetColor();
+                        Console.WriteLine("");
+                        SetCursorMiddle("Enter the bet:");
+                        Console.SetCursorPosition(68, 4);
+                        float.TryParse(Console.ReadLine(), out betResult);
+                        slotMachineBet = betResult;
+                        goto slotMenu;
+                    }
                 }
                 //RNG and getting the symbols
                 if (menuSelection == 2)
                 {
                     float slotRewardsAmount1 = 0f, slotRewardsAmount2 = 0f, slotRewardsAmount3 = 0f;
-                slotMachineRoll:
+                    slotMachineRoll:
                     rollTotalCounter++;
                     bars -= slotMachineBet;
                     string slotDisplay1, slotDisplay2, slotDisplay3;
                     Console.Clear();
-                    Console.WriteLine("Welcome to the Slot Machine!\n");
-                    Console.WriteLine("!~~~Values~~~!\n{0} = 1\t{1} = 2\n{2} = 4\t{3} = 7\n{4} = 15\t{5} = 25\n{6} = 50 JACKPOT\n\n", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    SetCursorMiddle("╔═╗╦  ╔═╗╔╦╗╔═╗  ╔╦╗╔═╗╔═╗╦ ╦╦╔╗╔╔═╗");
+                    SetCursorMiddle("╚═╗║  ║ ║ ║ ╚═╗  ║║║╠═╣║  ╠═╣║║║║║╣ ");
+                    SetCursorMiddle("╚═╝╩═╝╚═╝ ╩ ╚═╝  ╩ ╩╩ ╩╚═╝╩ ╩╩╝╚╝╚═╝");
+                    Console.ResetColor();
+                    SetCursorMiddle("Winning Table");
+                    SetCursorMiddle("- = 1|= = 2");
+                    SetCursorMiddle("≡ = 4|₪ = 7");
+                    SetCursorMiddle("7 = 15|◊ = 25");
+                    SetCursorMiddle("₿ = 50");
+                    SetCursorMiddle("^JACK^POT^");
                     int slotMachineRollAmount = rng.Next(20, 50);
                     //Animation
-                    Console.WriteLine("\n   .-------.");
-                    Console.WriteLine("[/{-JACKPOT-}\\]");
-                    Console.WriteLine(".=============.    ");
+                    Console.SetCursorPosition(0, 11);
+                    Console.WriteLine("                 _          __\r\n          ,-----' |   _   <'__`)\r\n          | //  : | -'     )o \\\\\r\n          | //  : |  ---   \\__;`\r\n          | //  : | -._      |\\`\\\r\n          `-----._|     __  // ( \\|\r\n           _/___\\_    //)_`//  | ||]\r\n     _____[_______]_[~~-_ (.L_/  ||\r\n    [____________________]' `\\_,/'/\r\n      ||| /          |||  ,___,'./\r\n      ||| \\          |||,'______|\r\n      ||| /          /|| I==||\r\n      ||| \\       __/_||  __||__\r\n  -----||-/------`-._/||-o--o---o---\r\n    ~~~~~'");
+                    Console.SetCursorPosition(52, 9);
+                    SetCursorMiddle("");
+                    SetCursorMiddle(".-------.");
+                    SetCursorMiddle("[/{-JACKPOT-}\\]");
+                    SetCursorMiddle(".=============.");
+                    Console.SetCursorPosition(52, 13);
                     Console.WriteLine("| {0} | __", slotAnimation1);
+                    Console.SetCursorPosition(52, 14);
                     Console.WriteLine("|>{0}<|( ⸗)", slotAnimation2);
+                    Console.SetCursorPosition(52, 15);
                     Console.WriteLine("| {0} | ||", slotAnimation3);
+                    Console.SetCursorPosition(52, 16);
                     Console.WriteLine("|˻┌─────────┐˼|_||");
+                    Console.SetCursorPosition(52, 17);
                     Console.WriteLine("| ´‾‾‾‾‾‾‾‾‾` |--'");
-                    Console.WriteLine("| xxx ::::::: |");
-                    Console.WriteLine("| ooo ::::::: |");
-                    Console.WriteLine("| $$$ ::::::: |");
-                    Console.WriteLine("|      __ === |");
-                    Console.WriteLine("|_____/__\\____|");
+                    SetCursorMiddle("| xxx ::::::: |");
+                    SetCursorMiddle("| ooo ::::::: |");
+                    SetCursorMiddle("| $$$ ::::::: |");
+                    SetCursorMiddle("|      __ === |");
+                    SetCursorMiddle("|_____/__\\____|");
                     Thread.Sleep(500);
                     Console.SetCursorPosition(23, Console.CursorTop - 14);
                     ClearCurrentConsoleLine();
                     for (int slotMachineIndex = 0; slotMachineIndex < slotMachineRollAmount; slotMachineIndex++)
                     {
+                        Console.SetCursorPosition(0, 11);
+                        Console.WriteLine("                 _          __\r\n          ,-----' |   _   <'__`)\r\n          | //  : | -'     )o \\\\\r\n          | //  : |  ---   \\__;`\r\n          | //  : | -._      |\\`\\\r\n          `-----._|     __  // ( \\|\r\n           _/___\\_    //)_`//  | ||]\r\n     _____[_______]_[~~-_ (.L_/  ||\r\n    [____________________]' `\\_,/'/\r\n      ||| /          |||  ,___,'./\r\n      ||| \\          |||,'______|\r\n      ||| /          /|| I==||\r\n      ||| \\       __/_||  __||__\r\n  -----||-/------`-._/||-o--o---o---\r\n    ~~~~~'");
                         //Rng
                         int slotMachineMainRng = rng.Next(0, 100);
                         //slotDisplay1
@@ -657,19 +699,26 @@ namespace ConsoleClicker
                         slotMachineSlotsBottom3 = SlotMachine(slotMachineMainRng);
                         slotDisplay3 = slotMachineDisplay(slotMachineSlotsBottom1, slotMachineSlotsBottom2, slotMachineSlotsBottom3);
                         //Slot Display is 1 char long
-                        Console.WriteLine("\n   .-------.");
-                        Console.WriteLine("[/{-JACKPOT-}\\]");
-                        Console.WriteLine(".=============. __");
+                        Console.SetCursorPosition(52, 9);
+                        SetCursorMiddle("");
+                        SetCursorMiddle(".-------.");
+                        SetCursorMiddle("[/{-JACKPOT-}\\]");
+                        SetCursorMiddle(".=============.");
+                        Console.SetCursorPosition(52, 13);
                         Console.WriteLine("| {0} |( ⸗)", slotDisplay1);
+                        Console.SetCursorPosition(52, 14);
                         Console.WriteLine("|>{0}<| || ", slotDisplay2);
+                        Console.SetCursorPosition(52, 15);
                         Console.WriteLine("| {0} | || ", slotDisplay3);
+                        Console.SetCursorPosition(52, 16);
                         Console.WriteLine("|˻┌─────────┐˼|_||");
+                        Console.SetCursorPosition(52, 17);
                         Console.WriteLine("| ´‾‾‾‾‾‾‾‾‾` |--'");
-                        Console.WriteLine("| xxx ::::::: |");
-                        Console.WriteLine("| ooo ::::::: |");
-                        Console.WriteLine("| $$$ ::::::: |");
-                        Console.WriteLine("|      __ === |");
-                        Console.WriteLine("|_____/__\\____|");
+                        SetCursorMiddle("| xxx ::::::: |");
+                        SetCursorMiddle("| ooo ::::::: |");
+                        SetCursorMiddle("| $$$ ::::::: |");
+                        SetCursorMiddle("|      __ === |");
+                        SetCursorMiddle("|_____/__\\____|");
                         Thread.Sleep(50);
                         //Slot Machine is 13 + 1 char in height
                         Console.SetCursorPosition(0, Console.CursorTop - 14);
@@ -784,31 +833,35 @@ namespace ConsoleClicker
                     if ((slotMachineSlotsMain1 == slotMachineSlotsMain2) && (slotMachineSlotsMain2 == slotMachineSlotsMain3) && (slotMachineSlotsMain1 == slotMachineSlotsMain3))
                     {
                         receivedTokens = ((slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3) * slotMachineBet) / 5;
+                        Console.SetCursorPosition(0, 0);
+                        Console.WriteLine("                               )\r\n                         )   __    (\r\n                        __  (~(    __\r\n                       (~(   \\O\\   )~)\r\n                        )O)   )_) (O(\r\n                       (_(__ (     )_) )\r\n                          )~)__      __\r\n                         /O/ )~)  ) (~(\r\n                        (_( (O(  __  \\O\\\r\n                          )  )_)(~(   \\_\\\r\n                         __      )O)   (  \r\n                 _      (~(   __(_(    __ \r\n          ,-----' |    _ \\O\\<'~_`)   ) )~)\r\n          | //  : |  -'   )_))^ \\\\  __(O( \r\n          | //  : |   ---    >__;` (~( )_)\r\n          | //  : |  -._     /\\_\\   \\O\\ \r\n          `-----._|     __  /__( \\|  )_)\r\n           _/___\\_    //)_`/( (| ||]\r\n     _____[_______]_[~~-_ (.L)O) ||\r\n    [____________________]' (_(,/(~(\r\n      ||| /          )~)  ,___,'./\\O\\\r\n      ||| \\         (O(|,'______|( )_)\r\n      ||| /          )_) I==||  __\r\n      ||| \\       __/_||  __||__)~)\r\n  -----||-/------`-._/||-o-_o__(O(--  __\r\n    ~~~~~'   ____     __  /_O_/.\\_\\   \\~\\\r\n             \\_O_\\   /~/__/_/O`.o.     \\O\\\r\n             ____   /O/_\\_O/_/  `.'     \\_\\\r\n            /_O_/  /_/\\_O_\\");
                     }
                     else
                     {
-                        receivedTokens = ((slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3) * slotMachineBet) / 25;
+                        receivedTokens = ((slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3) * slotMachineBet) / 24;
+                        Console.SetCursorPosition(0, 11);
+                        Console.WriteLine("                 _          __\r\n          ,-----' |   _   <'__`)\r\n          | //  : | -'     )o \\\\\r\n          | //  : |  ---   \\__;`\r\n          | //  : | -._      |\\`\\\r\n          `-----._|     __  // ( \\|\r\n           _/___\\_    //)_`//  | ||]\r\n     _____[_______]_[~~-_ (.L_/  ||\r\n    [____________________]' `\\_,/'/\r\n      ||| /          |||  ,___,'./\r\n      ||| \\          |||,'______|\r\n      ||| /          /|| I==||\r\n      ||| \\       __/_||  __||__\r\n  -----||-/------`-._/||-o--o---o---\r\n    ~~~~~'");
                     }
                     bars += receivedTokens;
-                    Console.SetCursorPosition(21, 14);
+                    Console.SetCursorPosition(73, 14);
                     Console.WriteLine("You got {0} | {1} | {2}", slotRewards1, slotRewards2, slotRewards3);
                     #endregion
                     if (receivedTokens > 0f)
                     {
-                        Console.SetCursorPosition(21, 15);
-                        Console.WriteLine("= {0:n2} Tokens~", receivedTokens);
+                        Console.SetCursorPosition(73, 15);
+                        Console.WriteLine("= {0:n1} Tokens~", receivedTokens);
                         totalTokens += receivedTokens;
                     }
                     slotProfit += (receivedTokens - slotMachineBet);
-                    Console.SetCursorPosition(21, 17);
-                    Console.WriteLine("Total Profit: {0:n2} | Total Rolls: {1:F0}", slotProfit, rollTotalCounter);
-                    Console.SetCursorPosition(21, 18);
+                    Console.SetCursorPosition(73, 17);
+                    Console.WriteLine("Total Profit: {0:n1} | Total Rolls: {1:F0}", slotProfit, rollTotalCounter);
+                    Console.SetCursorPosition(73, 18);
                     Console.WriteLine("Current bet: {0:n0}", slotMachineBet);
-                    Console.SetCursorPosition(21, 19);
+                    Console.SetCursorPosition(73, 19);
                     Console.WriteLine("[1] / [ENTER] to run again.");
-                    Console.SetCursorPosition(21, 20);
+                    Console.SetCursorPosition(73, 20);
                     Console.WriteLine("[ESC] / [BACKSPACE] to go back");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(750);
                     press = Console.ReadKey(false).Key;
                     switch (press)
                     {
