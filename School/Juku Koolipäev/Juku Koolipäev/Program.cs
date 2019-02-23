@@ -140,6 +140,24 @@ namespace Juku_Koolipäev
             }
         }
 
+        static float KooliÕde(ref float jukuEnergia)
+        {
+            if (jukuEnergia <= 0.01)
+            {
+                Console.Clear();
+                JukuValues(jukuEnergia);
+                jukuEnergia += 0.15f;
+                Console.WriteLine("Juku on ekstriimselt nõrk ja ta viiakse kooliõe juurde.\n" +
+                                  "Kooliõde on heameelne ja annab Jukule energiabatooni.\n" +
+                                  "+15% energiat.");
+                Console.ReadKey();
+                Console.Clear();
+            }
+
+            return jukuEnergia;
+        }
+
+
         static void Main(string[] args)
         {
             Console.Title = "Juku Koolipäev, By Renekris";
@@ -168,6 +186,8 @@ namespace Juku_Koolipäev
             hinne = rng.Next(1, 6);
             //switch case | decreases the energy
             JukuSwitchCase(ref jukuEnergia, hinne);
+            //checkib kas jukuEnergia on < 0.01
+            KooliÕde(ref jukuEnergia);
             //juku energia number | juku olukord
             JukuValues(jukuEnergia);
             Console.WriteLine("Esimene tund on Programmeerimine\nÕpetaja ütles Jukule, et täna on {0}",
@@ -180,6 +200,7 @@ namespace Juku_Koolipäev
             sündmus = rng.Next(0, 3);
             hinne = rng.Next(1, 6);
             JukuSwitchCase(ref jukuEnergia, hinne);
+            KooliÕde(ref jukuEnergia);
             JukuValues(jukuEnergia);
             Console.WriteLine("Teine tund on Eesti keel\nÕpetaja ütles Jukule, et täna on {0}",
                 syndimus[sündmus]);
@@ -190,6 +211,7 @@ namespace Juku_Koolipäev
             sündmus = rng.Next(0, 3);
             hinne = rng.Next(1, 6);
             JukuSwitchCase(ref jukuEnergia, hinne);
+            KooliÕde(ref jukuEnergia);
             JukuValues(jukuEnergia);
             Console.WriteLine("Kolmas tund on Inglise keel\nÕpetaja ütles Jukule, et täna on {0}",
                 syndimus[sündmus]);
@@ -199,12 +221,13 @@ namespace Juku_Koolipäev
             ////LÕUNA 4
             JukuToiduValik(ref jukuEnergia, ref jukuToiduValik);
             JukuValues(jukuEnergia);
-            Console.WriteLine("Juku sõi {0}, ja tal hakkas kohe parem.", jukuToiduValik.Clone());
+            Console.WriteLine("Juku sõi {0} ja tal hakkas kohe parem.", jukuToiduValik.Clone());
             Console.ReadKey();
             Console.Clear();
             ////TUND 5
             sündmus = rng.Next(0, 3);
             hinne = rng.Next(1, 6);
+            KooliÕde(ref jukuEnergia);
             JukuSwitchCase(ref jukuEnergia, hinne);
             JukuValues(jukuEnergia);
             Console.WriteLine("Viies tund on Keemia\nÕpetaja ütles Jukule, et täna on {0}", syndimus[sündmus]);
@@ -214,6 +237,7 @@ namespace Juku_Koolipäev
             ////TUND 6
             sündmus = rng.Next(0, 3);
             hinne = rng.Next(1, 6);
+            KooliÕde(ref jukuEnergia);
             JukuSwitchCase(ref jukuEnergia, hinne);
             JukuValues(jukuEnergia);
             Console.WriteLine("Kuues tund on Matemaatika\nÕpetaja ütles Jukule, et täna on {0}",
@@ -224,6 +248,7 @@ namespace Juku_Koolipäev
             ////TUND 7
             sündmus = rng.Next(0, 3);
             hinne = rng.Next(1, 6);
+            KooliÕde(ref jukuEnergia);
             JukuSwitchCase(ref jukuEnergia, hinne);
             JukuValues(jukuEnergia);
             Console.WriteLine(
@@ -244,6 +269,7 @@ namespace Juku_Koolipäev
             else
             {
                 Console.Clear();
+                KooliÕde(ref jukuEnergia);
                 JukuValues(jukuEnergia);
                 Console.WriteLine("Juku sai viimase tunni hinde {0},\n" +
                                   "Juku peab kauemaks kooli jääma asju parandama", hinne);
