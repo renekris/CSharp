@@ -358,7 +358,9 @@ namespace ConsoleClicker
                             goto bars;
                         }
                         else
+                        {
                             goto bars;
+                        }
                     case ConsoleKey.DownArrow:
                         if (press == ConsoleKey.DownArrow && count1 == 1 && barsLimit > bars)
                         {
@@ -533,7 +535,6 @@ namespace ConsoleClicker
             {
                 //temp setup, bound to change
                 int rollTotalCounter = 0;
-                bool slotSomeBug = false;
                 Random rng = new Random();
                 const string oneBar = "−",
                     twoBars = "=",
@@ -556,15 +557,14 @@ namespace ConsoleClicker
                     slotAnimation2 = "|× ¦ × ¦ ×|",
                     slotAnimation3 = "|× ¦ × ¦ ×|",
                     slotRewards1 = null, slotRewards2 = null, slotRewards3 = null;
-                string[] barStrings = { oneBar, twoBars, threeBars };
-                float slotMachineBet = 0f, 
-                    receivedTokens, 
+                float slotMachineBet = 0f,
+                    receivedTokens,
                     slotProfit = 0f;
             slotMenu:
+            float betResult;
                 //Asks for the bet
                 Console.Clear();
-                Console.WriteLine("Welcome to the Slot Machine!\n[ESC] to leave");
-                Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}, this is where the values go\n", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
+                Console.WriteLine("Welcome to the Slot Machine!\n[ESC] to leave\n");
                 Console.WriteLine("Start the Slot Machine\n" +
                                   "[1] / [ENTER] Start the slot\n\n" +
                                   "You can bet on the Slot Machine\n" +
@@ -577,14 +577,14 @@ namespace ConsoleClicker
                     //Bet changing
                     case ConsoleKey.NumPad2:
                     case ConsoleKey.D2:
-                    case ConsoleKey.Enter:
-                        menuSelection = 2;
+                    case ConsoleKey.Insert:
+                        menuSelection = 1;
                         break;
                     //Start the slot
                     case ConsoleKey.NumPad1:
-                    case ConsoleKey.Insert:
                     case ConsoleKey.D1:
-                        menuSelection = 1;
+                    case ConsoleKey.Enter:
+                        menuSelection = 2;
                         break;
                     case ConsoleKey.Escape:
                         goto menu;
@@ -595,17 +595,9 @@ namespace ConsoleClicker
                 if (menuSelection == 1 || slotMachineBet <= 0f)
                 {
                     Console.Clear();
-                    Console.WriteLine("Enter the bet:");
-                    if (slotSomeBug)
-                    {
-                        Console.ReadLine();
-                    }
-                    var slotTryParse = float.TryParse(Console.ReadLine(), out float betResult);
-                    if (slotTryParse)
-                    {
-                        slotSomeBug = true;
-                        slotMachineBet = betResult;
-                    }
+                    Console.WriteLine("Enter the bet:\n ");
+                    float.TryParse(Console.ReadLine(), out betResult);
+                    slotMachineBet = betResult;
                     goto slotMenu;
                 }
                 //RNG and getting the symbols
@@ -618,7 +610,7 @@ namespace ConsoleClicker
                     string slotDisplay1, slotDisplay2, slotDisplay3;
                     Console.Clear();
                     Console.WriteLine("Welcome to the Slot Machine!\n");
-                    Console.WriteLine("Testing {0} {1} {2} {3} {4} {5} {6}\n\n", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
+                    Console.WriteLine("!~~~Values~~~!\n{0} = 1\t{1} = 2\n{2} = 4\t{3} = 7\n{4} = 15\t{5} = 25\n{6} = 50 JACKPOT\n\n", oneBar, twoBars, threeBars, cherry, seven, diamond, jackPot);
                     int slotMachineRollAmount = rng.Next(20, 50);
                     //Animation
                     Console.WriteLine("\n   .-------.");
@@ -689,7 +681,7 @@ namespace ConsoleClicker
                     const float oneBarMult = 1f,
                         twoBarMult = 2f,
                         threeBarMult = 4f,
-                        cherryMult = 5f,
+                        cherryMult = 7f,
                         sevenMult = 15f,
                         diamondMult = 25f,
                         jackPotMult = 50f;
@@ -788,19 +780,6 @@ namespace ConsoleClicker
                             slotRewardsAmount3 = jackPotMult;
                             break;
                     }
-                    /*
-                    wild = "¥" 1f?
-                    oneBar = "−" 1f
-                    twoBars = "=" 2f
-                    threeBars = "≡" 4f
-                    cherry = "₪" 10f
-                    seven = "7" 25f
-                    diamond = "◊" 50f
-                    jackPot = "₿" 100f
-                    */
-                    ////////////////////////////
-                    //use this as the formula = 'receivedTokens' += 'slotMachineBet' * 2.33... = (3 = all same type|6or10 = different types / (oneBarMult + twoBarMult + threeBarMult))
-                    ////////////////////////////
                     //Main calculation of rewards
                     if ((slotMachineSlotsMain1 == slotMachineSlotsMain2) && (slotMachineSlotsMain2 == slotMachineSlotsMain3) && (slotMachineSlotsMain1 == slotMachineSlotsMain3))
                     {
@@ -808,26 +787,26 @@ namespace ConsoleClicker
                     }
                     else
                     {
-                        receivedTokens = ((slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3) * slotMachineBet) / 23;
+                        receivedTokens = ((slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3) * slotMachineBet) / 25;
                     }
                     bars += receivedTokens;
-                    Console.SetCursorPosition(21, 10);
+                    Console.SetCursorPosition(21, 14);
                     Console.WriteLine("You got {0} | {1} | {2}", slotRewards1, slotRewards2, slotRewards3);
                     #endregion
                     if (receivedTokens > 0f)
                     {
-                        Console.SetCursorPosition(21, 11);
+                        Console.SetCursorPosition(21, 15);
                         Console.WriteLine("= {0:n2} Tokens~", receivedTokens);
                         totalTokens += receivedTokens;
                     }
                     slotProfit += (receivedTokens - slotMachineBet);
-                    Console.SetCursorPosition(21, 14);
-                    Console.WriteLine("Total Profit: {0:n2} | Total Rolls: {1:F0}", slotProfit, rollTotalCounter);
-                    Console.SetCursorPosition(21, 15);
-                    Console.WriteLine("Current bet: {0:n0}", slotMachineBet);
-                    Console.SetCursorPosition(21, 16);
-                    Console.WriteLine("[1] / [ENTER] to run again.");
                     Console.SetCursorPosition(21, 17);
+                    Console.WriteLine("Total Profit: {0:n2} | Total Rolls: {1:F0}", slotProfit, rollTotalCounter);
+                    Console.SetCursorPosition(21, 18);
+                    Console.WriteLine("Current bet: {0:n0}", slotMachineBet);
+                    Console.SetCursorPosition(21, 19);
+                    Console.WriteLine("[1] / [ENTER] to run again.");
+                    Console.SetCursorPosition(21, 20);
                     Console.WriteLine("[ESC] / [BACKSPACE] to go back");
                     Thread.Sleep(1000);
                     press = Console.ReadKey(false).Key;
