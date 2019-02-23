@@ -21,8 +21,7 @@ namespace ConsoleClicker
                 threeBars = "≡",
                 diamond = "◊",
                 cherry = "₪",
-                jackPot = "₿",
-                wild = "¥";
+                jackPot = "₿";
             //Jackpot
             //One Bar >−< filled
             //25%
@@ -65,12 +64,6 @@ namespace ConsoleClicker
             if (slotMachineMainRng >= 97 && slotMachineMainRng <= 100)
             {
                 return jackPot;
-            }
-            //WILD
-            //20%
-            if (slotMachineMainRng >= 101 && slotMachineMainRng <= 121)
-            {
-                return wild;
             }
             return null;
         }
@@ -548,8 +541,7 @@ namespace ConsoleClicker
                     cherry = "₪",
                     seven = "7",
                     diamond = "◊",
-                    jackPot = "₿",
-                    wild = "¥";
+                    jackPot = "₿";
                 string
                     slotMachineSlotsTop1 = null,
                     slotMachineSlotsTop2 = null,
@@ -562,10 +554,13 @@ namespace ConsoleClicker
                     slotMachineSlotsBottom3 = null,
                     slotAnimation1 = "|× ¦ × ¦ ×|",
                     slotAnimation2 = "|× ¦ × ¦ ×|",
-                    slotAnimation3 = "|× ¦ × ¦ ×|";
+                    slotAnimation3 = "|× ¦ × ¦ ×|",
+                    slotRewards1 = null, slotRewards2 = null, slotRewards3 = null;
                 string[] barStrings = { oneBar, twoBars, threeBars };
-                float slotMachineBet = 0f, receivedTokens = 0f, slotProfit = 0f;
-                slotMenu:
+                float slotMachineBet = 0f, 
+                    receivedTokens, 
+                    slotProfit = 0f;
+            slotMenu:
                 //Asks for the bet
                 Console.Clear();
                 Console.WriteLine("Welcome to the Slot Machine!\n[ESC] to leave");
@@ -616,7 +611,8 @@ namespace ConsoleClicker
                 //RNG and getting the symbols
                 if (menuSelection == 2)
                 {
-                    slotMachineRoll:
+                    float slotRewardsAmount1 = 0f, slotRewardsAmount2 = 0f, slotRewardsAmount3 = 0f;
+                slotMachineRoll:
                     rollTotalCounter++;
                     string slotDisplay1, slotDisplay2, slotDisplay3;
                     Console.Clear();
@@ -644,7 +640,6 @@ namespace ConsoleClicker
                     {
                         //Rng
                         int slotMachineMainRng = rng.Next(0, 100);
-
                         //slotDisplay1
                         slotMachineSlotsTop1 = SlotMachine(slotMachineMainRng);
                         slotMachineMainRng = rng.Next(0, 100);
@@ -690,8 +685,108 @@ namespace ConsoleClicker
                     slotAnimation1 = "|" + slotMachineSlotsTop1 + " ¦ " + slotMachineSlotsTop2 + " ¦ " + slotMachineSlotsTop3 + "|";
                     slotAnimation2 = "|" + slotMachineSlotsMain1 + " ¦ " + slotMachineSlotsMain2 + " ¦ " + slotMachineSlotsMain3 + "|";
                     slotAnimation3 = "|" + slotMachineSlotsBottom1 + " ¦ " + slotMachineSlotsBottom2 + " ¦ " + slotMachineSlotsBottom3 + "|";
+                    const float oneBarMult = 1f,
+                        twoBarMult = 2f,
+                        threeBarMult = 4f,
+                        cherryMult = 5f,
+                        sevenMult = 15f,
+                        diamondMult = 25f,
+                        jackPotMult = 50f;
                     //If statements for prizes/rewards
                     #region Rewards
+                    switch (slotMachineSlotsMain1)
+                    {
+                        case oneBar:
+                            slotRewards1 = slotMachineSlotsMain1;
+                            slotRewardsAmount1 = oneBarMult;
+                            break;
+                        case twoBars:
+                            slotRewards1 = slotMachineSlotsMain1;
+                            slotRewardsAmount1 = twoBarMult;
+                            break;
+                        case threeBars:
+                            slotRewards1 = slotMachineSlotsMain1;
+                            slotRewardsAmount1 = threeBarMult;
+                            break;
+                        case cherry:
+                            slotRewards1 = slotMachineSlotsMain1;
+                            slotRewardsAmount1 = cherryMult;
+                            break;
+                        case seven:
+                            slotRewards1 = slotMachineSlotsMain1;
+                            slotRewardsAmount1 = sevenMult;
+                            break;
+                        case diamond:
+                            slotRewards1 = slotMachineSlotsMain1;
+                            slotRewardsAmount1 = diamondMult;
+                            break;
+                        case jackPot:
+                            slotRewards1 = slotMachineSlotsMain1;
+                            slotRewardsAmount1 = jackPotMult;
+                            break;
+                    }
+                    switch (slotMachineSlotsMain2)
+                    {
+                        case oneBar:
+                            slotRewards2 = slotMachineSlotsMain2;
+                            slotRewardsAmount2 = oneBarMult;
+                            break;
+                        case twoBars:
+                            slotRewards2 = slotMachineSlotsMain2;
+                            slotRewardsAmount2 = twoBarMult;
+                            break;
+                        case threeBars:
+                            slotRewards2 = slotMachineSlotsMain2;
+                            slotRewardsAmount2 = threeBarMult;
+                            break;
+                        case cherry:
+                            slotRewards2 = slotMachineSlotsMain2;
+                            slotRewardsAmount2 = cherryMult;
+                            break;
+                        case seven:
+                            slotRewards2 = slotMachineSlotsMain2;
+                            slotRewardsAmount2 = sevenMult;
+                            break;
+                        case diamond:
+                            slotRewards2 = slotMachineSlotsMain2;
+                            slotRewardsAmount2 = diamondMult;
+                            break;
+                        case jackPot:
+                            slotRewards2 = slotMachineSlotsMain2;
+                            slotRewardsAmount2 = jackPotMult;
+                            break;
+                    }
+                    switch (slotMachineSlotsMain3)
+                    {
+                        case oneBar:
+                            slotRewards3 = slotMachineSlotsMain3;
+                            slotRewardsAmount3 = oneBarMult;
+                            break;
+                        case twoBars:
+                            slotRewards3 = slotMachineSlotsMain3;
+                            slotRewardsAmount3 = twoBarMult;
+                            break;
+                        case threeBars:
+                            slotRewards3 = slotMachineSlotsMain3;
+                            slotRewardsAmount3 = threeBarMult;
+                            break;
+                        case cherry:
+                            slotRewards3 = slotMachineSlotsMain3;
+                            slotRewardsAmount3 = cherryMult;
+                            break;
+                        case seven:
+                            slotRewards3 = slotMachineSlotsMain3;
+                            slotRewardsAmount3 = sevenMult;
+                            break;
+                        case diamond:
+                            slotRewards3 = slotMachineSlotsMain3;
+                            slotRewardsAmount3 = diamondMult;
+                            break;
+                        case jackPot:
+                            slotRewards3 = slotMachineSlotsMain3;
+                            slotRewardsAmount3 = jackPotMult;
+                            break;
+                    }
                     /*
                     wild = "¥" 1f
                     oneBar = "−" 1f
@@ -703,87 +798,20 @@ namespace ConsoleClicker
                     jackPot = "₿" 100f
                     */
                     ////////////////////////////
-                    //use this as the formula = 'receivedTokens' += 'slotMachineBet' * 2.33... = (3 / (oneBarMult + twoBarMult + threeBarMult))
-                    const float oneBarMult = 1f,
-                        twoBarMult = 2f,
-                        threeBarMult = 4f,
-                        cherryMult = 10f,
-                        sevenMult = 25f,
-                        diamondMult = 50f,
-                        jackPotMult = 100f,
-                        wildMult = 1f;
+                    //use this as the formula = 'receivedTokens' += 'slotMachineBet' * 2.33... = (3 = all same type|6or10 = different types / (oneBarMult + twoBarMult + threeBarMult))
                     ////////////////////////////
-                    if (barStrings.Contains(slotMachineSlotsMain1) && barStrings.Contains(slotMachineSlotsMain2) && barStrings.Contains(slotMachineSlotsMain3))
+                    //Main calculation of rewards
+                    if ((slotMachineSlotsMain1 == slotMachineSlotsMain2) && (slotMachineSlotsMain2 == slotMachineSlotsMain3) && (slotMachineSlotsMain1 == slotMachineSlotsMain3))
                     {
-                        receivedTokens = slotMachineBet * 0.50f;
-                        bars += receivedTokens;
-                        Console.SetCursorPosition(21, 10);
-                        Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
+                        receivedTokens = slotMachineBet * (25 / (slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3));
                     }
-                    //Only one bars
-                    if (slotMachineSlotsMain1 == oneBar && slotMachineSlotsMain2 == oneBar && slotMachineSlotsMain3 == oneBar)
+                    else
                     {
-                        receivedTokens = slotMachineBet * 1f;
-                        bars += receivedTokens;
-                        Console.SetCursorPosition(21, 10);
-                        Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
+                        receivedTokens = slotMachineBet * (10 / (slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3));
                     }
-                    //Only two bars
-                    if (slotMachineSlotsMain1 == twoBars && slotMachineSlotsMain2 == twoBars && slotMachineSlotsMain3 == twoBars)
-                    {
-                        receivedTokens = slotMachineBet * 2f;
-                        bars += receivedTokens;
-                        Console.SetCursorPosition(21, 10);
-                        Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
-                    }
-                    //Only three bars
-                    if (slotMachineSlotsMain1 == threeBars && slotMachineSlotsMain2 == threeBars && slotMachineSlotsMain3 == threeBars)
-                    {
-                        receivedTokens = slotMachineBet * 4f;
-                        bars += receivedTokens;
-                        Console.SetCursorPosition(21, 10);
-                        Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
-                    }
-                    //Only cherries
-                    if (slotMachineSlotsMain1 == cherry && slotMachineSlotsMain2 == cherry && slotMachineSlotsMain3 == cherry)
-                    {
-                        receivedTokens = slotMachineBet * 10f;
-                        bars += receivedTokens;
-                        Console.SetCursorPosition(21, 10);
-                        Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
-                    }
-                    //Only sevens
-                    if (slotMachineSlotsMain1 == seven && slotMachineSlotsMain2 == seven && slotMachineSlotsMain3 == seven)
-                    {
-                        receivedTokens = slotMachineBet * 25f;
-                        bars += receivedTokens;
-                        Console.SetCursorPosition(21, 10);
-                        Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
-                    }
-                    //Only diamonds
-                    if (slotMachineSlotsMain1 == diamond && slotMachineSlotsMain2 == diamond && slotMachineSlotsMain3 == diamond)
-                    {
-                        receivedTokens = slotMachineBet * 50f;
-                        bars += receivedTokens;
-                        Console.SetCursorPosition(21, 10);
-                        Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
-                    }
-                    //Only jackPots
-                    if (slotMachineSlotsMain1 == jackPot && slotMachineSlotsMain2 == jackPot && slotMachineSlotsMain3 == jackPot)
-                    {
-                        receivedTokens = slotMachineBet * 100f;
-                        bars += receivedTokens;
-                        Console.SetCursorPosition(21, 10);
-                        Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
-                    }
-                    //Only wild
-                    if (slotMachineSlotsMain1 == wild && slotMachineSlotsMain2 == wild && slotMachineSlotsMain3 == wild)
-                    {
-                        receivedTokens = slotMachineBet * 1f;
-                        bars += receivedTokens;
-                        Console.SetCursorPosition(21, 10);
-                        Console.WriteLine("You got {0} | {1} | {2}", slotMachineSlotsMain1, slotMachineSlotsMain2, slotMachineSlotsMain3);
-                    }
+                    bars += receivedTokens;
+                    Console.SetCursorPosition(21, 10);
+                    Console.WriteLine("You got {0} | {1} | {2}", slotRewards1, slotRewards2, slotRewards3);
                     #endregion
                     if (receivedTokens > 0f)
                     {
@@ -812,7 +840,7 @@ namespace ConsoleClicker
                         case ConsoleKey.Escape:
                             goto slotMenu;
                             default:
-                                goto slotMenu;
+                                goto slotMachineRoll;
                     }
                 }
             }
