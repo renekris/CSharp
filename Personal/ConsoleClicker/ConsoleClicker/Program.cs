@@ -614,6 +614,7 @@ namespace ConsoleClicker
                     float slotRewardsAmount1 = 0f, slotRewardsAmount2 = 0f, slotRewardsAmount3 = 0f;
                 slotMachineRoll:
                     rollTotalCounter++;
+                    bars -= slotMachineBet;
                     string slotDisplay1, slotDisplay2, slotDisplay3;
                     Console.Clear();
                     Console.WriteLine("Welcome to the Slot Machine!\n");
@@ -788,7 +789,7 @@ namespace ConsoleClicker
                             break;
                     }
                     /*
-                    wild = "¥" 1f
+                    wild = "¥" 1f?
                     oneBar = "−" 1f
                     twoBars = "=" 2f
                     threeBars = "≡" 4f
@@ -803,11 +804,11 @@ namespace ConsoleClicker
                     //Main calculation of rewards
                     if ((slotMachineSlotsMain1 == slotMachineSlotsMain2) && (slotMachineSlotsMain2 == slotMachineSlotsMain3) && (slotMachineSlotsMain1 == slotMachineSlotsMain3))
                     {
-                        receivedTokens = slotMachineBet * (25 / (slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3));
+                        receivedTokens = ((slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3) * slotMachineBet) / 5;
                     }
                     else
                     {
-                        receivedTokens = slotMachineBet * (10 / (slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3));
+                        receivedTokens = ((slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3) * slotMachineBet) / 23;
                     }
                     bars += receivedTokens;
                     Console.SetCursorPosition(21, 10);
@@ -816,20 +817,20 @@ namespace ConsoleClicker
                     if (receivedTokens > 0f)
                     {
                         Console.SetCursorPosition(21, 11);
-                        Console.WriteLine("= {0:F1} Tokens~", receivedTokens);
+                        Console.WriteLine("= {0:n2} Tokens~", receivedTokens);
                         totalTokens += receivedTokens;
                     }
                     slotProfit += (receivedTokens - slotMachineBet);
-                    receivedTokens = 0f;
                     Console.SetCursorPosition(21, 14);
-                    Console.WriteLine("Total Profit: {0:F1} | Total Rolls: {1:F0}", slotProfit, rollTotalCounter);
+                    Console.WriteLine("Total Profit: {0:n2} | Total Rolls: {1:F0}", slotProfit, rollTotalCounter);
                     Console.SetCursorPosition(21, 15);
-                    Console.WriteLine("Current bet: {0}", slotMachineBet);
+                    Console.WriteLine("Current bet: {0:n0}", slotMachineBet);
                     Console.SetCursorPosition(21, 16);
                     Console.WriteLine("[1] / [ENTER] to run again.");
                     Console.SetCursorPosition(21, 17);
                     Console.WriteLine("[ESC] / [BACKSPACE] to go back");
-                    press = Console.ReadKey(true).Key;
+                    Thread.Sleep(1000);
+                    press = Console.ReadKey(false).Key;
                     switch (press)
                     {
                         case ConsoleKey.NumPad1:
