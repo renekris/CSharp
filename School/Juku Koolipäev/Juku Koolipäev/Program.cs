@@ -1,11 +1,5 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Juku_Koolipäev
 {
@@ -17,18 +11,21 @@ namespace Juku_Koolipäev
             Console.WriteLine(inputString);
             Console.ResetColor();
         }
+
         static void ColorBlue(string inputString)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(inputString);
             Console.ResetColor();
         }
+
         static void ColorDarkBlue(string inputString)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine(inputString);
             Console.ResetColor();
         }
+
         static void ColorRed(string inputString)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -36,7 +33,7 @@ namespace Juku_Koolipäev
             Console.ResetColor();
         }
 
-        static void jukuValues(float jukuEnergia)
+        static void JukuValues(float jukuEnergia)
         {
             Console.WriteLine("Juku Energia: {0:P0}", jukuEnergia);
             if (jukuEnergia >= 0.50)
@@ -102,7 +99,7 @@ namespace Juku_Koolipäev
         static void JukuToiduValik(ref float jukuEnergia, ref string jukuToiduValik)
         {
             anyKey:
-            jukuValues(jukuEnergia);
+            JukuValues(jukuEnergia);
             Console.WriteLine("Neljas tund on söögi aeg, vali jukule, mida ta sööb\n" +
                               "1. Värskekapsa borš sealihaga\n" +
                               "2. Makaronid hakklihaga\n" +
@@ -138,139 +135,120 @@ namespace Juku_Koolipäev
                     jukuToiduValik = "Praetud kanafilee";
                     jukuEnergia += 0.50f;
                     break;
-                    default:
-                        goto anyKey;
+                default:
+                    goto anyKey;
             }
         }
+
         static void Main(string[] args)
         {
+            Console.Title = "Juku Koolipäev, By Renekris";
             Random rng = new Random();
             Console.OutputEncoding = Encoding.Unicode;
-            int selectionMenu = 0, sündmus, hinne;
+            int sündmus, hinne;
             float jukuEnergia = 1f;
-            string[] syndimus = { "tunnikontroll", "kontrolltöö", "kodutööde esitamine" };
+            string[] syndimus = {"tunnikontroll", "kontrolltöö", "kodutööde esitamine"};
             string jukuToiduValik = null;
-            while (true)
+            ////MENU
+            JukuValues(jukuEnergia);
+            Console.WriteLine("Sa oled just kooli jõudnud ja sa oled täiesti ärkvel!\n\n" +
+                              "Tänane tunniplaan on:\n" +
+                              "1. tund | Programmeerimine\n" +
+                              "2. tund | Eesti keel\n" +
+                              "3. tund | Inglise keel\n" +
+                              "3. tund | Lõuna\n" +
+                              "4. tund | Keemia\n" +
+                              "5. tund | Matemaatika\n" +
+                              "6. tund | Operatsiooni süsteemide alused");
+            Console.ReadKey();
+            Console.Clear();
+            ////TUND 1
+            //rng
+            sündmus = rng.Next(0, 3);
+            hinne = rng.Next(1, 6);
+            //switch case | decreases the energy
+            JukuSwitchCase(ref jukuEnergia, hinne);
+            //juku energia number | juku olukord
+            JukuValues(jukuEnergia);
+            Console.WriteLine("Esimene tund on Programmeerimine\nÕpetaja ütles Jukule, et täna on {0}",
+                syndimus[sündmus]);
+            //1-5 hinne jukule
+            JukuHinne(hinne);
+            Console.ReadKey();
+            Console.Clear();
+            ////TUND 2
+            sündmus = rng.Next(0, 3);
+            hinne = rng.Next(1, 6);
+            JukuSwitchCase(ref jukuEnergia, hinne);
+            JukuValues(jukuEnergia);
+            Console.WriteLine("Teine tund on Eesti keel\nÕpetaja ütles Jukule, et täna on {0}",
+                syndimus[sündmus]);
+            JukuHinne(hinne);
+            Console.ReadKey();
+            Console.Clear();
+            ////TUND 3
+            sündmus = rng.Next(0, 3);
+            hinne = rng.Next(1, 6);
+            JukuSwitchCase(ref jukuEnergia, hinne);
+            JukuValues(jukuEnergia);
+            Console.WriteLine("Kolmas tund on Inglise keel\nÕpetaja ütles Jukule, et täna on {0}",
+                syndimus[sündmus]);
+            JukuHinne(hinne);
+            Console.ReadKey();
+            Console.Clear();
+            ////LÕUNA 4
+            JukuToiduValik(ref jukuEnergia, ref jukuToiduValik);
+            JukuValues(jukuEnergia);
+            Console.WriteLine("Juku sõi {0}, ja tal hakkas kohe parem.", jukuToiduValik.Clone());
+            Console.ReadKey();
+            Console.Clear();
+            ////TUND 5
+            sündmus = rng.Next(0, 3);
+            hinne = rng.Next(1, 6);
+            JukuSwitchCase(ref jukuEnergia, hinne);
+            JukuValues(jukuEnergia);
+            Console.WriteLine("Viies tund on Keemia\nÕpetaja ütles Jukule, et täna on {0}", syndimus[sündmus]);
+            JukuHinne(hinne);
+            Console.ReadKey();
+            Console.Clear();
+            ////TUND 6
+            sündmus = rng.Next(0, 3);
+            hinne = rng.Next(1, 6);
+            JukuSwitchCase(ref jukuEnergia, hinne);
+            JukuValues(jukuEnergia);
+            Console.WriteLine("Kuues tund on Matemaatika\nÕpetaja ütles Jukule, et täna on {0}",
+                syndimus[sündmus]);
+            JukuHinne(hinne);
+            Console.ReadKey();
+            Console.Clear();
+            ////TUND 7
+            sündmus = rng.Next(0, 3);
+            hinne = rng.Next(1, 6);
+            JukuSwitchCase(ref jukuEnergia, hinne);
+            JukuValues(jukuEnergia);
+            Console.WriteLine(
+                "Seitsmes tund on Operatsiooni süsteemide alused\nÕpetaja ütles Jukule, et täna on {0}",
+                syndimus[sündmus]);
+            JukuHinne(hinne);
+            Console.ReadKey();
+            if (hinne == 5)
             {
-                if (selectionMenu == 0)
-                {
-                    jukuValues(jukuEnergia);
-                    Console.WriteLine("Sa oled just kooli jõudnud ja sa oled täiesti ärkvel!\n\n" +
-                                      "Tänane tunniplaan on:\n" +
-                                      "1. tund | Programmeerimine\n" +
-                                      "2. tund | Eesti keel\n" +
-                                      "3. tund | Inglise keel\n" +
-                                      "3. tund | Lõuna\n" +
-                                      "4. tund | Keemia\n" +
-                                      "5. tund | Matemaatika\n" +
-                                      "6. tund | Operatsiooni süsteemide alused");
-                    Console.ReadKey();
-                    Console.Clear();
-                    selectionMenu = 1;
-                }
-                if (selectionMenu == 1)
-                {
-                    //rng
-                    sündmus = rng.Next(0, 3);
-                    hinne = rng.Next(1, 6);
-                    //switch case | decreases the energy
-                    JukuSwitchCase(ref jukuEnergia, hinne);
-                    //juku energia number | juku olukord
-                    jukuValues(jukuEnergia);
-                    Console.WriteLine("Esimene tund on Programmeerimine\nÕpetaja ütles Jukule, et täna on {0}", syndimus[sündmus]);
-                    //1-5 hinne jukule
-                    JukuHinne(hinne);
-                    Console.ReadKey();
-                    Console.Clear();
-                    selectionMenu = 2;
-                }
-                if (selectionMenu == 2)
-                {
-                    sündmus = rng.Next(0, 3);
-                    hinne = rng.Next(1, 6);
-                    JukuSwitchCase(ref jukuEnergia, hinne);
-                    jukuValues(jukuEnergia);
-                    Console.WriteLine("Teine tund on Eesti keel\nÕpetaja ütles Jukule, et täna on {0}", syndimus[sündmus]);
-                    JukuHinne(hinne);
-                    Console.ReadKey();
-                    Console.Clear();
-                    selectionMenu = 3;
-                }
-                if (selectionMenu == 3)
-                {
-                    sündmus = rng.Next(0, 3);
-                    hinne = rng.Next(1, 6);
-                    JukuSwitchCase(ref jukuEnergia, hinne);
-                    jukuValues(jukuEnergia);
-                    Console.WriteLine("Kolmas tund on Inglise keel\nÕpetaja ütles Jukule, et täna on {0}", syndimus[sündmus]);
-                    JukuHinne(hinne);
-                    Console.ReadKey();
-                    Console.Clear();
-                    selectionMenu = 4;
-                }
-                //Lõuna
-                if (selectionMenu == 4)
-                {
-                    JukuToiduValik(ref jukuEnergia, ref jukuToiduValik);
-                    jukuValues(jukuEnergia);
-                    Console.WriteLine("Juku sõi {0}, ja tal hakkas kohe parem.", jukuToiduValik.Clone());
-                    Console.ReadKey();
-                    Console.Clear();
-                    selectionMenu = 5;
-                }
-                if (selectionMenu == 5)
-                {
-                    sündmus = rng.Next(0, 3);
-                    hinne = rng.Next(1, 6);
-                    JukuSwitchCase(ref jukuEnergia, hinne);
-                    jukuValues(jukuEnergia);
-                    Console.WriteLine("Viies tund on Keemia\nÕpetaja ütles Jukule, et täna on {0}", syndimus[sündmus]);
-                    JukuHinne(hinne);
-                    Console.ReadKey();
-                    Console.Clear();
-                    selectionMenu = 6;
-                }
-                if (selectionMenu == 6)
-                {
-                    sündmus = rng.Next(0, 3);
-                    hinne = rng.Next(1, 6);
-                    JukuSwitchCase(ref jukuEnergia, hinne);
-                    jukuValues(jukuEnergia);
-                    Console.WriteLine("Kuues tund on Matemaatika\nÕpetaja ütles Jukule, et täna on {0}", syndimus[sündmus]);
-                    JukuHinne(hinne);
-                    Console.ReadKey();
-                    Console.Clear();
-                    selectionMenu = 7;
-                }
-                if (selectionMenu == 7)
-                {
-                    sündmus = rng.Next(0, 3);
-                    hinne = rng.Next(1, 6);
-                    JukuSwitchCase(ref jukuEnergia, hinne);
-                    jukuValues(jukuEnergia);
-                    Console.WriteLine("Seitsmes tund on Operatsiooni süsteemide alused\nÕpetaja ütles Jukule, et täna on {0}", syndimus[sündmus]);
-                    JukuHinne(hinne);
-                    Console.ReadKey();
-                    if (hinne == 5)
-                    {
-                        Console.Clear();
-                        jukuEnergia = 1f;
-                        jukuValues(jukuEnergia);
-                        Console.WriteLine("Juku sai viimase tunni hinde {0},\n" +
-                                          "ehk Juku saab varem koju + Juku elurõõm on tagasi tulnud", hinne);
-                        Console.ReadKey();
-                        Environment.Exit(0);
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        jukuValues(jukuEnergia);
-                        Console.WriteLine("Juku sai viimase tunni hinde {0},\n" +
-                                          "Juku peab kauemaks kooli jääma asju parandama", hinne);
-                        Console.ReadKey();
-                        Environment.Exit(0);
-                    }
-                }
+                Console.Clear();
+                jukuEnergia = 1f;
+                JukuValues(jukuEnergia);
+                Console.WriteLine("Juku sai viimase tunni hinde {0},\n" +
+                                  "ehk Juku saab varem koju + Juku elurõõm on tagasi tulnud", hinne);
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+            else
+            {
+                Console.Clear();
+                JukuValues(jukuEnergia);
+                Console.WriteLine("Juku sai viimase tunni hinde {0},\n" +
+                                  "Juku peab kauemaks kooli jääma asju parandama", hinne);
+                Console.ReadKey();
+                Environment.Exit(0);
             }
         }
     }
