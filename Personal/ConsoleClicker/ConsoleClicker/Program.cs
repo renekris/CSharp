@@ -87,21 +87,35 @@ namespace ConsoleClicker
             Console.Write(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(0, currentLineCursor);
         }
+
         static void Main(string[] args)
-        { 
+        {
             Console.OutputEncoding = Encoding.Unicode;
             int powerx = 1, count1 = 0, countPowerX = 0, countBarsLimit = 0, actionTiming = 50, menuSelection, countActionTime = 0, sideMain = 1, foo = 0, clicks = 0, realClicks = 0;
             float barsLimit = 50f, price1F = 50f, price2F = 100f, price3F = 10f, bars = 0f, totalBars = 0f, price4F = 20f, totalTokens = 0;
             bool isSecret = false, side, pressedDown = false, pressedUp = false, pressedDefault = false;
             string boughtIt1 = null;
             Console.TreatControlCAsInput = true;
-            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Title = "Console Clicker, Made by Renekris";
-            Console.WriteLine("  ▄████▄   ▒█████   ███▄    █   ██████  ▒█████   ██▓    ▓█████       \r\n▒██▀ ▀█  ▒██▒  ██▒ ██ ▀█   █ ▒██    ▒ ▒██▒  ██▒▓██▒    ▓█   ▀       \r\n▒▓█    ▄ ▒██░  ██▒▓██  ▀█ ██▒░ ▓██▄   ▒██░  ██▒▒██░    ▒███         \r\n▒▓▓▄ ▄██▒▒██   ██░▓██▒  ▐▌██▒  ▒   ██▒▒██   ██░▒██░    ▒▓█  ▄       \r\n▒ ▓███▀ ░░ ████▓▒░▒██░   ▓██░▒██████▒▒░ ████▓▒░░██████▒░▒████▒      \r\n░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░░ ▒░▒░▒░ ░ ▒░▓  ░░░ ▒░ ░      \r\n  ░  ▒     ░ ▒ ▒░ ░ ░░   ░ ▒░░ ░▒  ░ ░  ░ ▒ ▒░ ░ ░ ▒  ░ ░ ░  ░      \r\n░        ░ ░ ░ ▒     ░   ░ ░ ░  ░  ░  ░ ░ ░ ▒    ░ ░      ░         \r\n░ ░          ░ ░           ░       ░      ░ ░      ░  ░   ░  ░      \r\n░               ▄████▄   ██▓     ██▓ ▄████▄   ██ ▄█▀▓█████  ██▀███  \r\n               ▒██▀ ▀█  ▓██▒    ▓██▒▒██▀ ▀█   ██▄█▒ ▓█   ▀ ▓██ ▒ ██▒\r\n               ▒▓█    ▄ ▒██░    ▒██▒▒▓█    ▄ ▓███▄░ ▒███   ▓██ ░▄█ ▒\r\n               ▒▓▓▄ ▄██▒▒██░    ░██░▒▓▓▄ ▄██▒▓██ █▄ ▒▓█  ▄ ▒██▀▀█▄  \r\n               ▒ ▓███▀ ░░██████▒░██░▒ ▓███▀ ░▒██▒ █▄░▒████▒░██▓ ▒██▒\r\n               ░ ░▒ ▒  ░░ ▒░▓  ░░▓  ░ ░▒ ▒  ░▒ ▒▒ ▓▒░░ ▒░ ░░ ▒▓ ░▒▓░\r\n                 ░  ▒   ░ ░ ▒  ░ ▒ ░  ░  ▒   ░ ░▒ ▒░ ░ ░  ░  ░▒ ░ ▒░\r\n               ░          ░ ░    ▒ ░░        ░ ░░ ░    ░     ░░   ░ \r\n               ░ ░          ░  ░ ░  ░ ░      ░  ░      ░  ░   ░     \r\n               ░                    ░                               ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("  ▄████▄   ▒█████   ███▄    █   ██████  ▒█████   ██▓    ▓█████       \r\n▒██▀ ▀█  ▒██▒  ██▒ ██ ▀█   █ ▒██    ▒ ▒██▒  ██▒▓██▒    ▓█   ▀       \r\n▒▓█    ▄ ▒██░  ██▒▓██  ▀█ ██▒░ ▓██▄   ▒██░  ██▒▒██░    ▒███         \r\n▒▓▓▄ ▄██▒▒██   ██░▓██▒  ▐▌██▒  ▒   ██▒▒██   ██░▒██░    ▒▓█  ▄       \r\n▒ ▓███▀ ░░ ████▓▒░▒██░   ▓██░▒██████▒▒░ ████▓▒░░██████▒░▒████▒      \r\n░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░░ ▒░▒░▒░ ░ ▒░▓  ░░░ ▒░ ░      \r\n  ░  ▒     ░ ▒ ▒░ ░ ░░   ░ ▒░░ ░▒  ░ ░  ░ ▒ ▒░ ░ ░ ▒  ░ ░ ░  ░      \r\n░        ░ ░ ░ ▒     ░   ░ ░ ░  ░  ░  ░ ░ ░ ▒    ░ ░      ░         \r\n░ ░          ░ ░           ░       ░      ░ ░      ░  ░   ░  ░          \n░");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("                 ▄████▄   ██▓     ██▓ ▄████▄   ██ ▄█▀▓█████  ██▀███  \r\n               ▒██▀ ▀█  ▓██▒    ▓██▒▒██▀ ▀█   ██▄█▒ ▓█   ▀ ▓██ ▒ ██▒\r\n               ▒▓█    ▄ ▒██░    ▒██▒▒▓█    ▄ ▓███▄░ ▒███   ▓██ ░▄█ ▒\r\n               ▒▓▓▄ ▄██▒▒██░    ░██░▒▓▓▄ ▄██▒▓██ █▄ ▒▓█  ▄ ▒██▀▀█▄  \r\n               ▒ ▓███▀ ░░██████▒░██░▒ ▓███▀ ░▒██▒ █▄░▒████▒░██▓ ▒██▒\r\n               ░ ░▒ ▒  ░░ ▒░▓  ░░▓  ░ ░▒ ▒  ░▒ ▒▒ ▓▒░░ ▒░ ░░ ▒▓ ░▒▓░\r\n                 ░  ▒   ░ ░ ▒  ░ ▒ ░  ░  ▒   ░ ░▒ ▒░ ░ ░  ░  ░▒ ░ ▒░\r\n               ░          ░ ░    ▒ ░░        ░ ░░ ░    ░     ░░   ░ \r\n               ░ ░          ░  ░ ░  ░ ░      ░  ░      ░  ░   ░     \r\n               ░                    ░                               ");
             Console.ResetColor();
             Console.WriteLine("\nProgramming by Renekris / Rene Kristofer Pohlak.\n");
             Console.WriteLine("Big thanks to: Gio, Juškin, for giving me ideas to work with!");
-
+            //ignore
+            Console.SetCursorPosition(15, 21);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Renekris / Rene Kristofer Pohlak");
+            Console.SetCursorPosition(15, 23);
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Gio");
+            Console.SetCursorPosition(20, 23);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Juškin");
+            Console.ResetColor();
+            //ignore
             Console.ReadKey();
         menu:
             Console.Clear();
@@ -133,7 +147,6 @@ namespace ConsoleClicker
                     Process.Start("https://github.com/renekris/CSharp");
                     goto menu;
                 //Game start
-                case ConsoleKey.Enter:
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.DownArrow:
                     menuSelection = 1;
@@ -158,6 +171,7 @@ namespace ConsoleClicker
                     menuSelection = 4;
                     break;
                 //SlotMachine
+                case ConsoleKey.Enter:
                 case ConsoleKey.D3:
                     menuSelection = 5;
                     break;
@@ -636,16 +650,20 @@ namespace ConsoleClicker
                     SetCursorMiddle("╚═╗║  ║ ║ ║ ╚═╗  ║║║╠═╣║  ╠═╣║║║║║╣ ");
                     SetCursorMiddle("╚═╝╩═╝╚═╝ ╩ ╚═╝  ╩ ╩╩ ╩╚═╝╩ ╩╩╝╚╝╚═╝");
                     Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     SetCursorMiddle("Winning Table");
                     SetCursorMiddle("- = 1|= = 2");
                     SetCursorMiddle("≡ = 4|₪ = 7");
                     SetCursorMiddle("7 = 15|◊ = 25");
                     SetCursorMiddle("₿ = 50");
                     SetCursorMiddle("^JACK^POT^");
-                    int slotMachineRollAmount = rng.Next(20, 50);
+                    Console.ResetColor();
+                    int slotMachineRollAmount = rng.Next(10, 50);
                     //Animation
                     Console.SetCursorPosition(0, 11);
-                    Console.WriteLine("                 _          __\r\n          ,-----' |   _   <'__`)\r\n          | //  : | -'     )o \\\\\r\n          | //  : |  ---   \\__;`\r\n          | //  : | -._      |\\`\\\r\n          `-----._|     __  // ( \\|\r\n           _/___\\_    //)_`//  | ||]\r\n     _____[_______]_[~~-_ (.L_/  ||\r\n    [____________________]' `\\_,/'/\r\n      ||| /          |||  ,___,'./\r\n      ||| \\          |||,'______|\r\n      ||| /          /|| I==||\r\n      ||| \\       __/_||  __||__\r\n  -----||-/------`-._/||-o--o---o---\r\n    ~~~~~'");
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine("                 _          __\r\n          ,-----' |   _   <'__`)\r\n          | //  : | -'     )o \\\\\r\n          | //  : |  ---   \\__;`\r\n          | //  : | -._      |\\`\\\r\n          `-----._|     __  // ( \\|\r\n           _/___\\_    //)_`//  | ||]\r\n     _____[_______]_[^^-_ (.L_/  ||\r\n    [____________________]' `\\_,/'/\r\n      ||| /          |||  ,___,'./\r\n      ||| \\          |||,'______|\r\n      ||| /          /|| I==||\r\n      ||| \\       __/_||  __||__\r\n  -----||-/------`-._/||-o--o---o---\r\n    ~~~~~'");
+                    Console.ResetColor();
                     Console.SetCursorPosition(52, 9);
                     SetCursorMiddle("");
                     SetCursorMiddle(".-------.");
@@ -672,8 +690,11 @@ namespace ConsoleClicker
                     for (int slotMachineIndex = 0; slotMachineIndex < slotMachineRollAmount; slotMachineIndex++)
                     {
                         Console.SetCursorPosition(0, 11);
-                        Console.WriteLine("                 _          __\r\n          ,-----' |   _   <'__`)\r\n          | //  : | -'     )o \\\\\r\n          | //  : |  ---   \\__;`\r\n          | //  : | -._      |\\`\\\r\n          `-----._|     __  // ( \\|\r\n           _/___\\_    //)_`//  | ||]\r\n     _____[_______]_[~~-_ (.L_/  ||\r\n    [____________________]' `\\_,/'/\r\n      ||| /          |||  ,___,'./\r\n      ||| \\          |||,'______|\r\n      ||| /          /|| I==||\r\n      ||| \\       __/_||  __||__\r\n  -----||-/------`-._/||-o--o---o---\r\n    ~~~~~'");
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine("                 _          __\r\n          ,-----' |   _   <'__`)\r\n          | //  : | -'     )o \\\\\r\n          | //  : |  ---   \\__;`\r\n          | //  : | -._      |\\`\\\r\n          `-----._|     __  // ( \\|\r\n           _/___\\_    //)_`//  | ||]\r\n     _____[_______]_[^^-_ (.L_/  ||\r\n    [____________________]' `\\_,/'/\r\n      ||| /          |||  ,___,'./\r\n      ||| \\          |||,'______|\r\n      ||| /          /|| I==||\r\n      ||| \\       __/_||  __||__\r\n  -----||-/------`-._/||-o--o---o---\r\n    ~~~~~'");
+                        Console.ResetColor();
                         //Rng
+                        Console.ForegroundColor = ConsoleColor.White;
                         int slotMachineMainRng = rng.Next(0, 100);
                         //slotDisplay1
                         slotMachineSlotsTop1 = SlotMachine(slotMachineMainRng);
@@ -723,6 +744,7 @@ namespace ConsoleClicker
                         //Slot Machine is 13 + 1 char in height
                         Console.SetCursorPosition(0, Console.CursorTop - 14);
                         ClearCurrentConsoleLine();
+                        Console.ResetColor();
                     }
                     slotAnimation1 = "|" + slotMachineSlotsTop1 + " ¦ " + slotMachineSlotsTop2 + " ¦ " + slotMachineSlotsTop3 + "|";
                     slotAnimation2 = "|" + slotMachineSlotsMain1 + " ¦ " + slotMachineSlotsMain2 + " ¦ " + slotMachineSlotsMain3 + "|";
@@ -834,13 +856,25 @@ namespace ConsoleClicker
                     {
                         receivedTokens = ((slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3) * slotMachineBet) / 5;
                         Console.SetCursorPosition(0, 0);
-                        Console.WriteLine("                               )\r\n                         )   __    (\r\n                        __  (~(    __\r\n                       (~(   \\O\\   )~)\r\n                        )O)   )_) (O(\r\n                       (_(__ (     )_) )\r\n                          )~)__      __\r\n                         /O/ )~)  ) (~(\r\n                        (_( (O(  __  \\O\\\r\n                          )  )_)(~(   \\_\\\r\n                         __      )O)   (  \r\n                 _      (~(   __(_(    __ \r\n          ,-----' |    _ \\O\\<'~_`)   ) )~)\r\n          | //  : |  -'   )_))^ \\\\  __(O( \r\n          | //  : |   ---    >__;` (~( )_)\r\n          | //  : |  -._     /\\_\\   \\O\\ \r\n          `-----._|     __  /__( \\|  )_)\r\n           _/___\\_    //)_`/( (| ||]\r\n     _____[_______]_[~~-_ (.L)O) ||\r\n    [____________________]' (_(,/(~(\r\n      ||| /          )~)  ,___,'./\\O\\\r\n      ||| \\         (O(|,'______|( )_)\r\n      ||| /          )_) I==||  __\r\n      ||| \\       __/_||  __||__)~)\r\n  -----||-/------`-._/||-o-_o__(O(--  __\r\n    ~~~~~'   ____     __  /_O_/.\\_\\   \\~\\\r\n             \\_O_\\   /~/__/_/O`.o.     \\O\\\r\n             ____   /O/_\\_O/_/  `.'     \\_\\\r\n            /_O_/  /_/\\_O_\\");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("                               )\r\n                         )   __    (\r\n                        __  (~(    __\r\n                       (~(   \\O\\   )~)\r\n                        )O)   )_) (O(\r\n                       (_(__ (     )_) )\r\n                          )~)__      __\r\n                         /O/ )~)  ) (~(\r\n                        (_( (O(  __  \\O\\\r\n                          )  )_)(~(   \\_\\\r\n                         __      )O)   (  \r\n                 _      (~(   __(_(    __ \r\n          ,-----' |    _ \\O\\<'~_`)   ) )~)\r\n          | //  : |  -'   )_))^ \\\\  __(O( \r\n          | //  : |   ---    >__;` (~( )_)\r\n          | //  : |  -._     /\\_\\   \\O\\ \r\n          `-----._|     __  /__( \\|  )_)\r\n           _/___\\_    //)_`/( (| ||]\r\n     _____[_______]_[^^-_ (.L)O) ||\r\n    [____________________]' (_(,/(~(\r\n      ||| /          )~)  ,___,'./\\O\\\r\n      ||| \\         (O(|,'______|( )_)\r\n      ||| /          )_) I==||  __\r\n      ||| \\       __/_||  __||__)~)\r\n  -----||-/------`-._/||-o-_o__(O(--  __\r\n    ~~~~~'   ____     __  /_O_/.\\_\\   \\~\\\r\n             \\_O_\\   /~/__/_/O`.o.     \\O\\\r\n             ____   /O/_\\_O/_/  `.'     \\_\\\r\n            /_O_/  /_/\\_O_\\");
+                        Console.ResetColor();
                     }
                     else
                     {
                         receivedTokens = ((slotRewardsAmount1 + slotRewardsAmount2 + slotRewardsAmount3) * slotMachineBet) / 24;
                         Console.SetCursorPosition(0, 11);
-                        Console.WriteLine("                 _          __\r\n          ,-----' |   _   <'__`)\r\n          | //  : | -'     )o \\\\\r\n          | //  : |  ---   \\__;`\r\n          | //  : | -._      |\\`\\\r\n          `-----._|     __  // ( \\|\r\n           _/___\\_    //)_`//  | ||]\r\n     _____[_______]_[~~-_ (.L_/  ||\r\n    [____________________]' `\\_,/'/\r\n      ||| /          |||  ,___,'./\r\n      ||| \\          |||,'______|\r\n      ||| /          /|| I==||\r\n      ||| \\       __/_||  __||__\r\n  -----||-/------`-._/||-o--o---o---\r\n    ~~~~~'");
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine("                 _          __\r\n          ,-----' |   _   <'__`)\r\n          | //  : | -'     )o \\\\\r\n          | //  : |  ---   \\__;`\r\n          | //  : | -._      |\\`\\\r\n          `-----._|     __  // ( \\|\r\n           _/___\\_    //)_`//  | ||]\r\n     _____[_______]_[^^-_ (.L_/  ||\r\n    [____________________]' `\\_,/'/\r\n      ||| /          |||  ,___,'./\r\n      ||| \\          |||,'______|\r\n      ||| /          /|| I==||\r\n      ||| \\       __/_||  __||__\r\n  -----||-/------`-._/||-o--o---o---\r\n    ~~~~~'");
+                        Console.ResetColor();
+                    }
+
+                    if (receivedTokens > (slotMachineBet * 2.25f))
+                    {
+                        Console.SetCursorPosition(0, 0);
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("                               )\r\n                         )   __    (\r\n                        __  (~(    __\r\n                       (~(   \\O\\   )~)\r\n                        )O)   )_) (O(\r\n                       (_(__ (     )_) )\r\n                          )~)__      __\r\n                         /O/ )~)  ) (~(\r\n                        (_( (O(  __  \\O\\\r\n                          )  )_)(~(   \\_\\\r\n                         __      )O)   (  \r\n                 _      (~(   __(_(    __ \r\n          ,-----' |    _ \\O\\<'~_`)   ) )~)\r\n          | //  : |  -'   )_))^ \\\\  __(O( \r\n          | //  : |   ---    >__;` (~( )_)\r\n          | //  : |  -._     /\\_\\   \\O\\ \r\n          `-----._|     __  /__( \\|  )_)\r\n           _/___\\_    //)_`/( (| ||]\r\n     _____[_______]_[^^-_ (.L)O) ||\r\n    [____________________]' (_(,/(~(\r\n      ||| /          )~)  ,___,'./\\O\\\r\n      ||| \\         (O(|,'______|( )_)\r\n      ||| /          )_) I==||  __\r\n      ||| \\       __/_||  __||__)~)\r\n  -----||-/------`-._/||-o-_o__(O(--  __\r\n    ~~~~~'   ____     __  /_O_/.\\_\\   \\~\\\r\n             \\_O_\\   /~/__/_/O`.o.     \\O\\\r\n             ____   /O/_\\_O/_/  `.'     \\_\\\r\n            /_O_/  /_/\\_O_\\");
+                        Console.ResetColor();
                     }
                     bars += receivedTokens;
                     Console.SetCursorPosition(73, 14);
@@ -861,7 +895,21 @@ namespace ConsoleClicker
                     Console.WriteLine("[1] / [ENTER] to run again.");
                     Console.SetCursorPosition(73, 20);
                     Console.WriteLine("[ESC] / [BACKSPACE] to go back");
-                    Thread.Sleep(750);
+
+                    while (!Console.KeyAvailable && receivedTokens < (slotMachineBet * 2.25f))
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.SetCursorPosition(21, 17);
+                        Console.WriteLine(" //");
+                        Console.SetCursorPosition(20, 18);
+                        Console.WriteLine("[^~-");
+                        Thread.Sleep(500);
+                        Console.SetCursorPosition(21, 17);
+                        Console.WriteLine("// ");
+                        Console.SetCursorPosition(20, 18);
+                        Console.WriteLine("[~^-");
+                        Thread.Sleep(500);
+                    }
                     press = Console.ReadKey(false).Key;
                     switch (press)
                     {
