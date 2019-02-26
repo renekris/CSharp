@@ -19,13 +19,13 @@ namespace Cards
 
         private static string WhiteCard(string card)
         {
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine(card);
             Console.ResetColor();
             return card;
         }
 
-        public static string SpadeCards(int num)
+        public static string AllCards(int num)
         {
             string returnCard = null;
             switch (num)
@@ -202,15 +202,42 @@ namespace Cards
         {
             Random rng = new Random();
             Console.OutputEncoding = Encoding.Unicode;
-            List<int> cardsList = new List<int>(1 - 52); 
 
+            IEnumerable<int> UniqueRandom(int minInclusive, int maxInclusive)
+            {
+                List<int> candidates = new List<int>();
+                for (int i = minInclusive; i <= maxInclusive; i++)
+                {
+                    candidates.Add(i);
+                }
+                Random rnd = new Random();
+                while (candidates.Count > 0)
+                {
+                    int index = rnd.Next(candidates.Count);
+                    yield return candidates[index];
+                    candidates.RemoveAt(index);
+                }
+            }
+
+            
             while (true)
             {
-                int rngCards = rng.Next(cardsList);
-                cardsList.Remove(rngCards);
-                Cards.SpadeCards(rngCards);
+                int count = 0;
+                int cardPosx = 0;
+                int m = 0;
+                Console.WriteLine("You got these random cards:");
+                foreach (int i in UniqueRandom(1, 52))
+                {
+                    Cards.AllCards(i);
+                    cardPosx += 7;
+                    count += 1;
+                    if (count > 3)
+                    {
+                        break;
+                    }
+                }
+
                 Console.ReadKey();
-                Thread.Sleep(25);
                 Console.Clear();
             }
             
