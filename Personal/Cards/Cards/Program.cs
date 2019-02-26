@@ -202,13 +202,15 @@ namespace Cards
         {
             Random rng = new Random();
             Console.OutputEncoding = Encoding.Unicode;
+            List<int> cardsList = new List<int>(1 - 52); 
 
             while (true)
             {
-                int rng1 = rng.Next(1, 52);
-                Cards.SpadeCards(rng1);
+                int rngCards = rng.Next(cardsList);
+                cardsList.Remove(rngCards);
+                Cards.SpadeCards(rngCards);
                 Console.ReadKey();
-                Thread.Sleep(100);
+                Thread.Sleep(25);
                 Console.Clear();
             }
             
