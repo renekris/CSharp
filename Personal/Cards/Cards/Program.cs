@@ -200,7 +200,6 @@ namespace Cards
         
         static void Main(string[] args)
         {
-            Random rng = new Random();
             Console.OutputEncoding = Encoding.Unicode;
 
             IEnumerable<int> UniqueRandom(int minInclusive, int maxInclusive)
@@ -223,27 +222,20 @@ namespace Cards
             while (true)
             {
                 int count = 0;
-                int cardPosx = 0;
-                int m = 0;
                 Console.WriteLine("You got these random cards:");
                 foreach (int i in UniqueRandom(1, 52))
                 {
                     Cards.AllCards(i);
-                    cardPosx += 7;
                     count += 1;
                     if (count > 3)
                     {
                         break;
                     }
                 }
-
+                Console.WriteLine("♠\t♥\t♦\t♣");
                 Console.ReadKey();
                 Console.Clear();
             }
-            
-
-            Console.WriteLine("♠\t♥\t♦\t♣");
-            Console.ReadKey();
         }
     }
 }
