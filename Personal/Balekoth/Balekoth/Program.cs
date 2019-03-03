@@ -115,13 +115,16 @@ namespace Balekoth
                 Console.WriteLine("You have encountered a skeleton on your travels");
 
                 MiniTitle();
+                string[] enemyStrings = { "Skeleton", "Goblin", "Zombie", "Wolf", "Ghoul", "Ogre", "Mummy" };
                 bool isKilled = false;
                 int userHealth = hpNumber;
                 int enemyHealth = rng.Next(5, 25);
+                int enemyRandom = rng.Next(0, enemyStrings.Length);
                 do
                 {
                     MiniTitle();
-                    MiddleWriteLine("!Skeleton!");
+                    Console.SetCursorPosition((Console.WindowWidth - (2 + enemyStrings[enemyRandom].Length)) / 2, Console.CursorTop);
+                    Console.WriteLine("!{0}!", enemyStrings[enemyRandom]);
                     Console.SetCursorPosition((Console.WindowWidth - (9 + enemyHealth.ToString().Length)) / 2, Console.CursorTop);
                     Console.WriteLine("Enemy HP: {0}\n", enemyHealth);
                     Console.SetCursorPosition((Console.WindowWidth - (8 + userHealth.ToString().Length)) / 2, Console.CursorTop);
