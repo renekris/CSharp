@@ -9,13 +9,6 @@ namespace Õpilaste_Nimekiri
 {
     class Program
     {
-        static void StudentAmount(int amount)
-        {
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("Sinu klassis on {0} õpilast\n", amount);
-            Console.ResetColor();
-        }
-
         static void ViewStudents(List<string> student, List<string> grade)
         {
             Console.Clear();
@@ -24,18 +17,17 @@ namespace Õpilaste_Nimekiri
             for (int i = 0; i < student.Count; i++)
             {
                 Console.WriteLine("Õpilane: {0}", student[i]);
-                if (grade.Count > 0)
+                if (grade.Count == student.Count)
                 {
-                Console.WriteLine("Hinne: {0}\n", grade[i]);    
+                    Console.WriteLine("Hinne: {0}\n", grade[i]);
                 }
                 else
                 {
-                    Console.WriteLine("Hinded puuduvad\n");
+                    Console.WriteLine("Hinded puuduvad / Igal õpilasel pole hinnet\n");
                 }
             }
             Console.ReadKey();
         }
-
         static void AddStudents(ref List<string> student)
         {
             Console.Clear();
@@ -45,7 +37,7 @@ namespace Õpilaste_Nimekiri
             for (int i = 0; i < enteredNumber; i++)
             {
                 Console.WriteLine("Sisesta {0}. õpilase nimi {1}/{2}", student.Count + 1, i + 1, enteredNumber);
-                student.Add(Console.ReadLine());
+                student.Add(UppercaseFirst(Console.ReadLine().ToLower()));
             }
             Console.Clear();
             if (enteredNumber > 1)
@@ -63,15 +55,23 @@ namespace Õpilaste_Nimekiri
 
             Console.ReadKey();
         }
+        static void StudentAmount(int amount)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Sinu klassis on {0} õpilast\n", amount);
+            Console.ResetColor();
+        }
 
         static void InsertNumbers(ref List<string> grade, List<string> student)
         {
             grade.Clear();
+            int i = 1;
             foreach (var VARIABLE in student)
             {
-                string hinne = " "; 
+                string hinne = " ";
                 Console.Clear();
-                Console.WriteLine("Õpilane: {0}", VARIABLE);
+                StudentAmount(student.Count);
+                Console.WriteLine("Õpilane {1}/{2}: {0}", VARIABLE, i++, student.Count);
                 Console.Write("Hind: \n");
 
                 Console.WriteLine("[0] = P | [1] = X | [2] = 2 | [3] = 3 | [4] = 4 | [5] = 5");
@@ -110,7 +110,7 @@ namespace Õpilaste_Nimekiri
                 grade.Add(hinne);
             }
             Console.Clear();
-            for (int i = 0; i < student.Count; i++)
+            for (i = 0; i < student.Count; i++)
             {
                 Console.WriteLine("Õpilane: {0}", student[i]);
                 Console.WriteLine("Hind: {0}\n", grade[i]);
