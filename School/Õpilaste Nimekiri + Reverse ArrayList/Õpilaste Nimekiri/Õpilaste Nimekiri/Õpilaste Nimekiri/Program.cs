@@ -15,6 +15,44 @@ namespace Õpilaste_Nimekiri
             Console.WriteLine("Sinu klassis on {0} õpilast\n", amount);
             Console.ResetColor();
         }
+
+        static void ViewStudents(List<string> nimi)
+        {
+            Console.Clear();
+            Console.WriteLine("\nSinu klassis on õpilased nimega:");
+            foreach (string VARIABLE in nimi)
+            {
+                Console.WriteLine(VARIABLE);
+            }
+            Console.ReadKey();
+        }
+
+        static void AddStudents(ref List<string> nimed)
+        {
+            Console.Clear();
+            Console.WriteLine("Mitu õpilast sa sisestada tahad?");
+            int enteredNumber = int.Parse(Console.ReadLine());
+            for (int i = 0; i < enteredNumber; i++)
+            {
+                Console.WriteLine("Sisesta {0}. õpilase nimi", nimed.Count + 1);
+                nimed.Add(Console.ReadLine());
+            }
+            Console.Clear();
+            if (enteredNumber > 1)
+            {
+                Console.WriteLine("Sa sisestasid {0} õpilast\nSinu õpilaste nimede list on nüüd:\n", enteredNumber);
+            }
+            else
+            {
+                Console.WriteLine("Sa sisestasid {0} õpilase\nSinu õpilaste nimede list on nüüd:\n", enteredNumber);
+            }
+            foreach (string VARIABLE in nimed)
+            {
+                Console.WriteLine(VARIABLE);
+            }
+
+            Console.ReadKey();
+        }
         static void Main(string[] args)
         {
             /* 1~~
@@ -34,9 +72,26 @@ namespace Õpilaste_Nimekiri
             studentsList.Add("Joonas");
             studentsList.Add("Kohuke");
             studentsList.Add("Alfa USB Network Adapter 2.4GHz Wifi, RT3070 chip (Monitoring + packet injection)");
+        start:
+            Console.Clear();
             StudentAmount(studentsList.Count);
-            
 
+            Console.WriteLine("1. Vaata õpilasi\n" +
+                              "2. Lisa õpilasi\n" +
+                              "3. Sisesta hindeid + puudumised\n");
+            ConsoleKey press = Console.ReadKey(false).Key;
+            switch (press)
+            {
+                case ConsoleKey.D1:
+                    ViewStudents(studentsList);
+                    goto start;
+                case ConsoleKey.D2:
+                    AddStudents(ref studentsList);
+                    goto start;
+                case ConsoleKey.D3:
+
+                    goto start;
+            }
             int studentAmount = int.Parse(Console.ReadLine());
             Console.WriteLine();
 
