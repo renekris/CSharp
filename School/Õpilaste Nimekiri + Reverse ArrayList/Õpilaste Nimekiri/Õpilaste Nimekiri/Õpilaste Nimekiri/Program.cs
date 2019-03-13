@@ -16,11 +16,12 @@ namespace Õpilaste_Nimekiri
             Console.ResetColor();
         }
 
-        static void ViewStudents(List<string> nimi)
+        static void ViewStudents(List<string> nimed)
         {
             Console.Clear();
-            Console.WriteLine("\nSinu klassis on õpilased nimega:");
-            foreach (string VARIABLE in nimi)
+            StudentAmount(nimed.Count);
+            Console.WriteLine("Sinu klassis on õpilased nimega:\n");
+            foreach (string VARIABLE in nimed)
             {
                 Console.WriteLine(VARIABLE);
             }
@@ -30,27 +31,47 @@ namespace Õpilaste_Nimekiri
         static void AddStudents(ref List<string> nimed)
         {
             Console.Clear();
+            StudentAmount(nimed.Count);
             Console.WriteLine("Mitu õpilast sa sisestada tahad?");
             int enteredNumber = int.Parse(Console.ReadLine());
             for (int i = 0; i < enteredNumber; i++)
             {
-                Console.WriteLine("Sisesta {0}. õpilase nimi", nimed.Count + 1);
+                Console.WriteLine("Sisesta {0}. õpilase nimi {1}/{2}", nimed.Count + 1, i + 1, enteredNumber);
                 nimed.Add(Console.ReadLine());
             }
             Console.Clear();
             if (enteredNumber > 1)
             {
-                Console.WriteLine("Sa sisestasid {0} õpilast\nSinu õpilaste nimede list on nüüd:\n", enteredNumber);
+                Console.WriteLine("Sinu õpilaste nimede list on nüüd:\n");
             }
             else
             {
-                Console.WriteLine("Sa sisestasid {0} õpilase\nSinu õpilaste nimede list on nüüd:\n", enteredNumber);
+                Console.WriteLine("Sinu õpilaste nimede list on nüüd:\n");
             }
             foreach (string VARIABLE in nimed)
             {
                 Console.WriteLine(VARIABLE);
             }
 
+            Console.ReadKey();
+        }
+
+        static void InsertNumbers(ref List<char> grade, List<string> student)
+        {
+            foreach (var VARIABLE in student)
+            {
+                Console.Clear();
+                Console.WriteLine("Õpilane: {0}", VARIABLE);
+                Console.Write("Hind: \n");
+                grade.Add(char.Parse(Console.ReadLine()));
+            }
+            Console.Clear();
+            for (int i = 0; i < student.Count; i++)
+            {
+                Console.WriteLine("Hind: {0}", grade[i]);
+                Console.WriteLine("Õpilane: {0}\n", student[i]);
+                Console.WriteLine();
+            }
             Console.ReadKey();
         }
         static void Main(string[] args)
@@ -68,6 +89,7 @@ namespace Õpilaste_Nimekiri
              */
             Console.OutputEncoding = Encoding.Unicode;
             List<string> studentsList = new List<string>();
+            List<char> gradesList = new List<char>();
             studentsList.Add("Juku");
             studentsList.Add("Madis");
             studentsList.Add("Joonas");
@@ -90,13 +112,11 @@ namespace Õpilaste_Nimekiri
                     AddStudents(ref studentsList);
                     goto start;
                 case ConsoleKey.D3:
-
+                    InsertNumbers(ref gradesList, studentsList);
+                    goto start;
+                default:
                     goto start;
             }
-            int studentAmount = int.Parse(Console.ReadLine());
-            Console.WriteLine();
-
-            Console.ReadKey();
         }
     }
 }
