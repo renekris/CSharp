@@ -66,6 +66,7 @@ namespace Õpilaste_Nimekiri
              * Salvesta ArrayListi.
              * Väljasta need arvud tagurpidises järjekorras.
              */
+            Console.OutputEncoding = Encoding.Unicode;
             List<string> studentsList = new List<string>();
             studentsList.Add("Juku");
             studentsList.Add("Madis");
