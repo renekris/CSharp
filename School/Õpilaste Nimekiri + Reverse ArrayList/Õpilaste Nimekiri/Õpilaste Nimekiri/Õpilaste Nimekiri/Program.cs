@@ -56,14 +56,49 @@ namespace Õpilaste_Nimekiri
             Console.ReadKey();
         }
 
-        static void InsertNumbers(ref List<char> grade, List<string> student)
+        static void InsertNumbers(ref List<string> grade, List<string> student)
         {
             foreach (var VARIABLE in student)
             {
+                string hinne = " "; 
                 Console.Clear();
                 Console.WriteLine("Õpilane: {0}", VARIABLE);
                 Console.Write("Hind: \n");
-                grade.Add(char.Parse(Console.ReadLine()));
+
+                Console.WriteLine("0. Puudub / 'P' | 1. 'X' | 2. '2' | 3. '3'| 4. '4' | 5. '5' | Any key = ' '");
+                ConsoleKey press = Console.ReadKey(false).Key;
+                switch (press)
+                {
+                    case ConsoleKey.D0:
+                    case ConsoleKey.NumPad0:
+                        hinne = "P";
+                        break;
+                    case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
+                        hinne = "X";
+                        break;
+                    case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
+                        hinne = "2";
+                        break;
+                    case ConsoleKey.D3:
+                    case ConsoleKey.NumPad3:
+                        hinne = "3";
+                        break;
+                    case ConsoleKey.D4:
+                    case ConsoleKey.NumPad4:
+                        hinne = "4";
+                        break;
+                    case ConsoleKey.D5:
+                    case ConsoleKey.NumPad5:
+                        hinne = "5";
+                        break;
+                    default:
+                        hinne = " ";
+                        break;
+
+                }
+                grade.Add(hinne);
             }
             Console.Clear();
             for (int i = 0; i < student.Count; i++)
@@ -89,7 +124,7 @@ namespace Õpilaste_Nimekiri
              */
             Console.OutputEncoding = Encoding.Unicode;
             List<string> studentsList = new List<string>();
-            List<char> gradesList = new List<char>();
+            List<string> gradesList = new List<string>();
             studentsList.Add("Juku");
             studentsList.Add("Madis");
             studentsList.Add("Joonas");
