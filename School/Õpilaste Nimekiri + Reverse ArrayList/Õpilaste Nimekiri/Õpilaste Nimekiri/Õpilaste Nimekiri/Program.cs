@@ -30,7 +30,7 @@ namespace Õpilaste_Nimekiri
                 }
                 else
                 {
-                    Console.WriteLine();
+                    Console.WriteLine("Hinded puuduvad\n");
                 }
             }
             Console.ReadKey();
@@ -50,11 +50,11 @@ namespace Õpilaste_Nimekiri
             Console.Clear();
             if (enteredNumber > 1)
             {
-                Console.WriteLine("Sinu õpilaste studente list on nüüd:\n");
+                Console.WriteLine("Sinu õpilaste list on nüüd:\n");
             }
             else
             {
-                Console.WriteLine("Sinu õpilaste studente list on nüüd:\n");
+                Console.WriteLine("Sinu õpilaste list on nüüd:\n");
             }
             foreach (string VARIABLE in student)
             {
@@ -118,6 +118,42 @@ namespace Õpilaste_Nimekiri
             }
             Console.ReadKey();
         }
+
+        static void SearchStudents(List<string> student, List<string> grade)
+        {
+            Console.Clear();
+            StudentAmount(student.Count);
+            Console.Write("Otsi õpilane: ");
+            string search = Console.ReadLine();
+            if (student.Contains(UppercaseFirst(search.ToLower())))
+            {
+                Console.WriteLine("Nimi: {0}", student[student.IndexOf(UppercaseFirst(search.ToLower()))]);
+                if (grade.Count > 0)
+                {
+                    Console.WriteLine("Hinne: {0}", grade[student.IndexOf(UppercaseFirst(search.ToLower()))]);
+                }
+                else
+                {
+                    Console.WriteLine("Hinded puuduvad");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Õpilane pole listis");
+            }
+
+            Console.ReadKey();
+        }
+        static string UppercaseFirst(string s)
+        {
+            // Check for empty string.
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            return char.ToUpper(s[0]) + s.Substring(1);
+        }
         static void Main(string[] args)
         {
             /* 1~~
@@ -164,6 +200,7 @@ namespace Õpilaste_Nimekiri
                     goto start;
                 case ConsoleKey.NumPad4:
                 case ConsoleKey.D4:
+                    SearchStudents(studentsList, gradesList);
                     goto start;
                 default:
                     goto start;
