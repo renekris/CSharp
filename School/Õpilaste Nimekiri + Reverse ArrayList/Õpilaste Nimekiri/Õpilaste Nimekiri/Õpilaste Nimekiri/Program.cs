@@ -16,39 +16,47 @@ namespace Õpilaste_Nimekiri
             Console.ResetColor();
         }
 
-        static void ViewStudents(List<string> nimed)
+        static void ViewStudents(List<string> student, List<string> grade)
         {
             Console.Clear();
-            StudentAmount(nimed.Count);
+            StudentAmount(student.Count);
             Console.WriteLine("Sinu klassis on õpilased nimega:\n");
-            foreach (string VARIABLE in nimed)
+            for (int i = 0; i < student.Count; i++)
             {
-                Console.WriteLine(VARIABLE);
+                Console.WriteLine("Õpilane: {0}", student[i]);
+                if (grade.Count > 0)
+                {
+                Console.WriteLine("Hinne: {0}\n", grade[i]);    
+                }
+                else
+                {
+                    Console.WriteLine();
+                }
             }
             Console.ReadKey();
         }
 
-        static void AddStudents(ref List<string> nimed)
+        static void AddStudents(ref List<string> student)
         {
             Console.Clear();
-            StudentAmount(nimed.Count);
+            StudentAmount(student.Count);
             Console.WriteLine("Mitu õpilast sa sisestada tahad?");
             int enteredNumber = int.Parse(Console.ReadLine());
             for (int i = 0; i < enteredNumber; i++)
             {
-                Console.WriteLine("Sisesta {0}. õpilase nimi {1}/{2}", nimed.Count + 1, i + 1, enteredNumber);
-                nimed.Add(Console.ReadLine());
+                Console.WriteLine("Sisesta {0}. õpilase nimi {1}/{2}", student.Count + 1, i + 1, enteredNumber);
+                student.Add(Console.ReadLine());
             }
             Console.Clear();
             if (enteredNumber > 1)
             {
-                Console.WriteLine("Sinu õpilaste nimede list on nüüd:\n");
+                Console.WriteLine("Sinu õpilaste studente list on nüüd:\n");
             }
             else
             {
-                Console.WriteLine("Sinu õpilaste nimede list on nüüd:\n");
+                Console.WriteLine("Sinu õpilaste studente list on nüüd:\n");
             }
-            foreach (string VARIABLE in nimed)
+            foreach (string VARIABLE in student)
             {
                 Console.WriteLine(VARIABLE);
             }
@@ -58,6 +66,7 @@ namespace Õpilaste_Nimekiri
 
         static void InsertNumbers(ref List<string> grade, List<string> student)
         {
+            grade.Clear();
             foreach (var VARIABLE in student)
             {
                 string hinne = " "; 
@@ -65,7 +74,7 @@ namespace Õpilaste_Nimekiri
                 Console.WriteLine("Õpilane: {0}", VARIABLE);
                 Console.Write("Hind: \n");
 
-                Console.WriteLine("0. Puudub / 'P' | 1. 'X' | 2. '2' | 3. '3'| 4. '4' | 5. '5' | Any key = ' '");
+                Console.WriteLine("[0] = P | [1] = X | [2] = 2 | [3] = 3 | [4] = 4 | [5] = 5");
                 ConsoleKey press = Console.ReadKey(false).Key;
                 switch (press)
                 {
@@ -103,8 +112,8 @@ namespace Õpilaste_Nimekiri
             Console.Clear();
             for (int i = 0; i < student.Count; i++)
             {
-                Console.WriteLine("Hind: {0}", grade[i]);
-                Console.WriteLine("Õpilane: {0}\n", student[i]);
+                Console.WriteLine("Õpilane: {0}", student[i]);
+                Console.WriteLine("Hind: {0}\n", grade[i]);
                 Console.WriteLine();
             }
             Console.ReadKey();
@@ -134,20 +143,27 @@ namespace Õpilaste_Nimekiri
             Console.Clear();
             StudentAmount(studentsList.Count);
 
-            Console.WriteLine("1. Vaata õpilasi\n" +
-                              "2. Lisa õpilasi\n" +
-                              "3. Sisesta hindeid + puudumised\n");
+            Console.WriteLine("[1] Vaata õpilasi / hindeid\n" +
+                              "[2] Lisa õpilasi\n" +
+                              "[3] Sisesta hindeid / puudumised\n" +
+                              "[4] Otsi õpilasi");
             ConsoleKey press = Console.ReadKey(false).Key;
             switch (press)
             {
+                case ConsoleKey.NumPad1:
                 case ConsoleKey.D1:
-                    ViewStudents(studentsList);
+                    ViewStudents(studentsList, gradesList);
                     goto start;
+                case ConsoleKey.NumPad2:
                 case ConsoleKey.D2:
                     AddStudents(ref studentsList);
                     goto start;
+                case ConsoleKey.NumPad3:
                 case ConsoleKey.D3:
                     InsertNumbers(ref gradesList, studentsList);
+                    goto start;
+                case ConsoleKey.NumPad4:
+                case ConsoleKey.D4:
                     goto start;
                 default:
                     goto start;
