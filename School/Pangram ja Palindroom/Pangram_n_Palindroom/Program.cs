@@ -12,15 +12,6 @@ namespace Pangram_n_Palindroom
     {
         static void Main(string[] args)
         {
-            //string enteredStr1 = "a b c d e f g h i j k l m n o p q r s š z ž t u v w õ ä ö ü x y";
-            //string lettersEst = "a b c d e f g h i j k l m n o p q r s z t u v w õ ä ö ü x y";
-            //string[] lettersSplit = lettersEng.Split(new char[] { ' ' });
-            //List<string> lettersList = new List<string>();
-            //var match = enteredStr.IndexOfAny(new char[] {'*', '&', '#'}) != -enteredStr.Length;
-            //for (int i = 0; i < lettersSplit.Length; i++)
-            //{
-            //    Console.Write("{0}", lettersSplit[i]);
-            //}
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
             List<string> previousList = new List<string>();
@@ -50,6 +41,16 @@ namespace Pangram_n_Palindroom
                 {
                     result = "Ei ole Pangram";
                 }
+                Console.WriteLine("[{0}]\n{1}\n", enteredStr, result);
+                //Kontrollib kas sisestatud on palindroom
+                if (Palindroom(enteredStr))
+                {
+                    result = "See on Palindroom";
+                }
+                else
+                {
+                    result = "Ei ole Palindroom";
+                }
                 //kirjutab sisestatud stringi + vastuse
                 Console.WriteLine("[{0}]\n{1}\n", enteredStr, result);
                 enteredBefore = true;
@@ -67,6 +68,13 @@ namespace Pangram_n_Palindroom
         }
         static bool Pangram(string inputString)
         {
+            /*
+             * Töötab lausega milles on > (rohkem kui) 26 erinevat karakterit.
+             * Ehk Pangram alamprogrammi for loop lisab booli arrayse true,
+             * kui karakter on olemas. Lõpus kontrollib, kas on rohkem kui 26 karakterit,
+             * kui on, siis returnib true, else false.
+             */
+
             bool[] fullBools = new bool[26];
             int boolIndex = 0;
 
@@ -93,6 +101,17 @@ namespace Pangram_n_Palindroom
             }
 
             return (true);
+        }
+
+        static bool Palindroom(string inputString)
+        {
+            /*
+             * Sisestatud stringil asetatakse space-id mitte millegagi, ehk, "Never odd or even" -> "Neveroddoreven".
+             * Peale seda tehakse sellel kõik tähed lowercase "Neveroddoreven" -> "neveroddoreven".
+             * Siis see keeratakse tagurpidi ja see võrdleb ise ennast "neveroddoreven" == "neveroddoreven".
+             * Kui tõene, siis returnib true, else false.
+             */
+            return inputString.Replace(" ", "").ToLower().SequenceEqual(inputString.Replace(" ", "").ToLower().Reverse());
         }
     }
 }
