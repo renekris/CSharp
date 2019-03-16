@@ -16,7 +16,7 @@ namespace Pangram_n_Palindroom
             Console.InputEncoding = Encoding.Unicode;
             List<string> previousList = new List<string>();
             bool enteredBefore = false;
-            string result, enteredStr = "";
+            string result = "", enteredStr = "";
             while (true)
             {
                 //Stringi sisestamine
@@ -33,26 +33,21 @@ namespace Pangram_n_Palindroom
                 //Puhastab konsooli ja kirjutab 'sisesta string' uuesti
                 Console.Write("Sisesta string:{0}\n", enteredStr);
                 //Kontrollib kas sisestatud on pangram
-                if (Pangram(enteredStr))
+                if (Palindroom(enteredStr) && Pangram(enteredStr))
+                {
+                    result = "See on Palindroom ja Pangram";
+                }
+                else if (Pangram(enteredStr))
                 {
                     result = "See on Pangram";
                 }
-                else
-                {
-                    result = "Ei ole Pangram";
-                }
-                Console.WriteLine("[{0}]\n{1}\n", enteredStr, result);
-                //Kontrollib kas sisestatud on palindroom
-                if (Palindroom(enteredStr))
+                //Kontrollib kas sisestatud on palindroom 
+                else if (Palindroom(enteredStr))
                 {
                     result = "See on Palindroom";
                 }
-                else
-                {
-                    result = "Ei ole Palindroom";
-                }
                 //kirjutab sisestatud stringi + vastuse
-                Console.WriteLine("[{0}]\n{1}\n", enteredStr, result);
+                Console.WriteLine("[>{0}<]\n{1}", enteredStr, result);
                 enteredBefore = true;
                 Console.ReadKey();
                 Console.Clear();
