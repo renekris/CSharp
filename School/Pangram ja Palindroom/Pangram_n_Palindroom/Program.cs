@@ -23,22 +23,48 @@ namespace Pangram_n_Palindroom
             //}
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
-            string result;
-        start:
-            Console.Write("Sisesta string:");
-            string enteredStr = Console.ReadLine();
-            if (Pangram(enteredStr))
+            List<string> previousList = new List<string>();
+            bool enteredBefore = false;
+            string result, enteredStr = "";
+            while (true)
             {
-                result = "See on Pangram";
+                //Stringi sisestamine
+                Console.Write("Sisesta string:");
+                //Kontrollib kas while loop on lõpetanud > 1 kord
+                if (enteredBefore)
+                {
+                    Console.WriteLine("\n\n\n\n~~Previously entered~~");
+                    PreviousDisplay(enteredStr, ref previousList);
+                    Console.SetCursorPosition(15, 0);
+                }
+                enteredStr = Console.ReadLine();
+                Console.Clear();
+                //Puhastab konsooli ja kirjutab 'sisesta string' uuesti
+                Console.Write("Sisesta string:{0}\n", enteredStr);
+                //Kontrollib kas sisestatud on pangram
+                if (Pangram(enteredStr))
+                {
+                    result = "See on Pangram";
+                }
+                else
+                {
+                    result = "Ei ole Pangram";
+                }
+                //kirjutab sisestatud stringi + vastuse
+                Console.WriteLine("[{0}]\n{1}\n", enteredStr, result);
+                enteredBefore = true;
+                Console.ReadKey();
+                Console.Clear();
             }
-            else
-            {
-                result = "Ei ole Pangram";
-            }
-            Console.WriteLine(enteredStr + "\n{0}\n", result);
-            goto start;
         }
-
+        static void PreviousDisplay(string enteredStr, ref List<string> previousList)
+        {
+            previousList.Add(enteredStr);
+            foreach (var VARIABLE in previousList)
+            {
+                Console.WriteLine(VARIABLE);
+            }
+        }
         static bool Pangram(string inputString)
         {
             bool[] fullBools = new bool[26];
