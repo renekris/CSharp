@@ -12,8 +12,46 @@ namespace Pangram_n_Palindroom
     {
         static void Main(string[] args)
         {
+            //Teen konsooli pikemasks, sest kui kirjutada "0000", siis array text overflowib
+            Console.SetWindowSize(Console.WindowWidth + 30, Console.WindowHeight);
+            Console.OutputEncoding = Encoding.Unicode;
+            Console.InputEncoding = Encoding.Unicode;
+            List<string> previousList = new List<string>();
+            bool enteredBefore = false;
+            string result, enteredStr = "";
+            int counter = 0;
+            while (true)
+            {
+                result = "N/A";
+                Console.Write("Pangram lausel on kõik tähed olemas mis on tähestikus samuti. Näiteks: \"The quick brown fox jumps over the lazy dog\"" +
+                              "\nPalindroom lause on mõlemat pidi lugedes sama. Näiteks: \"sos\" või \"tacocat\" " +
+                              "\nSisestades \"0000\", Kirjutab välja erinevaid Pangramme ja Palindroome" +
+                              "\nSisesta string mida kontrollida:");
+                ColorExample();
+                //Kontrollib kas while loop on lõpetanud > 1 kord
+                PreviouslyEnteredDisplay(enteredBefore, enteredStr, previousList, counter);
+                //Stringi sisestamine
+                enteredStr = Console.ReadLine();
+                Console.Clear();
+                //Kontrollib sisestatud stringi
+                MainCheck(ref enteredStr, ref result);
+                //Kirjutab sisestatud stringi + vastuse
+                if (enteredStr != "0000")
+                {
+                    Console.WriteLine("Entered string: [>{0}<]\n{1}", enteredStr, result);
+                }
+                enteredBefore = true;
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+
+        static void MainCheck(ref string enteredStr, ref string result)
+        {
+            //Testimise array
             string[] palPamArray = new[]
             {
+                "The quick brown fox jumps over the lazy dog",
                 "Vamp fox held quartz duck just by wing",
                 "The five boxing wizards jump quickly",
                 "Waxy and quivering jocks fumble pizza",
@@ -32,78 +70,71 @@ namespace Pangram_n_Palindroom
                 "Bewareth gifts; a pyre – vex a tide; Lo! Jack no mazes... \"You quoy!\" sez a monk.  Cajoled, I tax every past fighter – a web!",
                 "'Cwm, fjard-knob glyphs vext quiz. I - U QT. 'x' Ev! Sh, Pyl! (G'bonk!) Dra' J-F m' W.C.'"
             };
-            Console.SetWindowSize(Console.WindowWidth + 30,Console.WindowHeight);
-            Console.OutputEncoding = Encoding.Unicode;
-            Console.InputEncoding = Encoding.Unicode;
-            List<string> previousList = new List<string>();
-            bool enteredBefore = false;
-            string result = "", enteredStr = "";
-            while (true)
+            if (enteredStr == "0000")
             {
-                //Stringi sisestamine
-                Console.Write("Pangram lausel on kõik tähed olemas mis on tähestikus samuti" +
-                              "\nPalindroom lause on mõlemat pidi lugedes sama." +
-                              "\nSisestades \"0000\", Kirjutab välja erinevaid Pangramme ja Palindroome" +
-                              "\nSisesta string mida kontrollida:");
-                //Kontrollib kas while loop on lõpetanud > 1 kord
-                if (enteredBefore)
+                foreach (var VARIABLE in palPamArray)
                 {
-                    Console.WriteLine("\n\n\n\n~~Previously entered~~");
-                    PreviousDisplay(enteredStr, ref previousList);
-                    Console.SetCursorPosition(32, 3);
+                    string temp = "None";
+                    if (Pangram(VARIABLE) && Palindroom(VARIABLE))
+                    {
+                        temp = "Pangram + Palindroom";
+                    }
+                    else if (Pangram(VARIABLE))
+                    {
+                        temp = "Pangram";
+                    }
+                    else if (Palindroom(VARIABLE))
+                    {
+                        temp = "Palindroom";
+                    }
+                    Console.WriteLine("{0} = {1}", temp, VARIABLE);
                 }
-                enteredStr = Console.ReadLine();
-                Console.Clear();
-                if (enteredStr == "0000")
+            }
+            else
+            {
+                if (Palindroom(enteredStr) && Pangram(enteredStr))
                 {
-                    foreach (var VARIABLE in palPamArray)
-                    {
-                        string temp = "None";
-                        if (Pangram(VARIABLE) && Palindroom(VARIABLE))
-                        {
-                            temp = "Pangram + Palindroom";
-                        }
-                        else if (Pangram(VARIABLE))
-                        {
-                            temp = "Pangram";
-                        }
-                        else if (Palindroom(VARIABLE))
-                        {
-                            temp = "Palindroom";
-                        }
-                        Console.WriteLine("{0} = {1}", temp, VARIABLE);
-                    }
+                    result = "See on Palindroom ja Pangram";
                 }
-                else
+                else if (Pangram(enteredStr))
                 {
-                    if (Palindroom(enteredStr) && Pangram(enteredStr))
-                    {
-                        result = "See on Palindroom ja Pangram";
-                    }
-                    //Kontrollib kas sisestatud on pangram
-                    else if (Pangram(enteredStr))
-                    {
-                        result = "See on Pangram";
-                    }
-                    //Kontrollib kas sisestatud on palindroom 
-                    else if (Palindroom(enteredStr))
-                    {
-                        result = "See on Palindroom";
-                    }
+                    result = "See on Pangram";
                 }
-                //kirjutab sisestatud stringi + vastuse
-                Console.WriteLine("Entered string: [>{0}<]\n{1}", enteredStr, result);
-                enteredBefore = true;
-                Console.ReadKey();
-                Console.Clear();
+                else if (Palindroom(enteredStr))
+                {
+                    result = "See on Palindroom";
+                }
             }
         }
-        static void PreviousDisplay(string enteredStr, ref List<string> previousList)
+        static void ColorExample()
         {
-            previousList.Add(enteredStr);
-            foreach (var VARIABLE in previousList)
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.SetCursorPosition(67, 1);
+            Console.Write("t     t");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(68, 1);
+            Console.Write("a   a");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.SetCursorPosition(69, 1);
+            Console.Write("c c");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.SetCursorPosition(70, 1);
+            Console.Write("o");
+            Console.ResetColor();
+            Console.SetCursorPosition(32, 3);
+        }
+        static void PreviouslyEnteredDisplay(bool enteredBefore, string enteredStr, List<string> previousList, int counter)
+        {
+            if (enteredBefore)
             {
-                Console.WriteLine(VARIABLE);
+                Console.WriteLine("\n\n\n\n>~Previously entered~<");
+                previousList.Add(enteredStr);
+                foreach (var VARIABLE in previousList)
+                {
+                    counter++;
+                    Console.WriteLine("{0}. >{1}<", counter, VARIABLE);
+                }
+                Console.SetCursorPosition(32, 3);
             }
         }
         static bool Pangram(string inputString)
@@ -146,13 +177,18 @@ namespace Pangram_n_Palindroom
         static bool Palindroom(string inputString)
         {
             /*
-             * Sisestatud stringil asetatakse space-id mitte millegagi, ehk, "Never odd or even" -> "Neveroddoreven".
+             * Sisestatud stringil asetatakse non-word karakterid mitte millegagi, ehk, "[]Never, odd!or even." -> "Neveroddoreven".
              * Peale seda tehakse sellel kõik tähed lowercase "Neveroddoreven" -> "neveroddoreven".
              * Siis see keeratakse tagurpidi ja see võrdleb ise ennast "neveroddoreven" == "neveroddoreven".
              * Kui tõene, siis returnib true, else false.
              */
+            if (inputString != "")
+            {
             inputString = Regex.Replace(inputString, "[\\W]", "");
             return inputString.ToLower().SequenceEqual(inputString.ToLower().Reverse());
+            }
+
+            return false;
         }
     }
 }
