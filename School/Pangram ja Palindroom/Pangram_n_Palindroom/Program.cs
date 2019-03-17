@@ -90,16 +90,22 @@ namespace Pangram_n_Palindroom
 
         private static void ColorExample()
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.SetCursorPosition(57, 1);
+            Console.Write("s s");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(58, 1);
+            Console.Write("o");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.SetCursorPosition(67, 1);
             Console.Write("t     t");
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.SetCursorPosition(68, 1);
             Console.Write("a   a");
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.SetCursorPosition(69, 1);
             Console.Write("c c");
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(70, 1);
             Console.Write("o");
             Console.ResetColor();
