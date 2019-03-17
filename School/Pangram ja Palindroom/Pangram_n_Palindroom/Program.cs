@@ -139,6 +139,7 @@ namespace Pangram_n_Palindroom
 
             var fullBools = new bool[26];
             var boolIndex = 0;
+            inputString = Regex.Replace(inputString, "[\\W]", "");
 
             for (var i = 0; i < inputString.Length; i++)
             {
