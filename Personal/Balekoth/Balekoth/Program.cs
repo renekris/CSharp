@@ -115,6 +115,7 @@ namespace Balekoth
 
         static void Main(string[] args)
         {
+            Console.Title = "BALEKOTH";
             int mainMenuSel = 0;
             string[] randomUser = { "Skeleton", "Human", "Goblin", "Elf" };
             Random rng = new Random();
@@ -135,7 +136,6 @@ namespace Balekoth
 
             //Introduction
             MiniTitle();
-            Console.ReadLine();
             MiddleWriteLine("Welcome to the land of Balekoth!");
             MiddleWriteLine("There are more than a hundred");
             MiddleWriteLine("dungeons and caves in this land.");
