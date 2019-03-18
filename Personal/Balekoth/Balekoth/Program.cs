@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+
 
 namespace Balekoth
 {
@@ -18,24 +23,25 @@ namespace Balekoth
             Console.SetCursorPosition((Console.WindowWidth - s.Length) / 2, Console.CursorTop);
             Console.Write(s);
         }
+
         static void Title()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
-            MiddleWriteLine("════════════════════════════════════════════════════════════════════════════════════════════════════");
-            Console.WriteLine();
-            MiddleWriteLine("▀█████████▄     ▄████████  ▄█          ▄████████    ▄█   ▄█▄  ▄██████▄      ███        ▄█    █▄   ");
-            MiddleWriteLine("  ███    ███   ███    ███ ███         ███    ███   ███ ▄███▀ ███    ███ ▀█████████▄   ███    ███  ");
-            MiddleWriteLine("  ███    ███   ███    ███ ███         ███    █▀    ███▐██▀   ███    ███    ▀███▀▀██   ███    ███  ");
-            MiddleWriteLine(" ▄███▄▄▄██▀    ███    ███ ███        ▄███▄▄▄      ▄█████▀    ███    ███     ███   ▀  ▄███▄▄▄▄███▄▄");
-            MiddleWriteLine("▀▀███▀▀▀██▄  ▀███████████ ███       ▀▀███▀▀▀     ▀▀█████▄    ███    ███     ███     ▀▀███▀▀▀▀███▀ ");
-            MiddleWriteLine("  ███    ██▄   ███    ███ ███         ███    █▄    ███▐██▄   ███    ███     ███       ███    ███  ");
-            MiddleWriteLine("  ███    ███   ███    ███ ███▌    ▄   ███    ███   ███ ▀███▄ ███    ███     ███       ███    ███  ");
-            MiddleWriteLine("▄█████████▀    ███    █▀  █████▄▄██   ██████████   ███   ▀█▀  ▀██████▀     ▄████▀     ███    █▀   ");
-            MiddleWriteLine("                          ▀                        ▀                                              ");
-            MiddleWriteLine("════════════════════════════════════════════════════════════════════════════════════════════════════");
+            Console.WriteLine(" ════════════════════════════════════════════════════════════════════════════════════════════════════\n");
+            Console.WriteLine("  ▀█████████▄     ▄████████  ▄█          ▄████████    ▄█   ▄█▄  ▄██████▄      ███        ▄█    █▄   ");
+            Console.WriteLine("    ███    ███   ███    ███ ███         ███    ███   ███ ▄███▀ ███    ███ ▀█████████▄   ███    ███  ");
+            Console.WriteLine("    ███    ███   ███    ███ ███         ███    █▀    ███▐██▀   ███    ███    ▀███▀▀██   ███    ███  ");
+            Console.WriteLine("   ▄███▄▄▄██▀    ███    ███ ███        ▄███▄▄▄      ▄█████▀    ███    ███     ███   ▀  ▄███▄▄▄▄███▄▄");
+            Console.WriteLine("  ▀▀███▀▀▀██▄  ▀███████████ ███       ▀▀███▀▀▀     ▀▀█████▄    ███    ███     ███     ▀▀███▀▀▀▀███▀ ");
+            Console.WriteLine("    ███    ██▄   ███    ███ ███         ███    █▄    ███▐██▄   ███    ███     ███       ███    ███  ");
+            Console.WriteLine("    ███    ███   ███    ███ ███▌    ▄   ███    ███   ███ ▀███▄ ███    ███     ███       ███    ███  ");
+            Console.WriteLine("  ▄█████████▀    ███    █▀  █████▄▄██   ██████████   ███   ▀█▀  ▀██████▀     ▄████▀     ███    █▀   ");
+            Console.WriteLine("                            ▀                        ▀                                              ");
+            Console.WriteLine(" ════════════════════════════════════════════════════════════════════════════════════════════════════");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine();
-            MiddleWriteLine("~Written by Rene Kristofer Pohlak~");
+            MiddleWriteLine("By");
+            MiddleWrite("Rene Kristofer Pohlak");
             Console.ResetColor();
         }
 
@@ -51,6 +57,62 @@ namespace Balekoth
             Console.WriteLine();
             Console.ResetColor();
         }
+
+        static void Loading()
+        {
+            DialogResult loadBoxResult;
+            loadBoxResult = MessageBox.Show("Do you want to load your latest save?", "Loading.", MessageBoxButtons.OKCancel, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+            if (loadBoxResult == DialogResult.OK)
+            {
+                Console.WriteLine("Loading your latest save");
+            }
+        }
+
+        static void Saving(string userName)
+        {
+            DialogResult loadBoxResult;
+            loadBoxResult = MessageBox.Show("Do you want to save your progress?", "Saving.", MessageBoxButtons.OKCancel, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+            if (loadBoxResult == DialogResult.OK)
+            {
+                Console.Clear();
+                MiniTitle();
+                Console.WriteLine("Saving your game");
+                string path = @"../../GameSave.txt";
+                try
+                {
+                    if (!File.Exists(path))
+                    {
+                        File.Create(path);
+                        TextWriter tw = new StreamWriter(path);
+                        tw.WriteLine(userName);
+                        tw.Close();
+                    }
+                    else if (File.Exists(path))
+                    {
+                        TextWriter tw = new StreamWriter(path);
+                        tw.WriteLine(userName);
+                        tw.Close();
+                    }
+                }
+                catch (AccessViolationException e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+        }
+
+        static void WindowBuffer(int height, int width)
+        {
+            Console.BufferWidth = Console.WindowWidth = width;
+            Console.BufferHeight = Console.WindowHeight = height;
+        }
+
         static void Main(string[] args)
         {
             int mainMenuSel = 0;
@@ -65,16 +127,25 @@ namespace Balekoth
             int conNumber = rng.Next(3, 12);
             int chaNumber = rng.Next(3, 12);
             //Title
+            WindowBuffer(17, 102);
             Title();
             Console.ReadKey();
             Console.Clear();
+            WindowBuffer(Console.WindowHeight, 35);
 
             //Introduction
             MiniTitle();
+            Console.ReadLine();
             MiddleWriteLine("Welcome to the land of Balekoth!");
-            MiddleWriteLine("There are more than a hundred dungeons and caves in this land.");
-            MiddleWriteLine("Be the one to conquer them all and become the master of dungeons and caves.");
+            MiddleWriteLine("There are more than a hundred");
+            MiddleWriteLine("dungeons and caves in this land.");
+            MiddleWriteLine("Be the one to conquer them all");
+            MiddleWriteLine("and become the master of dungeons");
+            MiddleWriteLine("and caves.");
             MiddleWriteLine("");
+            Console.WriteLine("What is your name traveler?");
+            string userName = Console.ReadLine();
+            Saving(userName);
             Console.ReadKey();
 
             //Generated character sheet
@@ -160,7 +231,7 @@ namespace Balekoth
 
         }
 
-        static void CharacterSheet(int hpNumber, string[] randomUser, int userRandom, int strNumber, int intNumber, int wisNumber, int dexNumber, int conNumber , int chaNumber)
+        static void CharacterSheet(int hpNumber, string[] randomUser, int userRandom, int strNumber, int intNumber, int wisNumber, int dexNumber, int conNumber, int chaNumber)
         {
 
             //Character sheet generation
