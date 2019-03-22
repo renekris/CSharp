@@ -68,42 +68,21 @@ namespace Balekoth
             }
         }
 
-        static void Saving(string userName)
+        static void Saving(string path, string userName)
         {
-            DialogResult loadBoxResult;
-            loadBoxResult = MessageBox.Show("Do you want to save your progress?", "Saving.", MessageBoxButtons.OKCancel, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+            DialogResult loadBoxResult = MessageBox.Show("Do you want to save your progress?", "Saving.", MessageBoxButtons.OKCancel, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+            Console.Clear();
+            MiniTitle();
             if (loadBoxResult == DialogResult.OK)
             {
-                Console.Clear();
-                MiniTitle();
-                Console.WriteLine("Saving your game");
-                string path = @"../../GameSave.txt";
-                try
-                {
-                    if (!File.Exists(path))
-                    {
-                        File.Create(path);
-                        TextWriter tw = new StreamWriter(path);
-                        tw.WriteLine(userName);
-                        tw.Close();
-                    }
-                    else if (File.Exists(path))
-                    {
-                        TextWriter tw = new StreamWriter(path);
-                        tw.WriteLine(userName);
-                        tw.Close();
-                    }
-                }
-                catch (AccessViolationException e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
+                TextWriter tw = new StreamWriter(path);
+                tw.WriteLine(userName);
+                tw.Close();
+                Console.WriteLine("Saved!");
+            }
+            else
+            {
+                Console.WriteLine("Resuming without saving");
             }
         }
 
@@ -115,7 +94,12 @@ namespace Balekoth
 
         static void Main(string[] args)
         {
-            Console.Title = "BALEKOTH";
+            //save file paths
+            string save1 = @"../../GameSave1.txt";
+            string save2 = @"../../GameSave2.txt";
+            string save3 = @"../../GameSave3.txt";
+            //
+            Console.Title = "BaleKoth";
             int mainMenuSel = 0;
             string[] randomUser = { "Skeleton", "Human", "Goblin", "Elf" };
             Random rng = new Random();
@@ -145,7 +129,7 @@ namespace Balekoth
             MiddleWriteLine("");
             Console.WriteLine("What is your name traveler?");
             string userName = Console.ReadLine();
-            Saving(userName);
+            Saving(save1, userName);
             Console.ReadKey();
 
             //Generated character sheet
@@ -182,33 +166,14 @@ namespace Balekoth
 
             if (mainMenuSel == 1)
             {
-                MiniTitle();
-                Console.WriteLine("You have encountered a skeleton on your travels");
-
-                MiniTitle();
-                string[] enemyStrings = { "Skeleton", "Goblin", "Zombie", "Wolf", "Ghoul", "Ogre", "Mummy" };
-                bool isKilled = false;
-                int userHealth = hpNumber;
-                int enemyHealth = rng.Next(5, 25);
-                int enemyRandom = rng.Next(0, enemyStrings.Length);
-                do
+                while (true)
                 {
                     MiniTitle();
-                    Console.SetCursorPosition((Console.WindowWidth - (2 + enemyStrings[enemyRandom].Length)) / 2, Console.CursorTop);
-                    Console.WriteLine("!{0}!", enemyStrings[enemyRandom]);
-                    Console.SetCursorPosition((Console.WindowWidth - (9 + enemyHealth.ToString().Length)) / 2, Console.CursorTop);
-                    Console.WriteLine("Enemy HP: {0}\n", enemyHealth);
-                    Console.SetCursorPosition((Console.WindowWidth - (8 + userHealth.ToString().Length)) / 2, Console.CursorTop);
-                    Console.WriteLine("Your HP: {0}", userHealth);
-                    MiddleWriteLine("Any key to attack!");
+                    Console.WriteLine("You have encountered a monster");
                     Console.ReadKey();
-                    int enemySTR = rng.Next(2, 8);
-                    userHealth -= enemySTR;
-                    enemyHealth -= strNumber;
-                } while (enemyHealth > 0);
-
-                MiddleWriteLine("Enemy dead");
-                Console.ReadKey();
+                    Console.Clear();
+                    MonsterAttack(hpNumber, strNumber);
+                }
             }
 
             if (mainMenuSel == 2)
@@ -223,7 +188,7 @@ namespace Balekoth
 
             if (mainMenuSel == 4)
             {
-                Console.WriteLine("");
+
             }
 
             Console.ReadKey();
@@ -231,6 +196,39 @@ namespace Balekoth
 
         }
 
+        static void MonsterAttack(int hpNumber, int strNumber)
+        {
+            MiniTitle();
+            Random rng = new Random();
+            string[] enemyStrings = { "Skeleton", "Goblin", "Zombie", "Wolf", "Ghoul", "Ogre", "Mummy" };
+            bool isKilled = false;
+            int userHealth = hpNumber;
+            int enemyHealth = rng.Next(50, 100);
+            int enemyRandom = rng.Next(0, enemyStrings.Length);
+            do
+            {
+                MiniTitle();
+                Console.SetCursorPosition((Console.WindowWidth - (2 + enemyStrings[enemyRandom].Length)) / 2, Console.CursorTop);
+                Console.WriteLine("*{0}*", enemyStrings[enemyRandom]);
+                Console.SetCursorPosition((Console.WindowWidth - (9 + enemyHealth.ToString().Length)) / 2, Console.CursorTop);
+                Console.WriteLine("Enemy HP: {0}\n", enemyHealth);
+                Console.SetCursorPosition((Console.WindowWidth - (8 + userHealth.ToString().Length)) / 2, Console.CursorTop);
+                Console.WriteLine("Your HP: {0}", userHealth);
+                MiddleWriteLine("Esc to run away, any key to attack");
+                ConsoleKey press = Console.ReadKey().Key;
+                switch (press)
+                {
+                    case ConsoleKey.Escape:
+                        return;
+                }
+                int enemySTR = rng.Next(2, 8);
+                userHealth -= enemySTR;
+                enemyHealth -= strNumber;
+            } while (enemyHealth > 0);
+
+            MiddleWriteLine("Enemy dead");
+            Console.ReadKey();
+        }
         static void CharacterSheet(int hpNumber, string[] randomUser, int userRandom, int strNumber, int intNumber, int wisNumber, int dexNumber, int conNumber, int chaNumber)
         {
 
