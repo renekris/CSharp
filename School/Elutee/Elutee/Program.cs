@@ -80,6 +80,10 @@ namespace Elutee
                     Console.WriteLine("Oled kooli lõpetanud ja valid tööd. Said omale {0} töö", temp);
                     break;
                 case 20:
+                case 30:
+                case 40:
+                case 50:
+                case 60:
                     kink = rng.Next(500, 1000);
                     Console.WriteLine("Sinul on juubel, sa saad lähedastelt €{0:N0}", kink);
                     break;
@@ -88,10 +92,6 @@ namespace Elutee
                     Console.WriteLine("Uue telefoni ostmiseks läks maksma €{0:N0}", tempint);
                     kõrvalepanekCurrent -= tempint;
                     break;
-                case 30:
-                    kink = rng.Next(500, 1000);
-                    Console.WriteLine("Sinul on juubel, sa saad lähedastelt €{0:N0}", kink);
-                    break;
                 case 31:
                     temp = keelStrings[rng.Next(0, 5)];
                     Console.WriteLine("Lähed kooli edasi õppima, valisid {0} keele", temp);
@@ -99,10 +99,6 @@ namespace Elutee
                 case 32:
                     temp = töödStrings[rng.Next(0, 5)];
                     Console.WriteLine("Oled selgeks õppinud veel ühe programmeerimise keele ja valid uue töö. Sa valisid {0} töö", temp);
-                    break;
-                case 40:
-                    kink = rng.Next(500, 1000);
-                    Console.WriteLine("Sinul on juubel, sa saad lähedastelt €{0:N0}", kink);
                     break;
                 case 41:
                     tempint = rng.Next(5000, 20000);
@@ -114,18 +110,10 @@ namespace Elutee
                     Console.WriteLine("Sinu auto parandamiseks läks maksma €{0:N0}", tempint);
                     kõrvalepanekCurrent -= tempint;
                     break;
-                case 50:
-                    kink = rng.Next(500, 1000);
-                    Console.WriteLine("Sinul on juubel, sa saad lähedastelt €{0:N0}", kink);
-                    break;
                 case 52:
                     tempint = rng.Next(60000, 80000);
                     Console.WriteLine("Uue maja ostmiseks läks maksma €{0:N0}", tempint);
                     kõrvalepanekCurrent -= tempint;
-                    break;
-                case 60:
-                    kink = rng.Next(500, 1000);
-                    Console.WriteLine("Sinul on juubel, sa saad lähedastelt €{0:N0}", kink);
                     break;
                 default:
                     break;
