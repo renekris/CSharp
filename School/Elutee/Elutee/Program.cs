@@ -21,7 +21,7 @@ namespace Elutee
             int aastaCurrent = 0;
             int kõrvalepanekCurrent = 0;
             Console.Title = "Kuidas rikkaks saada";
-            Console.WriteLine("Kuidas rikkaks saada!\nAlustan 17 aastasena");
+            Console.WriteLine("Rikkaks saamise elujoon!\nAlustan 17 aastasena");
             Console.ReadKey();
             Console.Clear();
             for (int i = 0; i <= aastamax; i++)
@@ -32,13 +32,24 @@ namespace Elutee
                 EventCourse(i, ref majandusKriis, majandusCount, ref kõrvalepanekCurrent, ref teenimineMin, ref teenimineMax);
                 if (kõrvalepanekCurrent > 1000000)
                 {
-                    break;
+                    Console.WriteLine("Oled teeninud > €1,000,000. Lähed nüüd pensionile.");
+                    Console.ReadKey();
+                    Environment.Exit(0);
                 }
+                Console.SetCursorPosition(0, 5);
+                Console.WriteLine("   Jätka   \n  [SPACE]");
+                Thread.Sleep(100);
+                Console.SetCursorPosition(0, 5);
+                Console.WriteLine("  >Jätka<  \n  [SPACE]");
+                Thread.Sleep(100);
+                Console.SetCursorPosition(0, 5);
+                Console.WriteLine(" >>Jätka<< \n  [SPACE]");
+                Thread.Sleep(100);
+                Console.SetCursorPosition(0, 5);
+                Console.WriteLine(">>>Jätka<<<\n  [SPACE]");
                 Console.ReadKey();
             }
-
-            Console.WriteLine("Oled teeninud > €1,000,000" +
-                              "\nLähed nüüd pensionile.");
+            Console.WriteLine("Sa oled 60a vana ja sul pole ikka veel 1,000,000. Elu läbi!");
             Console.ReadKey();
         }
 
@@ -48,7 +59,7 @@ namespace Elutee
             {
                 Random rng = new Random();
                 int kõrvalepanek = rng.Next(teenimineMin, teenimineMax);
-                return kõrvalepanekCurrent += (kõrvalepanek * 12) - 500; 
+                return kõrvalepanekCurrent += (kõrvalepanek * 12) - 500;
             }
 
             return 0;
@@ -58,8 +69,9 @@ namespace Elutee
         {
             Random rng = new Random();
             string temp = "";
+            int kink = 0;
             string[] töödStrings = new[] { "Andmeturbeinspektori", "C# programmeerija", "Andmetungia", "IT spetsialisti", "Tarkvaraarendaja" };
-            string[] keelStrings = new[] { "Python", "C++", "Javascript", "Java", "PHP" };
+            string[] keelStrings = new[] { "Python", "C++", "Javascripti", "Java", "PHP" };
             MajandusEvent(i, majandusKriis, majandusCount, ref kõrvalepanekCurrent);
             switch (i + 17)
             {
@@ -67,24 +79,62 @@ namespace Elutee
                     temp = töödStrings[rng.Next(0, 5)];
                     Console.WriteLine("Oled kooli lõpetanud ja valid tööd. Said omale {0} töö", temp);
                     break;
+                case 20:
+                    kink = rng.Next(500, 1000);
+                    Console.WriteLine("Sinul on juubel, sa saad lähedastelt €{0:N0}", kink);
+                    break;
+                case 22:
+                    int tempint = rng.Next(400, 1500);
+                    Console.WriteLine("Uue telefoni ostmiseks läks maksma €{0:N0}", tempint);
+                    kõrvalepanekCurrent -= tempint;
+                    break;
                 case 30:
+                    kink = rng.Next(500, 1000);
+                    Console.WriteLine("Sinul on juubel, sa saad lähedastelt €{0:N0}", kink);
+                    break;
+                case 31:
                     temp = keelStrings[rng.Next(0, 5)];
                     Console.WriteLine("Lähed kooli edasi õppima, valisid {0} keele", temp);
                     break;
                 case 32:
                     temp = töödStrings[rng.Next(0, 5)];
-                    Console.WriteLine("Oled selgeks õppinud veel ühe programmeerimise keele ja valid uue töö. Sa valisid {0}", temp);
-
+                    Console.WriteLine("Oled selgeks õppinud veel ühe programmeerimise keele ja valid uue töö. Sa valisid {0} töö", temp);
+                    break;
+                case 40:
+                    kink = rng.Next(500, 1000);
+                    Console.WriteLine("Sinul on juubel, sa saad lähedastelt €{0:N0}", kink);
+                    break;
+                case 41:
+                    tempint = rng.Next(5000, 20000);
+                    Console.WriteLine("Keskea kriis, kulutad €{0:N0}, et ennast rahustada", tempint);
+                    kõrvalepanekCurrent -= tempint;
+                    break;
+                case 46:
+                    tempint = rng.Next(5000, 20000);
+                    Console.WriteLine("Sinu auto parandamiseks läks maksma €{0:N0}", tempint);
+                    kõrvalepanekCurrent -= tempint;
+                    break;
+                case 50:
+                    kink = rng.Next(500, 1000);
+                    Console.WriteLine("Sinul on juubel, sa saad lähedastelt €{0:N0}", kink);
+                    break;
+                case 52:
+                    tempint = rng.Next(60000, 80000);
+                    Console.WriteLine("Uue maja ostmiseks läks maksma €{0:N0}", tempint);
+                    kõrvalepanekCurrent -= tempint;
+                    break;
+                case 60:
+                    kink = rng.Next(500, 1000);
+                    Console.WriteLine("Sinul on juubel, sa saad lähedastelt €{0:N0}", kink);
                     break;
                 default:
-                    Console.WriteLine("~");
                     break;
             }
             switch (temp)
             {
                 case "Andmeturbeinspektori":
                     teenimineMin = 1400;
-                    teenimineMax = 1681;
+                    teenimineMax = 1680;
                     break;
                 case "C# programmeerija":
                     teenimineMin = 1900;
@@ -104,15 +154,16 @@ namespace Elutee
                     break;
             }
 
+            kõrvalepanekCurrent += kink;
         }
 
         static void MajandusEvent(int i, int majandusKriis, int majandusCount, ref int kõrvalepanekCurrent)
         {
             Random rng = new Random();
-            int addNext = rng.Next(50000, 100000);
+            int addNext = rng.Next(30000, 60000);
             if (i + 17 > 39 && i + 17 < 43)
             {
-                Console.WriteLine("Majandus kriis!\n+ {0}", addNext);
+                Console.WriteLine("Majandus kriis!\nSa teenisid €{0:N0} extra", addNext);
                 kõrvalepanekCurrent += addNext;
             }
         }
