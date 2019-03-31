@@ -15,11 +15,12 @@ namespace Elutee
         {
             Console.OutputEncoding = Encoding.Unicode;
             Random rng = new Random();
-            int teenimineMin = 0, teenimineMax = 0;
-            int majandusCount = 0, majandusKriis = 0;
             const int aastamax = 42;
-            int aastaCurrent = 0;
-            int kõrvalepanekCurrent = 0;
+            int teenimineMin = 0, 
+                teenimineMax = 0,
+                majandusKriis = 0,
+                aastaCurrent = 0,
+                kõrvalepanekCurrent = 0;
             Console.Title = "Kuidas rikkaks saada";
             Console.WriteLine("Rikkaks saamise elujoon!\nAlustan 17 aastasena");
             Console.ReadKey();
@@ -29,7 +30,7 @@ namespace Elutee
                 Console.Clear();
                 aastaCurrent++;
                 Console.WriteLine("Praegune eluaasta: {0} | Kõrvalolev raha: €{1:N0}\n", aastaCurrent + 17, RahaGain(aastaCurrent, ref kõrvalepanekCurrent, teenimineMax, teenimineMin));
-                EventCourse(i, ref majandusKriis, majandusCount, ref kõrvalepanekCurrent, ref teenimineMin, ref teenimineMax);
+                EventCourse(i, ref majandusKriis, ref kõrvalepanekCurrent, ref teenimineMin, ref teenimineMax);
                 if (kõrvalepanekCurrent > 1000000)
                 {
                     Console.WriteLine("Oled teeninud > €1,000,000. Lähed nüüd pensionile.");
@@ -65,14 +66,14 @@ namespace Elutee
             return 0;
         }
 
-        static void EventCourse(int i, ref int majandusCount, int majandusKriis, ref int kõrvalepanekCurrent, ref int teenimineMin, ref int teenimineMax)
+        static void EventCourse(int i, ref int majandusKriis, ref int kõrvalepanekCurrent, ref int teenimineMin, ref int teenimineMax)
         {
             Random rng = new Random();
             string temp = "";
             int kink = 0;
             string[] töödStrings = new[] { "Andmeturbeinspektori", "C# programmeerija", "Andmetungia", "IT spetsialisti", "Tarkvaraarendaja" };
             string[] keelStrings = new[] { "Python", "C++", "Javascripti", "Java", "PHP" };
-            MajandusEvent(i, majandusKriis, majandusCount, ref kõrvalepanekCurrent);
+            MajandusEvent(i, majandusKriis, ref kõrvalepanekCurrent);
             switch (i + 17)
             {
                 case 17:
@@ -115,8 +116,6 @@ namespace Elutee
                     Console.WriteLine("Uue maja ostmiseks läks maksma €{0:N0}", tempint);
                     kõrvalepanekCurrent -= tempint;
                     break;
-                default:
-                    break;
             }
             switch (temp)
             {
@@ -134,7 +133,7 @@ namespace Elutee
                     break;
                 case "IT spetsialisti":
                     teenimineMin = 1900;
-                    teenimineMax = 3600;
+                    teenimineMax = 2600;
                     break;
                 case "Tarkvaraarendaja":
                     teenimineMin = 1900;
@@ -145,7 +144,7 @@ namespace Elutee
             kõrvalepanekCurrent += kink;
         }
 
-        static void MajandusEvent(int i, int majandusKriis, int majandusCount, ref int kõrvalepanekCurrent)
+        static void MajandusEvent(int i, int majandusKriis, ref int kõrvalepanekCurrent)
         {
             Random rng = new Random();
             int addNext = rng.Next(30000, 60000);
