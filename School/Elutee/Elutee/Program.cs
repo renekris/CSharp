@@ -14,11 +14,9 @@ namespace Elutee
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.Unicode;
-            Random rng = new Random();
             const int aastamax = 42;
             int teenimineMin = 0, 
                 teenimineMax = 0,
-                majandusKriis = 0,
                 aastaCurrent = 0,
                 kõrvalepanekCurrent = 0;
             Console.Title = "Kuidas rikkaks saada";
@@ -30,7 +28,7 @@ namespace Elutee
                 Console.Clear();
                 aastaCurrent++;
                 Console.WriteLine("Praegune eluaasta: {0} | Kõrvalolev raha: €{1:N0}\n", aastaCurrent + 17, RahaGain(aastaCurrent, ref kõrvalepanekCurrent, teenimineMax, teenimineMin));
-                EventCourse(i, ref majandusKriis, ref kõrvalepanekCurrent, ref teenimineMin, ref teenimineMax);
+                EventCourse(i, ref kõrvalepanekCurrent, ref teenimineMin, ref teenimineMax);
                 if (kõrvalepanekCurrent > 1000000)
                 {
                     Console.WriteLine("Oled teeninud > €1,000,000. Lähed nüüd pensionile.");
@@ -66,14 +64,14 @@ namespace Elutee
             return 0;
         }
 
-        static void EventCourse(int i, ref int majandusKriis, ref int kõrvalepanekCurrent, ref int teenimineMin, ref int teenimineMax)
+        static void EventCourse(int i, ref int kõrvalepanekCurrent, ref int teenimineMin, ref int teenimineMax)
         {
             Random rng = new Random();
             string temp = "";
             int kink = 0;
             string[] töödStrings = new[] { "Andmeturbeinspektori", "C# programmeerija", "Andmetungia", "IT spetsialisti", "Tarkvaraarendaja" };
             string[] keelStrings = new[] { "Python", "C++", "Javascripti", "Java", "PHP" };
-            MajandusEvent(i, majandusKriis, ref kõrvalepanekCurrent);
+            MajandusEvent(i, ref kõrvalepanekCurrent);
             switch (i + 17)
             {
                 case 17:
@@ -144,7 +142,7 @@ namespace Elutee
             kõrvalepanekCurrent += kink;
         }
 
-        static void MajandusEvent(int i, int majandusKriis, ref int kõrvalepanekCurrent)
+        static void MajandusEvent(int i, ref int kõrvalepanekCurrent)
         {
             Random rng = new Random();
             int addNext = rng.Next(30000, 60000);
