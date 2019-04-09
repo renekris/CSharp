@@ -63,7 +63,7 @@ namespace StreamWriter_koos_ruututega
         {
             Console.Clear();
             Console.Write("Astendaja:");
-            if (!int.TryParse(Console.ReadLine(), out exponent))
+            if (!int.TryParse(Console.ReadLine().Trim(), out exponent))
             {
                 exponent = 2;
             }
