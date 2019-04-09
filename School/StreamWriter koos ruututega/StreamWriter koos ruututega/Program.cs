@@ -31,21 +31,27 @@ namespace StreamWriter_koos_ruututega
                 ConsoleKey press = Console.ReadKey().Key;
                 switch (press)
                 {
+                    case ConsoleKey.NumPad1:
                     case ConsoleKey.D1:
                         Arv(mainSwitchCurrent);
                         break;
+                    case ConsoleKey.NumPad2:
                     case ConsoleKey.D2:
                         ExponentChange();
                         break;
+                    case ConsoleKey.NumPad3:
                     case ConsoleKey.D3:
                         mainSwitchCurrent = Overwrite(ref mainSwitch);
                         break;
+                    case ConsoleKey.NumPad4:
                     case ConsoleKey.D4:
                         Process.Start(path);
                         break;
+                    case ConsoleKey.NumPad5:
                     case ConsoleKey.D5:
                         Process.Start("explorer.exe", "/select, " + path);
                         break;
+                    case ConsoleKey.NumPad6:
                     case ConsoleKey.D6:
                         File.WriteAllText(path, String.Empty);
                         break;
