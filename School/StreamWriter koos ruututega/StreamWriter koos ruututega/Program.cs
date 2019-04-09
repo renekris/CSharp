@@ -10,39 +10,20 @@ namespace StreamWriter_koos_ruututega
 {
     class Program
     {
-        static string Size()
-        {
-            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
-            double len = new FileInfo("data.txt").Length;
-            int order = 0;
-            while (len >= 1024 && order < sizes.Length - 1)
-            {
-                order++;
-                len = len / 1024;
-            }
-            return String.Format("{0:0.##} {1}", len, sizes[order]);
-        }
-            
+        static string path = "data.txt";
         static void Main(string[] args)
         {
             bool mainSwitch = false;
             bool mainSwitchCurrent = false;
-            /*
-             * Tekita programmi abil fail,
-             * milles oleksid arvud ja nende ruudud
-             * ühest kahekümneni.
-             */
-
-
-            if (!File.Exists("data.txt"))
-                File.Create("data.txt").Dispose();
+            if (!File.Exists(path))
+                File.Create(path).Dispose();
             while (true)
             {
                 Console.WriteLine("[1]> Sisesta arv\n" +
                                   "[2]> Lülita otsakirjutamine [{0}]\n" +
                                   "[3]> Ava fail\n" +
                                   "[4]> Ava faili asukoht\n" +
-                                  "[5]> Puhasta fail [LINES: {1} & SIZE: {2}]", mainSwitchCurrent.ToString().ToUpper(), File.ReadLines(@"data.txt").Count(), Size());
+                                  "[5]> Puhasta fail [LINES: {1} | SIZE: {2}]", mainSwitchCurrent.ToString().ToUpper(), File.ReadLines(@"data.txt").Count(), Size());
                 ConsoleKey press = Console.ReadKey().Key;
                 switch (press)
                 {
@@ -53,17 +34,29 @@ namespace StreamWriter_koos_ruututega
                         mainSwitchCurrent = Overwrite(ref mainSwitch);
                         break;
                     case ConsoleKey.D3:
-                        Process.Start("data.txt");
+                        Process.Start(path);
                         break;
                     case ConsoleKey.D4:
-                        Process.Start("explorer.exe", "/select, " + "data.txt");
+                        Process.Start("explorer.exe", "/select, " + path);
                         break;
                     case ConsoleKey.D5:
-                        File.WriteAllText("data.txt", String.Empty);
+                        File.WriteAllText(path, String.Empty);
                         break;
                 }
                 Console.Clear();
             }
+        }
+        static string Size()
+        {
+            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+            double len = new FileInfo(path).Length;
+            int order = 0;
+            while (len >= 1024 && order < sizes.Length - 1)
+            {
+                order++;
+                len = len / 1024;
+            }
+            return String.Format("{0:0.##}{1}", len, sizes[order]);
         }
         static bool Overwrite(ref bool mainSwitch)
         {
@@ -84,16 +77,16 @@ namespace StreamWriter_koos_ruututega
             Console.Clear();
             Console.Write("Sisesta mitmendani:");
             int kordus = int.Parse(Console.ReadLine().Trim());
-            using (StreamWriter writer = new StreamWriter(@"data.txt", mainSwitchCurrent))
+            using (StreamWriter writer = new StreamWriter(path, mainSwitchCurrent))
             {
                 for (int i = 0; i < kordus; i++)
                 {
-                    writer.WriteLine("{0, 6:G6}^2 = {1, 6:G10}", i + 1, Math.Pow(i + 1, 2));
+                    writer.WriteLine("{0, 6:N0}^2 = {1, 6:N0}", i + 1, Math.Pow(i + 1, 2));
                 }
                 writer.Close();
             }
 
-            using (StreamReader reader = new StreamReader(@"data.txt"))
+            using (StreamReader reader = new StreamReader(path))
             {
                 string line = reader.ReadLine();
                 while (line != null)
