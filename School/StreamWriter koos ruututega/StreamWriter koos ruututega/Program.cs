@@ -10,7 +10,19 @@ namespace StreamWriter_koos_ruututega
 {
     class Program
     {
-
+        static string Size()
+        {
+            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+            double len = new FileInfo("data.txt").Length;
+            int order = 0;
+            while (len >= 1024 && order < sizes.Length - 1)
+            {
+                order++;
+                len = len / 1024;
+            }
+            return String.Format("{0:0.##} {1}", len, sizes[order]);
+        }
+            
         static void Main(string[] args)
         {
             bool mainSwitch = false;
@@ -20,6 +32,8 @@ namespace StreamWriter_koos_ruututega
              * milles oleksid arvud ja nende ruudud
              * ühest kahekümneni.
              */
+
+
             if (!File.Exists("data.txt"))
                 File.Create("data.txt").Dispose();
             while (true)
@@ -28,7 +42,7 @@ namespace StreamWriter_koos_ruututega
                                   "[2]> Lülita otsakirjutamine [{0}]\n" +
                                   "[3]> Ava fail\n" +
                                   "[4]> Ava faili asukoht\n" +
-                                  "[5]> Puhasta fail [LINES: {1}]", mainSwitchCurrent.ToString().ToUpper(), File.ReadLines(@"data.txt").Count());
+                                  "[5]> Puhasta fail [LINES: {1} & SIZE: {2}]", mainSwitchCurrent.ToString().ToUpper(), File.ReadLines(@"data.txt").Count(), Size());
                 ConsoleKey press = Console.ReadKey().Key;
                 switch (press)
                 {
