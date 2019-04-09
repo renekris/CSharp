@@ -10,6 +10,47 @@ namespace StreamWriter_koos_ruututega
 {
     class Program
     {
+
+        static void Main(string[] args)
+        {
+            bool mainSwitch = false;
+            bool mainSwitchCurrent = false;
+            /*
+             * Tekita programmi abil fail,
+             * milles oleksid arvud ja nende ruudud
+             * ühest kahekümneni.
+             */
+            if (!File.Exists("data.txt"))
+                File.Create("data.txt").Dispose();
+            while (true)
+            {
+                Console.WriteLine("[1]> Sisesta arv\n" +
+                                  "[2]> Lülita otsakirjutamine [{0}]\n" +
+                                  "[3]> Ava fail\n" +
+                                  "[4]> Ava faili asukoht\n" +
+                                  "[5]> Puhasta fail [LINES: {1}]", mainSwitchCurrent.ToString().ToUpper(), File.ReadLines(@"data.txt").Count());
+                ConsoleKey press = Console.ReadKey().Key;
+                switch (press)
+                {
+                    case ConsoleKey.D1:
+                        Arv(mainSwitchCurrent);
+                        break;
+                    case ConsoleKey.D2:
+                        mainSwitchCurrent = Overwrite(ref mainSwitch);
+                        break;
+                    case ConsoleKey.D3:
+                        Process.Start("data.txt");
+                        break;
+                    case ConsoleKey.D4:
+                        Process.Start("explorer.exe", "/select, " + "data.txt");
+                        break;
+                    case ConsoleKey.D5:
+                        File.WriteAllText("data.txt", String.Empty);
+                        break;
+                }
+                Console.Clear();
+            }
+        }
         static bool Overwrite(ref bool mainSwitch)
         {
             if (mainSwitch)
@@ -49,45 +90,6 @@ namespace StreamWriter_koos_ruututega
                 reader.Close();
             }
             Console.ReadKey();
-        }
-        static void Main(string[] args)
-        {
-            bool mainSwitch = false;
-            bool mainSwitchCurrent = false;
-            /*
-             * Tekita programmi abil fail,
-             * milles oleksid arvud ja nende ruudud
-             * ühest kahekümneni.
-             */
-
-            while (true)
-            {
-                Console.WriteLine("[1]> Sisesta arv\n" +
-                                  "[2]> Lülita otsakirjutamine [{0}]\n" +
-                                  "[3]> Ava fail\n" +
-                                  "[4]> Ava faili asukoht\n" +
-                                  "[5]> Puhasta fail [LINES: {1}]", mainSwitchCurrent.ToString().ToUpper(), File.ReadLines(@"data.txt").Count());
-                ConsoleKey press = Console.ReadKey().Key;
-                switch (press)
-                {
-                    case ConsoleKey.D1:
-                        Arv(mainSwitchCurrent);
-                        break;
-                    case ConsoleKey.D2:
-                        mainSwitchCurrent = Overwrite(ref mainSwitch);
-                        break;
-                    case ConsoleKey.D3:
-                        Process.Start("data.txt");
-                        break;
-                    case ConsoleKey.D4:
-                        Process.Start("explorer.exe", "/select, " + "data.txt");
-                        break;
-                    case ConsoleKey.D5:
-                        File.WriteAllText("data.txt", String.Empty);
-                        break;
-                }
-                Console.Clear();
-            }
         }
     }
 }
