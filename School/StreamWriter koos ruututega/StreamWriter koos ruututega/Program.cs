@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Services;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace StreamWriter_koos_ruututega
 {
+
     class Program
     {
+        static int exponent = 2;
         static string path = "data.txt";
         static void Main(string[] args)
         {
@@ -20,10 +23,11 @@ namespace StreamWriter_koos_ruututega
             while (true)
             {
                 Console.WriteLine("[1]> Sisesta arv\n" +
-                                  "[2]> Lülita otsakirjutamine [{0}]\n" +
-                                  "[3]> Ava fail\n" +
-                                  "[4]> Ava faili asukoht\n" +
-                                  "[5]> Puhasta fail [LINES: {1} | SIZE: {2}]", mainSwitchCurrent.ToString().ToUpper(), File.ReadLines(@"data.txt").Count(), Size());
+                                  "[2]> Moonda astendajat [^{0}]\n" +
+                                  "[3]> Lülita otsakirjutamine [{1}]\n" +
+                                  "[4]> Ava fail\n" +
+                                  "[5]> Ava faili asukoht\n" +
+                                  "[6]> Puhasta fail [LINES: {2} | SIZE: {3}]", exponent, mainSwitchCurrent.ToString().ToUpper(), File.ReadLines(@"data.txt").Count(), Size());
                 ConsoleKey press = Console.ReadKey().Key;
                 switch (press)
                 {
@@ -31,19 +35,31 @@ namespace StreamWriter_koos_ruututega
                         Arv(mainSwitchCurrent);
                         break;
                     case ConsoleKey.D2:
-                        mainSwitchCurrent = Overwrite(ref mainSwitch);
+                        ExponentChange();
                         break;
                     case ConsoleKey.D3:
-                        Process.Start(path);
+                        mainSwitchCurrent = Overwrite(ref mainSwitch);
                         break;
                     case ConsoleKey.D4:
-                        Process.Start("explorer.exe", "/select, " + path);
+                        Process.Start(path);
                         break;
                     case ConsoleKey.D5:
+                        Process.Start("explorer.exe", "/select, " + path);
+                        break;
+                    case ConsoleKey.D6:
                         File.WriteAllText(path, String.Empty);
                         break;
                 }
                 Console.Clear();
+            }
+        }
+        static void ExponentChange()
+        {
+            Console.Clear();
+            Console.Write("Astendaja:");
+            if (!int.TryParse(Console.ReadLine(), out exponent))
+            {
+                exponent = 2;
             }
         }
         static string Size()
@@ -76,27 +92,29 @@ namespace StreamWriter_koos_ruututega
         {
             Console.Clear();
             Console.Write("Sisesta mitmendani:");
-            int kordus = int.Parse(Console.ReadLine().Trim());
-            using (StreamWriter writer = new StreamWriter(path, mainSwitchCurrent))
+            if (int.TryParse(Console.ReadLine().Trim(), out int kordus))
             {
-                for (int i = 0; i < kordus; i++)
+                using (StreamWriter writer = new StreamWriter(path, mainSwitchCurrent))
                 {
-                    writer.WriteLine("{0, 6:N0}^2 = {1, 6:N0}", i + 1, Math.Pow(i + 1, 2));
+                    for (int i = 0; i < kordus; i++)
+                    {
+                        writer.WriteLine("{0, 6:N0}^{1} = {2, 6:N0}", i + 1, exponent, Math.Pow(i + 1, exponent));
+                    }
+                    writer.Close();
                 }
-                writer.Close();
-            }
 
-            using (StreamReader reader = new StreamReader(path))
-            {
-                string line = reader.ReadLine();
-                while (line != null)
+                using (StreamReader reader = new StreamReader(path))
                 {
-                    Console.WriteLine(line);
-                    line = reader.ReadLine();
+                    string line = reader.ReadLine();
+                    while (line != null)
+                    {
+                        Console.WriteLine(line);
+                        line = reader.ReadLine();
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+                Console.ReadKey();
             }
-            Console.ReadKey();
         }
     }
 }
