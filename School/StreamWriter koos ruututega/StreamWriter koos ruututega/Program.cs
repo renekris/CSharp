@@ -63,9 +63,10 @@ namespace StreamWriter_koos_ruututega
             while (true)
             {
                 Console.WriteLine("[1]> Sisesta arv\n" +
-                                  "[2]> Ava fail\n" +
-                                  "[3]> Lülita otsakirjutamine [{0}]\n" +
-                                  "[4]> Puhasta fail [LINES: {1}]", mainSwitchCurrent.ToString().ToUpper(), File.ReadLines(@"data.txt").Count()); 
+                                  "[2]> Lülita otsakirjutamine [{0}]\n" +
+                                  "[3]> Ava fail\n" +
+                                  "[4]> Ava faili asukoht\n" +
+                                  "[5]> Puhasta fail [LINES: {1}]", mainSwitchCurrent.ToString().ToUpper(), File.ReadLines(@"data.txt").Count());
                 ConsoleKey press = Console.ReadKey().Key;
                 switch (press)
                 {
@@ -73,12 +74,15 @@ namespace StreamWriter_koos_ruututega
                         Arv(mainSwitchCurrent);
                         break;
                     case ConsoleKey.D2:
-                        Process.Start("data.txt");
-                        break;
-                    case ConsoleKey.D3:
                         mainSwitchCurrent = Overwrite(ref mainSwitch);
                         break;
+                    case ConsoleKey.D3:
+                        Process.Start("data.txt");
+                        break;
                     case ConsoleKey.D4:
+                        Process.Start("explorer.exe", "/select, " + "data.txt");
+                        break;
+                    case ConsoleKey.D5:
                         File.WriteAllText("data.txt", String.Empty);
                         break;
                 }
