@@ -16,6 +16,7 @@ namespace StreamWriter_koos_ruututega
         static string path = "data.txt";
         static void Main(string[] args)
         {
+            Console.Title = "StreamWriter^2 by Renekris";
             bool mainSwitch = false;
             bool mainSwitchCurrent = false;
             if (!File.Exists(path))
