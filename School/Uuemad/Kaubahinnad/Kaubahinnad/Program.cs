@@ -13,9 +13,8 @@ namespace Kaubahinnad
         private static string path = @"data.txt";
         static void Main(string[] args)
         {
-            if (!File.Exists(path))
-                File.Create(path).Dispose();
             Console.OutputEncoding = Encoding.Unicode;
+            dataExist();
             while (true)
             {
                 Console.Clear();
@@ -44,6 +43,35 @@ namespace Kaubahinnad
                         Process.Start("explorer.exe", "/select, " + path);
                         break;
                 }
+            }
+        }
+
+        static void dataExist()
+        {
+            if (!File.Exists(path))
+            {
+                StreamWriter writer = new StreamWriter(path, false, Encoding.Unicode);
+                writer.WriteLine("[1]>\t€ 0.53\tPiim\n" +
+                                 "[2]>\t€ 1.59\tLeib\n" +
+                                 "[3]>\t€ 1.29\tSai\n" +
+                                 "[4]>\t€ 1.3\tKala\n" +
+                                 "[5]>\t€ 1\tSulatatud juust\n" +
+                                 "[6]>\t€ 4.35\tMesi\n" +
+                                 "[7]>\t€ 3.29\tBasiilikukaste\n" +
+                                 "[8]>\t€ 2.4\tVaarikamoos\n" +
+                                 "[9]>\t€ 0.59\tHapukoor\n" +
+                                 "[10]>\t€ 1.09\tVanillipuding\n" +
+                                 "[11]>\t€ 0.99\tKeefir\n" +
+                                 "[12]>\t€ 1.29\tKodujuust\n" +
+                                 "[13]>\t€ 0.43\tSibul\n" +
+                                 "[14]>\t€ 0.59\tKohuke\n" +
+                                 "[15]>\t€ 999\tArvuti\n" +
+                                 "[16]>\t€ 125.1\tLaud\n" +
+                                 "[17]>\t€ 21\tKlaveatuur\n" +
+                                 "[18]>\t€ 419.9\tPS4\n" +
+                                 "[19]>\t€ 49\tTool\n" +
+                                 "[20]>\t€ 0.2\tKoer");
+                writer.Close();
             }
         }
         static DataTable ConvertToDataTable(string filePath, int numberOfColumns)
