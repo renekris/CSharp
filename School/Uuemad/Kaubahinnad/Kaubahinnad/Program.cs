@@ -1,18 +1,51 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Kaubahinnad
 {
     class Program
     {
         private static string path = @"data.txt";
+        static void Main(string[] args)
+        {
+            if (!File.Exists(path))
+                File.Create(path).Dispose();
+            Console.OutputEncoding = Encoding.Unicode;
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("[1]> Poodi\n" +
+                                  "[2]> Ava fail\n" +
+                                  "[3]> Ava fail Excelis\n" +
+                                  "[4]> Ava faili asukoht");
+                ConsoleKey press = Console.ReadKey().Key;
+                switch (press)
+                {
+                    case ConsoleKey.NumPad1:
+                    case ConsoleKey.D1:
+                        Console.Clear();
+                        ColumnsPriceSum();
+                        break;
+                    case ConsoleKey.NumPad2:
+                    case ConsoleKey.D2:
+                        Process.Start(path);
+                        break;
+                    case ConsoleKey.NumPad3:
+                    case ConsoleKey.D3:
+                        Process.Start("excel.exe", path);
+                        break;
+                    case ConsoleKey.NumPad4:
+                    case ConsoleKey.D4:
+                        Process.Start("explorer.exe", "/select, " + path);
+                        break;
+                }
+            }
+        }
         static DataTable ConvertToDataTable(string filePath, int numberOfColumns)
         {
             DataTable tbl = new DataTable();
@@ -25,7 +58,7 @@ namespace Kaubahinnad
             {
                 var cols = line.Split('\t');
                 DataRow dr = tbl.NewRow();
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < numberOfColumns; i++)
                 {
                     dr[i] = cols[i];
                 }
@@ -36,71 +69,41 @@ namespace Kaubahinnad
 
         static void ColumnsPriceSum()
         {
-            StreamReader reader = new StreamReader(path);
             List<double> hinnadList = new List<double>();
             List<double> hinnadSumList = new List<double>();
-            DataTable dataTable = ConvertToDataTable(path, 2);
-            double sum = 0d, price = 0d;
-            string objects = "";
-            while (!reader.EndOfStream)
-            {
-                Console.WriteLine(reader.ReadLine());
-            }
-            reader.Close();
-            for (int i = 0; i < dataTable.Rows.Count; i++)
-            {
-                hinnadList.Add(Convert.ToDouble(dataTable.Rows[i]["Column1"]));
-                objects = dataTable.Rows[i]["Column2"].ToString();
-            }
+            DataTable dataTable = ConvertToDataTable(path, 3);
 
             while (true)
             {
-                Console.WriteLine("Enter the number you want to buy");
-                if (int.TryParse(Console.ReadLine(), out int enteredNumber))
+                using (StreamReader reader = new StreamReader(path))
                 {
-                    hinnadSumList.Add(hinnadList[enteredNumber - 1]);
-                    Console.WriteLine(string.Format("{0}€", hinnadSumList.Sum()));
+                    Console.Write("Sisesta ostu number:");
+                    Console.Write("\tTäis hind: €{0}\t", hinnadSumList.Sum());
+                    Console.Write("[0] - Tagasi\n");
+                    Console.WriteLine("NUMBER\tHIND\tTOODE");
+
+                    while (!reader.EndOfStream)
+                    {
+                        Console.WriteLine(reader.ReadLine());
+                    }
+                    reader.Close();
+                    for (int i = 0; i < dataTable.Rows.Count; i++)
+                    {
+                        hinnadList.Add(Convert.ToDouble(dataTable.Rows[i]["Column2"].ToString().Replace("€", null)));
+                    }
+                    Console.SetCursorPosition(20, 0);
+                    //Loeb
+                    if (int.TryParse(Console.ReadLine(), out int enteredNumber) && hinnadList.Count + 1 > enteredNumber)
+                    {
+                        if (enteredNumber == 0)
+                        {
+                            break;
+                        }
+                        hinnadSumList.Add(hinnadList[enteredNumber - 1]);
+                    }
+                    hinnadList.Clear();
                 }
-            }
-        }
-        static void Main(string[] args)
-        {
-            if (!File.Exists(@"data.txt"))
-                File.Create(@"data.txt").Dispose();
-            Console.OutputEncoding = Encoding.Unicode;
-            while (true)
-            {
                 Console.Clear();
-                Console.WriteLine("[1]> Poodi\n" +
-                                  "[2]> Moonda poe hindu\n" +
-                                  "[3]> Ava fail\n" +
-                                  "[4]> Ava fail Excelis\n" +
-                                  "[5]> Ava faili asukoht");
-                ConsoleKey press = Console.ReadKey().Key;
-                switch (press)
-                {
-                    case ConsoleKey.NumPad1:
-                    case ConsoleKey.D1:
-                        Console.Clear();
-                        ColumnsPriceSum();
-                        Console.ReadKey();
-                        break;
-                    case ConsoleKey.NumPad2:
-                    case ConsoleKey.D2:
-                        break;
-                    case ConsoleKey.NumPad3:
-                    case ConsoleKey.D3:
-                        Process.Start(path);
-                        break;
-                    case ConsoleKey.NumPad4:
-                    case ConsoleKey.D4:
-                        Process.Start("excel.exe", path);
-                        break;
-                    case ConsoleKey.NumPad5:
-                    case ConsoleKey.D5:
-                        Process.Start("explorer.exe", "/select, " + path);
-                        break;
-                }
             }
         }
     }
