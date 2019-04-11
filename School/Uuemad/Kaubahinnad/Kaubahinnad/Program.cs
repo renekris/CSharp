@@ -3,13 +3,10 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.FileIO;
 
 namespace Kaubahinnad
 {
@@ -40,7 +37,8 @@ namespace Kaubahinnad
         static void ColumnsPriceSum()
         {
             StreamReader reader = new StreamReader(path);
-            List<double> hinnad = new List<double>();
+            List<double> hinnadList = new List<double>();
+            List<double> hinnadSumList = new List<double>();
             DataTable dataTable = ConvertToDataTable(path, 2);
             double sum = 0d, price = 0d;
             string objects = "";
@@ -51,14 +49,24 @@ namespace Kaubahinnad
             reader.Close();
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
-                hinnad.Add(Convert.ToDouble(dataTable.Rows[i]["Column1"].ToString()));
+                hinnadList.Add(Convert.ToDouble(dataTable.Rows[i]["Column1"]));
                 objects = dataTable.Rows[i]["Column2"].ToString();
             }
 
-            Console.WriteLine(string.Format("{0}€", hinnad.Sum()));
+            while (true)
+            {
+                Console.WriteLine("Enter the number you want to buy");
+                if (int.TryParse(Console.ReadLine(), out int enteredNumber))
+                {
+                    hinnadSumList.Add(hinnadList[enteredNumber - 1]);
+                    Console.WriteLine(string.Format("{0}€", hinnadSumList.Sum()));
+                }
+            }
         }
         static void Main(string[] args)
         {
+            if (!File.Exists(@"data.txt"))
+                File.Create(@"data.txt").Dispose();
             Console.OutputEncoding = Encoding.Unicode;
             while (true)
             {
@@ -68,7 +76,6 @@ namespace Kaubahinnad
                                   "[3]> Ava fail\n" +
                                   "[4]> Ava fail Excelis\n" +
                                   "[5]> Ava faili asukoht");
-
                 ConsoleKey press = Console.ReadKey().Key;
                 switch (press)
                 {
