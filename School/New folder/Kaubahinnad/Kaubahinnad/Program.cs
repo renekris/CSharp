@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,57 +16,47 @@ namespace Kaubahinnad
     class Program
     {
         private static string path = @"data.txt";
-        private static TextFieldParser parser = new TextFieldParser(@"test.txt");
-        private static string objectsPath = @"objects.txt";
-        private static string pricePath = @"price.txt";
-        static List<string> objects = new List<string>();
-        static List<double> price = new List<double>();
-
-        static void Pood()
+        static DataTable ConvertToDataTable(string filePath, int numberOfColumns)
         {
-            Console.Clear();
-            using (StreamReader reader = new StreamReader(path))
+            DataTable tbl = new DataTable();
+            for (int col = 0; col < numberOfColumns; col++)
             {
-                
-
-                DataTable table = new DataTable();
-                table.Columns.Add("Hind", typeof(double));
-                table.Columns.Add("Toode", typeof(string));
-
-                var lines = File.ReadAllLines(pricePath).ToList();
-                lines.ForEach(line => table.Rows.Add(line));
-
-                double temp = 0;
-                foreach (DataRow row in table.Rows)
-                {
-                    temp += row.Field<double>(0);
-                    Console.WriteLine(row.Field<double>(0));
-                }
-
-                Console.WriteLine("SUM {0}", temp);
-                reader.Close();
+                tbl.Columns.Add(new DataColumn("Column" + (col + 1).ToString()));
             }
-            Console.ReadKey();
-            //parser.TextFieldType = FieldType.Delimited;
-            //parser.SetDelimiters("\t");
-            //while (!parser.EndOfData)
-            //{
-            //    string[] fields = parser.ReadFields();
-            //    for (int i = 0; i < fields.Length / 2; i++)
-            //    {
-            //        price.Add(Convert.ToDouble(fields[i].Replace(',', '.')));
-            //        objects.Add(fields[i + 1]);
-            //    }
-            //}
-            //double temp = 0d;
-            //foreach (double d in price)
-            //{
-            //    temp += d;
-            //}
-            //Console.WriteLine(temp);
-            //Console.ReadKey();
+            string[] lines = File.ReadAllLines(filePath);
+            foreach (string line in lines)
+            {
+                var cols = line.Split('\t');
+                DataRow dr = tbl.NewRow();
+                for (int i = 0; i < 2; i++)
+                {
+                    dr[i] = cols[i];
+                }
+                tbl.Rows.Add(dr);
+            }
+            return tbl;
         }
 
+        static void ColumnsPriceSum()
+        {
+            StreamReader reader = new StreamReader(path);
+            List<double> hinnad = new List<double>();
+            DataTable dataTable = ConvertToDataTable(path, 2);
+            double sum = 0d, price = 0d;
+            string objects = "";
+            while (!reader.EndOfStream)
+            {
+                Console.WriteLine(reader.ReadLine());
+            }
+            reader.Close();
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                hinnad.Add(Convert.ToDouble(dataTable.Rows[i]["Column1"].ToString()));
+                objects = dataTable.Rows[i]["Column2"].ToString();
+            }
+
+            Console.WriteLine(string.Format("{0}€", hinnad.Sum()));
+        }
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.Unicode;
@@ -83,7 +74,9 @@ namespace Kaubahinnad
                 {
                     case ConsoleKey.NumPad1:
                     case ConsoleKey.D1:
-                        Pood();
+                        Console.Clear();
+                        ColumnsPriceSum();
+                        Console.ReadKey();
                         break;
                     case ConsoleKey.NumPad2:
                     case ConsoleKey.D2:
@@ -102,39 +95,6 @@ namespace Kaubahinnad
                         break;
                 }
             }
-
-
-
-
-
-            Console.ReadKey();
-
-
-            parser.TextFieldType = FieldType.Delimited;
-            parser.SetDelimiters("\t");
-            while (!parser.EndOfData)
-            {
-                //Processing row
-                string[] fields = parser.ReadFields();
-                for (int i = 0; i < fields.Length / 2; i++)
-                {
-                    price.Add(Convert.ToDouble(fields[i].Replace(',', '.')));
-                    objects.Add(fields[i + 1]);
-                }
-            }
-
-            double temp = 0d;
-            foreach (double d in price)
-            {
-                temp += d;
-            }
-            Console.WriteLine(temp);
-            Console.WriteLine(objects);
-
-
-            Console.ReadKey();
-            //Tekstifaili igal real on müüdud kauba hind.Arvuta programmi abil nende hindade summa.
-
         }
     }
 }
