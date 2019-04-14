@@ -13,12 +13,13 @@ namespace Automatic_Youtube_Downloader
     class Program
     {
         private static int counter = 0;
-        private static string[] sequence = new string[] { ".   ", "..  ", "... ", "...." };
+        private static string[] sequence = new string[] { "   .   ", "  ...  ", " ..... ", ".. . ..", ".  .  ." };
         private static string[] pythonPackages = new[] { "pytube", "youtube-dl" };
         private static Regex removeNum = new Regex(@"[0-9=./\()*&^%$#@!]+");
         private static List<string> urls = new List<string>();
-        private static string[] filesCheck = new[] { "youtube-audio.py", "youtube-video.py", "/Windows/py.exe", "youtube-video-dl.py" };
-        private static string urlPath = "urls.txt";
+        private static string[] filesCheck = new[] { "youtube-audio.py", "youtube-video.py", "/Windows/py.exe", "youtube-video-dl.py", "ffmpeg.exe" };
+        private static readonly string urlVideoPath = "urlsVideo.txt";
+        private static readonly string urlAudioPath = "urlsAudio.txt";
 
         static public void Turn()
         {
@@ -60,6 +61,22 @@ namespace Automatic_Youtube_Downloader
                     Environment.Exit(0);
                 }
             }
+            //Kontrollib kas õiged pythoni osad olemas
+            Process pipFreeze = new Process();
+            ConsoleOutput(pipFreeze, "py.exe", "-m pip freeze");
+
+            List<string> pipFreezeList = new List<string>();
+            pipFreezeList.Add(removeNum.Replace(pipFreeze.StandardOutput.ReadToEnd(), ""));
+            foreach (var freeze in pipFreezeList)
+            {
+                if (!pythonPackages.All(freeze.Contains))
+                {
+                    Console.Clear();
+                    Console.WriteLine("Ühekordne valmistus. Installin [{0}] + [{1}]", pythonPackages[0], pythonPackages[1]);
+                    Process pipInstall = new Process();
+                    IsRunning(ConsoleOutput(pipInstall, "py.exe", "-m pip install pytube youtube-dl --no-warn-script-location"), true);
+                }
+            }
         }
 
         static Process ConsoleOutput(Process process, string fileName, string arguments)
@@ -71,6 +88,16 @@ namespace Automatic_Youtube_Downloader
             process.StartInfo.RedirectStandardOutput = true;
             process.Start();
             return process;
+        }
+
+        static void UrlRead(string urlPath)
+        {
+            using (StreamReader reader = new StreamReader(urlPath))
+            {
+                while (!reader.EndOfStream)
+                    urls.Add(reader.ReadLine());
+                reader.Close();
+            }
         }
 
         static void Main(string[] args)
@@ -86,8 +113,10 @@ namespace Automatic_Youtube_Downloader
 
                 FileCheck();
                 //Teeb faili kui see puudub
-                if (!File.Exists(urlPath))
-                    File.Create(urlPath).Dispose();
+                if (!File.Exists(urlAudioPath))
+                    File.Create(urlAudioPath).Dispose();
+                if (!File.Exists(urlVideoPath))
+                    File.Create(urlVideoPath).Dispose();
                 Console.WriteLine("[1]> Video\n" +
                                   "[2]> Audio");
                 ConsoleKey press = Console.ReadKey().Key;
@@ -119,33 +148,28 @@ namespace Automatic_Youtube_Downloader
         /// </summary>
         static void Audio()
         {
-            IsRunning(Process.Start(urlPath), false);
+            IsRunning(Process.Start(urlAudioPath), false);
+            //Loeb sisestatud URL'id
+            UrlRead(urlAudioPath);
 
-            using (StreamReader reader = new StreamReader(urlPath))
-            {
-                while (!reader.EndOfStream)
-                    urls.Add(reader.ReadLine());
-                reader.Close();
-            }
             Console.Clear();
             //Kontrollib korra veel faili olemasolu
-            if (File.Exists(urlPath))
+            if (File.Exists(urlAudioPath))
             {
                 foreach (var VARIABLE in urls)
                 {
                     //Laeb videod alla
 
                     /*
-            parser.add_argument('--url', type=str)
-            parser.add_argument('--noplaylist', type=bool, default=true)
-             */
+                    parser.add_argument('--url', type=str)
+                    parser.add_argument('--noplaylist', type=bool, default=true)
+                   */
                     Process videoInstall = new Process();
                     Console.WriteLine("{0} / {1} faili", urls.IndexOf(VARIABLE) + 1, urls.Count);
                     IsRunning(ConsoleOutput(videoInstall, "py.exe", "youtube-audio.py --url " + VARIABLE), true);
+                    Console.WriteLine("Writing ended");
                     Console.Clear();
                 }
-                Console.Clear();
-                Console.WriteLine("Kõik videod alla laetud!");
                 DialogResult ans = MessageBox.Show("Kas sa soovid vaadata allalaetud faile?", "Kausta avamine", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                 if (ans == DialogResult.Yes)
                     Process.Start("explorer.exe", "/select," + Path.GetFullPath("Automatic Youtube Downloader.exe"));
@@ -162,36 +186,14 @@ namespace Automatic_Youtube_Downloader
         static void Video()
         {
             //Ei jätka kuni failid pannakse kinni
-            IsRunning(Process.Start(urlPath), false);
-
-            //Kontrollib kas õiged pythoni osad olemas
-            Process pipFreeze = new Process();
-            ConsoleOutput(pipFreeze, "py.exe", "-m pip freeze");
-
-            List<string> pipFreezeList = new List<string>();
-            pipFreezeList.Add(removeNum.Replace(pipFreeze.StandardOutput.ReadToEnd(), ""));
-            foreach (var freeze in pipFreezeList)
-            {
-                if (!pythonPackages.All(freeze.Contains))
-                {
-                    Console.Clear();
-                    Console.WriteLine("Ühekordne valmistus. Installin [{0}] + [{1}]", pythonPackages[0], pythonPackages[1]);
-                    Process pipInstall = new Process();
-                    IsRunning(ConsoleOutput(pipInstall, "py.exe", "-m pip install pytube youtube-dl --no-warn-script-location"), true);
-                }
-            }
-
+            IsRunning(Process.Start(urlVideoPath), false);
 
             //Loeb sisestatud URL'id
-            using (StreamReader reader = new StreamReader(urlPath))
-            {
-                while (!reader.EndOfStream)
-                    urls.Add(reader.ReadLine());
-                reader.Close();
-            }
+            UrlRead(urlVideoPath);
+
             Console.Clear();
             //Kontrollib korra veel faili olemasolu
-            if (File.Exists(urlPath))
+            if (File.Exists(urlVideoPath))
             {
                 foreach (var VARIABLE in urls)
                 {
@@ -203,8 +205,9 @@ namespace Automatic_Youtube_Downloader
                     //IsRunning(ConsoleOutput(videoInstall, "py.exe", "youtube-video.py --url " + VARIABLE), true);
                     //Newer version:
                     IsRunning(ConsoleOutput(videoInstall, "py.exe", "youtube-video-dl.py --url " + VARIABLE), true);
+                    Console.WriteLine("Writing ended");
+                    Console.Clear();
                 }
-                Console.Clear();
                 DialogResult ans = MessageBox.Show("Kas sa soovid vaadata allalaetud faile?", "Kausta avamine", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.DefaultDesktopOnly);
                 if (ans == DialogResult.Yes)
                     Process.Start("explorer.exe", "/select," + Path.GetFullPath("Automatic Youtube Downloader.exe"));
