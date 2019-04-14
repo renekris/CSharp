@@ -2,31 +2,44 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Services;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-using Microsoft.Win32;
 
 namespace Automatic_Youtube_Downloader
 {
     class Program
     {
+        private static int counter = 0;
+        private static string[] sequence = new string[] { ".   ", "..  ", "... ", "...." };
         private static string[] pythonPackages = new[] { "pytube", "youtube-dl" };
         private static Regex removeNum = new Regex(@"[0-9=./\()*&^%$#@!]+");
         private static List<string> urls = new List<string>();
         private static string[] filesCheck = new[] { "youtube-audio.py", "youtube-video.py", "/Windows/py.exe" };
         private static string urlPath = "urls.txt";
 
-        static void IsRunning(Process status)
+        static public void Turn()
         {
+            counter++;
+
+            if (counter >= sequence.Length)
+                counter = 0;
+
+            Console.Write(sequence[counter]);
+            Console.SetCursorPosition(Console.CursorLeft - sequence[counter].Length, Console.CursorTop);
+        }
+
+        static void IsRunning(Process status, bool animation)
+        {
+            counter = 0;
             while (!status.HasExited)
             {
+                if (animation == true)
+                {
+                Turn();
+                }
                 Thread.Sleep(250);
             }
         }
@@ -77,7 +90,7 @@ namespace Automatic_Youtube_Downloader
                 Console.WriteLine("Sisesta text faili URL-id reakaupa,\n" +
                                   "Salvesta ja sule fail kui oled valmis allalaadima");
                 //Ei jätka kuni failid pannakse kinni
-                IsRunning(Process.Start(urlPath));
+                IsRunning(Process.Start(urlPath), false);
 
                 //Kontrollib kas õiged pythoni osad olemas
                 Process pipFreeze = new Process();
@@ -89,8 +102,10 @@ namespace Automatic_Youtube_Downloader
                 {
                     if (!pythonPackages.All(freeze.Contains))
                     {
-                        IsRunning(Process.Start(@"py.exe", @"-m pip install pytube"));
-                        IsRunning(Process.Start(@"py.exe", @"-m pip install youtube-dl"));
+                        Console.Clear();
+                        Console.WriteLine("Ühekordne valmistus. Installin [{0}] + [{1}]", pythonPackages[0], pythonPackages[1]);
+                        Process pipInstall = new Process();
+                        IsRunning(ConsoleOutput(pipInstall, "py.exe", "-m pip install pytube youtube-dl --no-warn-script-location"), true);
                     }
                 }
 
@@ -102,15 +117,17 @@ namespace Automatic_Youtube_Downloader
                         urls.Add(reader.ReadLine());
                     reader.Close();
                 }
-
+                Console.Clear();
                 //Kontrollib korra veel faili olemasolu
                 if (File.Exists(urlPath))
                 {
                     foreach (var VARIABLE in urls)
                     {
                         //Laeb videod alla
-                        Console.WriteLine(urls.IndexOf(VARIABLE) + 1 + "/" + urls.Count);
-                        IsRunning(Process.Start(@"py.exe", @"youtube-video.py --url " + VARIABLE));
+
+                        Process videoInstall = new Process();
+                        Console.WriteLine("{0} / {1} faili", urls.IndexOf(VARIABLE) + 1, urls.Count);
+                        IsRunning(ConsoleOutput(videoInstall, "py.exe", "youtube-video.py --url " + VARIABLE), true);
                         Console.Clear();
                     }
                     Console.Clear();
@@ -126,6 +143,7 @@ namespace Automatic_Youtube_Downloader
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                Console.WriteLine("Palun teata veast. renekrispohlak@gmail.com | github.com/renekris");
                 Console.ReadKey();
                 throw;
             }
