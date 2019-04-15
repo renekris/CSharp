@@ -7,6 +7,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using Automatic_Youtube_Downloader.Properties;
 
 namespace Automatic_Youtube_Downloader
 {
@@ -18,7 +19,6 @@ namespace Automatic_Youtube_Downloader
         private static readonly string[] filesCheck = new[] { "avcodec-58.dll", "avdevice-58.dll", "avfilter-7.dll", "avformat-58.dll", "avutil-56.dll", "ffmpeg.exe", "ffprobe.exe", "postproc-55.dll", "swresample-3.dll", "swscale-5.dll" };
         private static readonly string urlVideoPath = "urlsVideo.txt";
         private static readonly string urlAudioPath = "urlsAudio.txt";
-
         static void Main(string[] args)
         {
             try
@@ -60,7 +60,6 @@ namespace Automatic_Youtube_Downloader
         static void Turn()
         {
             counter++;
-
             if (counter >= sequence.Length)
                 counter = 0;
 
@@ -133,7 +132,6 @@ namespace Automatic_Youtube_Downloader
             {
                 Console.WriteLine("{0} / {1} faili", urls.IndexOf(VARIABLE) + 1, urls.Count);
                 IsRunning(ConsoleOutput(new Process(), Path.GetFullPath("youtube-dl.exe"), " --config-location dl-Audio.txt " + VARIABLE), true);
-
             }
             Console.Title = "Automatic Youtube V/A Downloader";
             OpenFolderForms("Audio");
