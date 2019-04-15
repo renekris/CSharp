@@ -1,0 +1,17 @@
+--console-title
+ 
+--no-check-certificate 
+
+-v 
+
+--add-metadata 
+
+--ffmpeg-location data/ 
+
+-c 
+
+-i 
+
+-f best[ext=mp4]
+
+-o "Downloaded files/Video/%(extractor_key)s/%(title)s.%(ext)s"
