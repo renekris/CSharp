@@ -1,0 +1,37 @@
+--no-playlist                    Download only the video, if the URL refers
+                                 to a video and a playlist.
+--yes-playlist                   Download the playlist, if the URL refers to
+                                 a video and a playlist.
+-o, --output TEMPLATE            Output filename template, see the "OUTPUT
+                                 TEMPLATE" for all the info
+--write-thumbnail                Write thumbnail image to disk
+--write-all-thumbnails           Write all thumbnail image formats to disk
+-g, --get-url                    Simulate, quiet but print URL
+-e, --get-title                  Simulate, quiet but print title
+--get-id                         Simulate, quiet but print id
+--get-thumbnail                  Simulate, quiet but print thumbnail URL
+--get-description                Simulate, quiet but print video description
+--get-duration                   Simulate, quiet but print video length
+--get-filename                   Simulate, quiet but print output filename
+--get-format                     Simulate, quiet but print output format
+-f, --format FORMAT              Video format code, see the "FORMAT
+                                 SELECTION" for all the info
+-x, --extract-audio              Convert video files to audio-only files
+                                 (requires ffmpeg or avconv and ffprobe or
+                                 avprobe)
+--audio-format FORMAT            Specify audio format: "best", "aac",
+                                 "flac", "mp3", "m4a", "opus", "vorbis", or
+                                 "wav"; "best" by default; No effect without
+                                 -x
+--audio-quality QUALITY          Specify ffmpeg/avconv audio quality, insert
+                                 a value between 0 (better) and 9 (worse)
+                                 for VBR or a specific bitrate like 128K
+                                 (default 5)
+--recode-video FORMAT            Encode the video to another format if
+                                 necessary (currently supported:
+                                 mp4|flv|ogg|webm|mkv|avi)
+--embed-thumbnail                Embed thumbnail in the audio as cover art
+--add-metadata                   Write metadata to the video file
+--ffmpeg-location PATH           Location of the ffmpeg/avconv binary;
+                                 either the path to the binary or its
+                                 containing directory.

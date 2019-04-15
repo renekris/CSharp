@@ -64,8 +64,8 @@ namespace Automatic_Youtube_Downloader
             if (counter >= sequence.Length)
                 counter = 0;
 
-            Console.Write(sequence[counter]);
-            Console.SetCursorPosition(Console.CursorLeft - sequence[counter].Length, Console.CursorTop);
+            Console.Write("\n" + sequence[counter]);
+            Console.SetCursorPosition(Console.CursorLeft - sequence[counter].Length, Console.CursorTop - 1);
         }
 
         static void IsRunning(Process status, bool animation)
@@ -136,7 +136,7 @@ namespace Automatic_Youtube_Downloader
 
             }
             Console.Title = "Automatic Youtube V/A Downloader";
-            OpenFolderForms();
+            OpenFolderForms("Audio");
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Automatic_Youtube_Downloader
                 IsRunning(ConsoleOutput(new Process(), Path.GetFullPath("youtube-dl.exe"), " --config-location dl-Video.txt " + VARIABLE), true);
             }
             Console.Title = "Automatic Youtube V/A Downloader";
-            OpenFolderForms();
+            OpenFolderForms("Video");
         }
 
         static void DownloadSetup(string path)
@@ -169,11 +169,14 @@ namespace Automatic_Youtube_Downloader
             Console.Clear();
         }
 
-        static void OpenFolderForms()
+        static void OpenFolderForms(string format)
         {
-            DialogResult ans = MessageBox.Show("Kas sa soovid vaadata allalaetud faile?", "Kausta avamine", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.DefaultDesktopOnly);
+            DialogResult ans = MessageBox.Show("Kas sa soovid vaadata allalaaditud faile?", "Kausta avamine", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.ServiceNotification);
             if (ans == DialogResult.Yes)
-                Process.Start("explorer.exe", "/select," + Path.GetFullPath("Downloaded files/"));
+                if (format == "Audio")
+                    Process.Start("explorer.exe", "/open," + Path.GetFullPath("Downloaded files/Audio/"));
+                else if (format == "Video")
+                    Process.Start("explorer.exe", "/open," + Path.GetFullPath("Downloaded files/Video/"));
         }
     }
 }
