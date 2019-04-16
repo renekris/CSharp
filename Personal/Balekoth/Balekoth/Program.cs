@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
@@ -11,106 +12,51 @@ using System.Windows.Forms;
 
 namespace Balekoth
 {
-    class Program
+    class Program : Oftenlib
     {
-        static void MiddleWriteLine(string s)
-        {
-            Console.SetCursorPosition((Console.WindowWidth - s.Length) / 2, Console.CursorTop);
-            Console.WriteLine(s);
-        }
-        static void MiddleWrite(string s)
-        {
-            Console.SetCursorPosition((Console.WindowWidth - s.Length) / 2, Console.CursorTop);
-            Console.Write(s);
-        }
-
-        static void Title()
-        {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(" ════════════════════════════════════════════════════════════════════════════════════════════════════\n");
-            Console.WriteLine("  ▀█████████▄     ▄████████  ▄█          ▄████████    ▄█   ▄█▄  ▄██████▄      ███        ▄█    █▄   ");
-            Console.WriteLine("    ███    ███   ███    ███ ███         ███    ███   ███ ▄███▀ ███    ███ ▀█████████▄   ███    ███  ");
-            Console.WriteLine("    ███    ███   ███    ███ ███         ███    █▀    ███▐██▀   ███    ███    ▀███▀▀██   ███    ███  ");
-            Console.WriteLine("   ▄███▄▄▄██▀    ███    ███ ███        ▄███▄▄▄      ▄█████▀    ███    ███     ███   ▀  ▄███▄▄▄▄███▄▄");
-            Console.WriteLine("  ▀▀███▀▀▀██▄  ▀███████████ ███       ▀▀███▀▀▀     ▀▀█████▄    ███    ███     ███     ▀▀███▀▀▀▀███▀ ");
-            Console.WriteLine("    ███    ██▄   ███    ███ ███         ███    █▄    ███▐██▄   ███    ███     ███       ███    ███  ");
-            Console.WriteLine("    ███    ███   ███    ███ ███▌    ▄   ███    ███   ███ ▀███▄ ███    ███     ███       ███    ███  ");
-            Console.WriteLine("  ▄█████████▀    ███    █▀  █████▄▄██   ██████████   ███   ▀█▀  ▀██████▀     ▄████▀     ███    █▀   ");
-            Console.WriteLine("                            ▀                        ▀                                              ");
-            Console.WriteLine(" ════════════════════════════════════════════════════════════════════════════════════════════════════");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine();
-            MiddleWriteLine("By");
-            MiddleWrite("Rene Kristofer Pohlak");
-            Console.ResetColor();
-        }
-
-        static void MiniTitle()
-        {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            MiddleWriteLine("────────────────────────────");
-            MiddleWriteLine("| ╔╗ ╔═╗╦  ╔═╗╦╔═╔═╗╔╦╗╦ ╦ |");
-            MiddleWriteLine("~| ╠╩╗╠═╣║  ║╣ ╠╩╗║ ║ ║ ╠═╣ |~");
-            MiddleWriteLine("| ╚═╝╩ ╩╩═╝╚═╝╩ ╩╚═╝ ╩ ╩ ╩ |");
-            MiddleWriteLine("────────────────────────────");
-            Console.WriteLine();
-            Console.ResetColor();
-        }
-
+        
         static void Loading()
         {
             DialogResult loadBoxResult;
             loadBoxResult = MessageBox.Show("Do you want to load your latest save?", "Loading.", MessageBoxButtons.OKCancel, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
             if (loadBoxResult == DialogResult.OK)
             {
+
                 Console.WriteLine("Loading your latest save");
             }
         }
 
-        static void Saving(string path, string userName)
+        static void Saving()
         {
             DialogResult loadBoxResult = MessageBox.Show("Do you want to save your progress?", "Saving.", MessageBoxButtons.OKCancel, MessageBoxIcon.None, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
             Console.Clear();
-            MiniTitle();
+            
+            
             if (loadBoxResult == DialogResult.OK)
             {
-                TextWriter tw = new StreamWriter(path);
-                tw.WriteLine(userName);
-                tw.Close();
+                GetSettings.Save();
                 Console.WriteLine("Saved!");
             }
             else
-            {
                 Console.WriteLine("Resuming without saving");
-            }
         }
 
-        static void WindowBuffer(int height, int width)
+        static Properties.Settings GetSettings = new Properties.Settings();
+        static Random rng = new Random();
+        static void Main(string[] args) 
         {
-            Console.BufferWidth = Console.WindowWidth = width;
-            Console.BufferHeight = Console.WindowHeight = height;
-        }
-
-        static void Main(string[] args)
-        {
-            //save file paths
-            string save1 = @"../../GameSave1.txt";
-            string save2 = @"../../GameSave2.txt";
-            string save3 = @"../../GameSave3.txt";
-            //
             Console.Title = "BaleKoth";
             int mainMenuSel = 0;
-            string[] randomUser = { "Skeleton", "Human", "Goblin", "Elf" };
-            Random rng = new Random();
-            int userRandom = rng.Next(0, randomUser.Length);
+            string[] randomRace = { "Skeleton", "Human", "Goblin", "Elf" };
+            int userRace = rng.Next(0, randomRace.Length);
             int hpNumber = rng.Next(50, 100);
             int strNumber = rng.Next(3, 12);
             int intNumber = rng.Next(3, 12);
             int wisNumber = rng.Next(3, 12);
             int dexNumber = rng.Next(3, 12);
-            int conNumber = rng.Next(3, 12);
+            int lukNumber = rng.Next(3, 12);
             int chaNumber = rng.Next(3, 12);
+            int statPoints = rng.Next(20, 30);
             //Title
             WindowBuffer(17, 102);
             Title();
@@ -120,29 +66,28 @@ namespace Balekoth
 
             //Introduction
             MiniTitle();
-            MiddleWriteLine("Welcome to the land of Balekoth!");
-            MiddleWriteLine("There are more than a hundred");
-            MiddleWriteLine("dungeons and caves in this land.");
-            MiddleWriteLine("Be the one to conquer them all");
-            MiddleWriteLine("and become the master of dungeons");
-            MiddleWriteLine("and caves.");
-            MiddleWriteLine("");
-            Console.WriteLine("What is your name traveler?");
+            Console.WriteLine("Welcome to the land of Balekoth!\n" +
+                "There are more than a hundred\n" +
+                "dungeons and caves in this land.\n" +
+                "Be the one to conquer them all\n" +
+                "and become the master of dungeons\n" +
+                "and caves.\n\n" +
+                "What is your name traveler?");
             string userName = Console.ReadLine();
-            Saving(save1, userName);
+            Saving();
             Console.ReadKey();
 
             //Generated character sheet
-            CharacterSheet(hpNumber, randomUser, userRandom, strNumber, intNumber, wisNumber, dexNumber, conNumber, chaNumber);
+            CharacterSheet(hpNumber, randomRace, userRace, strNumber, intNumber, wisNumber, dexNumber, lukNumber, chaNumber);
             Console.ReadKey();
 
             //Main Menu
             MiniTitle();
 
-            MiddleWriteLine("[1]        Adventure");
-            MiddleWriteLine("[2]           Market");
-            MiddleWriteLine("[3]       Guild Room");
-            MiddleWriteLine("[4]  Character Sheet");
+            Console.WriteLine("[1]> Adventure");
+            Console.WriteLine("[2]> Market");
+            Console.WriteLine("[3]> Guild Room");
+            Console.WriteLine("[4]> Character Sheet");
             ConsoleKey press = Console.ReadKey(false).Key;
             switch (press)
             {
@@ -199,7 +144,6 @@ namespace Balekoth
         static void MonsterAttack(int hpNumber, int strNumber)
         {
             MiniTitle();
-            Random rng = new Random();
             string[] enemyStrings = { "Skeleton", "Goblin", "Zombie", "Wolf", "Ghoul", "Ogre", "Mummy" };
             bool isKilled = false;
             int userHealth = hpNumber;
@@ -214,7 +158,7 @@ namespace Balekoth
                 Console.WriteLine("Enemy HP: {0}\n", enemyHealth);
                 Console.SetCursorPosition((Console.WindowWidth - (8 + userHealth.ToString().Length)) / 2, Console.CursorTop);
                 Console.WriteLine("Your HP: {0}", userHealth);
-                MiddleWriteLine("Esc to run away, any key to attack");
+                Console.WriteLine("Esc to run away, any key to attack");
                 ConsoleKey press = Console.ReadKey().Key;
                 switch (press)
                 {
@@ -226,20 +170,22 @@ namespace Balekoth
                 enemyHealth -= strNumber;
             } while (enemyHealth > 0);
 
-            MiddleWriteLine("Enemy dead");
+            Console.WriteLine("Enemy dead");
+            SoundPlayer kill_enemy = new SoundPlayer("sounds/kill_enemy.wav");
+            kill_enemy.Play();
             Console.ReadKey();
         }
-        static void CharacterSheet(int hpNumber, string[] randomUser, int userRandom, int strNumber, int intNumber, int wisNumber, int dexNumber, int conNumber, int chaNumber)
+        static void CharacterSheet(int hpNumber, string[] randomRace, int userRace, int strNumber, int intNumber, int wisNumber, int dexNumber, int lukNumber, int chaNumber)
         {
 
             //Character sheet generation
             MiniTitle();
-            MiddleWriteLine("This is your character sheet:");
+            Console.WriteLine("This is your character sheet:");
             Console.WriteLine();
 
-            Console.SetCursorPosition((Console.WindowWidth - (5 + randomUser[userRandom].Length)) / 2, Console.CursorTop);
+            Console.SetCursorPosition((Console.WindowWidth - (5 + randomRace[userRace].Length)) / 2, Console.CursorTop);
             Console.Write("Race: ");
-            Console.Write("{0}\n", randomUser[userRandom]);
+            Console.Write("{0}\n", randomRace[userRace]);
             Console.SetCursorPosition((Console.WindowWidth - (3 + hpNumber.ToString().Length)) / 2, Console.CursorTop);
             Console.Write("HP: ");
             Console.Write("{0}\n\n", hpNumber);
@@ -260,9 +206,9 @@ namespace Balekoth
             Console.Write("DEX: ");
             Console.Write("{0}\n", dexNumber);
 
-            Console.SetCursorPosition((Console.WindowWidth - (4 + conNumber.ToString().Length)) / 2, Console.CursorTop);
+            Console.SetCursorPosition((Console.WindowWidth - (4 + lukNumber.ToString().Length)) / 2, Console.CursorTop);
             Console.Write("CON: ");
-            Console.Write("{0}\n", conNumber);
+            Console.Write("{0}\n", lukNumber);
 
             Console.SetCursorPosition((Console.WindowWidth - (4 + chaNumber.ToString().Length)) / 2, Console.CursorTop);
             Console.Write("CHA: ");
