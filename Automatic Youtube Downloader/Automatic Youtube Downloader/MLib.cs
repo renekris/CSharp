@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Automatic_Youtube_Downloader.Properties;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,10 +13,10 @@ namespace Automatic_Youtube_Downloader
 {
     class MLib
     {
-        internal static int counter = 0;
-        internal static string[] sequence = new string[] { "[   .   ]", "[  ...  ]", "[ .. .. ]", "[..   ..]", "[.     .]" };
+        private static int counter = 0;
+        private static string[] sequence = new string[] { "[   .   ]", "[  ...  ]", "[ .. .. ]", "[..   ..]", "[.     .]" };
         internal static List<string> urls = new List<string>();
-        internal static readonly string[] filesCheck = new[] { "avcodec-58.dll", "avdevice-58.dll", "avfilter-7.dll", "avformat-58.dll", "avutil-56.dll", "ffmpeg.exe", "ffprobe.exe", "postproc-55.dll", "swresample-3.dll", "swscale-5.dll" };
+        private static readonly string[] filesCheck = new[] { "avcodec-58.dll", "avdevice-58.dll", "avfilter-7.dll", "avformat-58.dll", "avutil-56.dll", "ffmpeg.exe", "ffprobe.exe", "postproc-55.dll", "swresample-3.dll", "swscale-5.dll" };
         internal static readonly string urlVideoPath = "urlsVideo.txt", urlAudioPath = "urlsAudio.txt";
 
         static void UrlRead(string urlPath)
@@ -128,6 +129,18 @@ namespace Automatic_Youtube_Downloader
                 return items[0];
 
             return items[(index + 1) % items.Count];
+        }
+        internal static string ExportFormat(string type)
+        {
+            if (type == "VIDEO")
+            {
+                if (!(Settings.Default.defaultVideoFormat == "mp4"))
+                    return "--recode-video " + Settings.Default.defaultVideoFormat;
+                else
+                    return "";
+            }
+            else
+                return "--audio-format " + Settings.Default.defaultAudioFormat;
         }
     }
 }
