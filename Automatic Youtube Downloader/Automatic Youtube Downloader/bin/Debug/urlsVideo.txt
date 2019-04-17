@@ -1,1 +1,4 @@
+# Read mis algavad [#], programm ei loe. Ehk, sellega saab välja kommenteerida ridu kui vaja.
+# Sisesta Video URL-id reakaupa.
+
 https://www.youtube.com/watch?v=dckiJ-vycpY

@@ -1,1 +1,4 @@
+# Read mis algavad [#], programm ei loe. Ehk, sellega saab välja kommenteerida ridu kui vaja.
+# Sisesta Audio URL-id reakaupa.
+
 https://www.youtube.com/watch?v=LACbVhgtx9I

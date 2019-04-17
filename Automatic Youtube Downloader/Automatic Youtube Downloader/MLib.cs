@@ -22,12 +22,34 @@ namespace Automatic_Youtube_Downloader
         {
             using (StreamReader reader = new StreamReader(urlPath))
             {
+                string URL;
                 while (!reader.EndOfStream)
-                    urls.Add(reader.ReadLine());
-                reader.Close();
+                {
+                    URL = reader.ReadLine();
+                    if (!URL.StartsWith("#") && !String.IsNullOrWhiteSpace(URL))
+                        urls.Add(URL);
+                }
             }
         }
 
+        internal static void SetTitle()
+        {
+            Console.Title = "Automatic Youtube V/A Downloader - Renekris";
+        }
+
+        internal static void MainMethodSetup()
+        {
+            Console.OutputEncoding = Encoding.Unicode;
+            Console.InputEncoding = Encoding.Unicode;
+            urls.Clear();
+            Console.Clear();
+            SetTitle();
+            FileCheck();
+            if (!File.Exists(urlAudioPath))
+                File.Create(urlAudioPath).Dispose();
+            if (!File.Exists(urlVideoPath))
+                File.Create(urlVideoPath).Dispose();
+        }
         internal static void DownloadSetup(string path)
         {
             Console.Clear();
@@ -83,9 +105,7 @@ namespace Automatic_Youtube_Downloader
             while (!status.HasExited)
             {
                 if (animation == true)
-                {
                     Turn();
-                }
                 Thread.Sleep(250);
             }
         }
