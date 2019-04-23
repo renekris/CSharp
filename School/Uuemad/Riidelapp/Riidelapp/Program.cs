@@ -54,8 +54,6 @@ namespace Riidelapp
                                 temp = ValikulinePoolitamine(pikkus, laius, f);
                         }
                         break;
-                    default:
-                        break;
                 }
                 Console.Clear();
                 Console.WriteLine("Pikkus: {0} | Laius: {1} | Toon: {2} \n", pikkus, laius, toon);
@@ -66,7 +64,6 @@ namespace Riidelapp
                 else
                     Console.WriteLine("\nPeale poolitamist: \n" + Poolitamine(pikkus, laius));
                 Console.ReadKey();
-                y = false;
             }
         }
     }
