@@ -12,12 +12,15 @@ namespace NetSockets
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(Dns.GetHostName());
+            Console.ReadKey();
             Console.WriteLine("[1]> Be Client\n" +
                               "[2]> Be Server");
             switch (Console.ReadKey().Key)
             {
                 case ConsoleKey.D1:
-                    ExecuteClient();
+                    Console.WriteLine("Mida sa tahad serverile saata?");
+                    ExecuteClient(Console.ReadLine());
                     break;
                 case ConsoleKey.D2:
                     ExecuteServer();
@@ -29,9 +32,10 @@ namespace NetSockets
 
         public static void ExecuteServer()
         {
-            IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
+            IPHostEntry ipHost = Dns.GetHostEntry(IPAddress.Loopback);
             IPAddress ipAddr = ipHost.AddressList[0];
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddr, 11111);
+
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddr, 80);
 
             Socket listener = new Socket(ipAddr.AddressFamily,
                 SocketType.Stream, ProtocolType.Tcp);
@@ -52,42 +56,39 @@ namespace NetSockets
 
                     int numByte = clientSocket.Receive(bytes);
 
-                    data += Encoding.ASCII.GetString(bytes,
-                        0, numByte);
+                    data += Encoding.Unicode.GetString(bytes, 0, numByte);
 
-                    if (data.IndexOf("<EOF>") > -1)
+                    if (!String.IsNullOrEmpty(data))
                         break;
                 }
-
-                Console.WriteLine("Text received -> {0} ", data);
-                byte[] message = Encoding.ASCII.GetBytes("Test Server");
-
-                clientSocket.Send(message);
+                Console.Clear();
+                Console.WriteLine("{0} ", data);
+                //byte[] message = Encoding.Unicode.GetBytes("Test Server");
+                //clientSocket.Send(message);
 
                 clientSocket.Shutdown(SocketShutdown.Both);
                 clientSocket.Close();
             }
         }
 
-        static void ExecuteClient()
+        static void ExecuteClient(string sendData)
         {
-            IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
+            IPHostEntry ipHost = Dns.GetHostEntry(IPAddress.Loopback);
             IPAddress ipAddr = ipHost.AddressList[0];
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddr, 11111);
+            IPEndPoint localEndPoint = new IPEndPoint(ipAddr, 80);
 
             Socket sender = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             sender.Connect(localEndPoint);
 
-            Console.WriteLine("Socket connected to -> {0} ", sender.RemoteEndPoint.ToString());
-
-            byte[] messageSent = Encoding.ASCII.GetBytes("Test Client<EOF>");
+            //Console.WriteLine("Socket connected to -> {0} ", sender.RemoteEndPoint.ToString());
+            byte[] messageSent = Encoding.Unicode.GetBytes(sendData);
             int byteSent = sender.Send(messageSent);
 
             byte[] messageReceived = new byte[1024];
 
             int byteRecv = sender.Receive(messageReceived);
-            Console.WriteLine("Message from Server -> {0}", Encoding.ASCII.GetString(messageReceived, 0, byteRecv));
+            //Console.WriteLine("Message from Server -> {0}", Encoding.Unicode.GetString(messageReceived, 0, byteRecv));
 
             sender.Shutdown(SocketShutdown.Both);
             sender.Close();
