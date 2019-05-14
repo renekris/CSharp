@@ -72,9 +72,9 @@ namespace Raamat
             Hind = hind;
         }
 
-        public static string tiitel;
-        public static string autor;
-        public static decimal hind;
+        private static string tiitel;
+        private static string autor;
+        private static decimal hind;
 
         public static List<string> TiitelList = new List<string>();
         public static List<string> AutorList = new List<string>();
